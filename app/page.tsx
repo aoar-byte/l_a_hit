@@ -1,0 +1,1638 @@
+"use client";
+
+import React, { useState, useRef, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import Papa from "papaparse";
+import {
+  Play,
+  Pause,
+  SkipBack,
+  SkipForward,
+  BarChart3,
+  Globe,
+  Zap,
+  Headphones,
+  ArrowRight,
+  Music,
+  Layers,
+  ShieldCheck,
+  X,
+  Search,
+  CheckCircle2,
+  Lock,
+  Loader2,
+  MessageCircle,
+  Send,
+  PenTool,
+  Radio,
+  Youtube,
+  Instagram,
+  Volume2,
+  TrendingUp,
+  Award,
+  ExternalLink,
+  Image as ImageIcon,
+} from "lucide-react";
+
+// ============================================================
+// DADOS ESTÁTICOS DE FALLBACK (caso a planilha falhe)
+// ============================================================
+const FALLBACK_DATA = {
+  catalogo: [
+    {
+      id: 1,
+      title: "MINHA FLOR",
+      artist: "L'A HIT Originals",
+      bpm: 128,
+      genre: "Piseiro Pop",
+      mood: "Romântico",
+      price: 499,
+      audioUrl: "https://soundcloud.com/lahit/minha-flor", // substitua
+    },
+    {
+      id: 2,
+      title: "SOZINHA POR OPÇÃO",
+      artist: "L'A HIT Originals",
+      bpm: 140,
+      genre: "Sertanejo Feminino",
+      mood: "Superação",
+      price: 499,
+      audioUrl: "https://soundcloud.com/lahit/sozinha",
+    },
+    {
+      id: 3,
+      title: "TROVÕES",
+      artist: "L'A HIT Originals",
+      bpm: 90,
+      genre: "Sertanejo Romântico",
+      mood: "Melancólico",
+      price: 499,
+      audioUrl: "https://soundcloud.com/lahit/trovoes",
+    },
+    {
+      id: 4,
+      title: "BUQUÊ DE DORES",
+      artist: "L'A HIT Originals",
+      bpm: 79,
+      genre: "Sertanejo",
+      mood: "Romântico",
+      price: 650,
+      audioUrl: "https://soundcloud.com/lahit/buque",
+    },
+    {
+      id: 5,
+      title: "CACHAÇA TERAPIA",
+      artist: "L'A HIT Originals",
+      bpm: 124,
+      genre: "Sertanejo",
+      mood: "Barzinho",
+      price: 499,
+      audioUrl: "https://soundcloud.com/lahit/cachaca",
+    },
+    {
+      id: 6,
+      title: "MASSAGEM CARDÍACA",
+      artist: "L'A HIT Originals",
+      bpm: 72,
+      genre: "Sertanejo Arrocha",
+      mood: "Dramático",
+      price: 499,
+      audioUrl: "https://soundcloud.com/lahit/massagem",
+    },
+  ],
+  servicos: [
+    {
+      id: "ghost",
+      title: "Ghostwriting",
+      desc: "Produção fantasma para artistas de Tier-1. Sigilo absoluto.",
+      icon: "PenTool",
+      cta: "Consultar",
+      highlight: false,
+      external: "",
+    },
+    {
+      id: "sync",
+      title: "Sync Licensing",
+      desc: "Licenciamento para Cinema, TV e Games. A partir de R$ 850.",
+      icon: "Globe",
+      cta: "Ver Licenças",
+      highlight: false,
+      external: "",
+    },
+    {
+      id: "brand",
+      title: "Sonic Branding & Jingles",
+      desc: "Identidade sonora proprietária para marcas e jingles publicitários.",
+      icon: "Volume2",
+      cta: "Consultar",
+      highlight: false,
+      external: "",
+    },
+    {
+      id: "distro",
+      title: "Distribuição Digital, Marketing & Editais",
+      desc: "Distribuição em todas as plataformas, estratégias de marketing musical, análise de carreira e suporte para leis de incentivo.",
+      icon: "TrendingUp",
+      cta: "Conhecer Parceiro",
+      highlight: true,
+      external: "https://instagram.com/distribuidora",
+    },
+  ],
+  cases: [
+    {
+      id: 1,
+      title: "MINHA FLOR",
+      artist: "L'A HIT Originals",
+      image: "/cases/minha-flor.jpg",
+      videoThumb: "/cases/mina-flor-thumb.jpg",
+      link: "https://youtube.com/watch?v=...",
+      plays: "1.2M",
+      platform: "YouTube",
+    },
+    {
+      id: 2,
+      title: "SOZINHA POR OPÇÃO",
+      artist: "L'A HIT Originals",
+      image: "/cases/sozinha.jpg",
+      videoThumb: "/cases/sozinha-thumb.jpg",
+      link: "https://open.spotify.com/track/...",
+      plays: "850K",
+      platform: "Spotify",
+    },
+    {
+      id: 3,
+      title: "TROVÕES",
+      artist: "L'A HIT Originals",
+      image: "/cases/trovoes.jpg",
+      videoThumb: "/cases/trovoes-thumb.jpg",
+      link: "https://instagram.com/p/...",
+      plays: "2.3M",
+      platform: "Instagram Reels",
+    },
+    {
+      id: 4,
+      title: "CACHAÇA TERAPIA",
+      artist: "L'A HIT Originals",
+      image: "/cases/cachaca.jpg",
+      videoThumb: "/cases/cachaca-thumb.jpg",
+      link: "https://tiktok.com/@...",
+      plays: "5.7M",
+      platform: "TikTok",
+    },
+  ],
+  links: {
+    formularioCliente:
+      "https://docs.google.com/forms/d/e/1FAIpQLSd6MVlpHp6EVZnmQVvG1pWD-_DvX0euNBjrdg4NI0bF0w3Ojg/viewform?usp=pp_url",
+    formularioEncomenda:
+      "https://docs.google.com/forms/d/e/1FAIpQLScVsotUHwhzOwZZ2XuTNtxNFMtErXSsfvFczi6GnQB8ZYs-Rg/viewform?usp=pp_url",
+    formularioLicenciamento:
+      "https://docs.google.com/forms/d/e/SEU_FORM_ID_LICENCIAMENTO/viewform",
+    whatsapp: "https://wa.me/5511999999999",
+    showreel: "https://www.youtube.com/watch?v=SEU_VIDEO_ID",
+  },
+  tiposLicenca: [
+    {
+      id: "liberacao_simples",
+      icon: "Radio",
+      title: "LIBERAÇÃO SIMPLES",
+      subtitle: "Para Artistas",
+      price: "R$ 500,00+",
+      payment: "Por Música",
+      deliverables: [
+        "Liberação para Gravação e Lançamento",
+        "Geração de ISRC",
+        "Arquivo do playback WAV Masterizado",
+      ],
+      advantage:
+        "Ideal para artistas que querem gravar e lançar a música sem exclusividade.",
+    },
+    {
+      id: "exclusividade",
+      icon: "ShieldCheck",
+      title: "EXCLUSIVIDADE",
+      subtitle: "Artista / Carreira",
+      price: "R$ 2.500,00",
+      payment: "Taxa de Reserva",
+      deliverables: [
+        "Retirada Imediata do Catálogo (Ninguém mais compra)",
+        "Liberação para Gravação (ISRC)",
+        "Guia de Voz + Playback",
+      ],
+      advantage:
+        "Monopólio do Hit. A música é 'Sua'. Você entra como intérprete oficial no Spotify.",
+    },
+    {
+      id: "sync",
+      icon: "Globe",
+      title: "LICENÇA SYNC",
+      subtitle: "Audiovisual & Games",
+      price: "R$ 850,00",
+      payment: "Pagamento Único",
+      deliverables: [
+        "Arquivo WAV Masterizado (48kHz/24bit)",
+        "Documento de Liberação (YouTube/Instagram Safe)",
+        "Licença Vitalícia para 1 Projeto",
+      ],
+      advantage:
+        "Zero Dor de Cabeça. Publique seu vídeo, filme ou game sem medo de 'Copyright Strike'.",
+    },
+    {
+      id: "publicidade",
+      icon: "Zap",
+      title: "PUBLICIDADE",
+      subtitle: "Digital & Branding",
+      price: "R$ 1.800,00",
+      payment: "Campanha",
+      deliverables: [
+        "WAV + Stems (Faixas separadas para edição)",
+        "Contrato de Uso Comercial (Ads/Tráfego Pago)",
+        "Nota Fiscal para PJ",
+      ],
+      advantage:
+        "Blindagem Jurídica. Sua marca roda anúncios com segurança legal total.",
+    },
+    {
+      id: "buyout",
+      icon: "BarChart3",
+      title: "BUYOUT",
+      subtitle: "Venda de Ativo",
+      price: "R$ 15.000,00+",
+      payment: "Patrimônio",
+      deliverables: [
+        "Transferência Total de Titularidade",
+        "Arquivos do Projeto Aberto",
+        "Direitos de Royalties Futuros",
+      ],
+      advantage: "Construção de Patrimônio. Você vira o dono da 'Casa'.",
+    },
+  ],
+};
+
+// ============================================================
+// CONFIGURAÇÃO DAS PLANILHAS (SUBSTITUA PELAS SUAS URLs)
+// ============================================================
+const SHEETS = {
+  catalogo:
+    "https://docs.google.com/spreadsheets/d/e/2PACX-1vS7sqQrQ4CJDQ2b8QwjCBVHXXj1yQulLWQoeeP58hqqoA_kgPYDCMf2Q5hvkxcD7m3ISnxmFH_NTe8P/pub?gid=0&single=true&output=csv",
+  servicos:
+    "https://docs.google.com/spreadsheets/d/e/2PACX-1vS7sqQrQ4CJDQ2b8QwjCBVHXXj1yQulLWQoeeP58hqqoA_kgPYDCMf2Q5hvkxcD7m3ISnxmFH_NTe8P/pub?gid=5493861&single=true&output=csv",
+  cases:
+    "https://docs.google.com/spreadsheets/d/e/2PACX-1vS7sqQrQ4CJDQ2b8QwjCBVHXXj1yQulLWQoeeP58hqqoA_kgPYDCMf2Q5hvkxcD7m3ISnxmFH_NTe8P/pub?gid=1357706581&single=true&output=csv",
+  links:
+    "https://docs.google.com/spreadsheets/d/e/2PACX-1vS7sqQrQ4CJDQ2b8QwjCBVHXXj1yQulLWQoeeP58hqqoA_kgPYDCMf2Q5hvkxcD7m3ISnxmFH_NTe8P/pub?gid=918950045&single=true&output=csv",
+  tiposLicenca:
+    "https://docs.google.com/spreadsheets/d/e/2PACX-1vS7sqQrQ4CJDQ2b8QwjCBVHXXj1yQulLWQoeeP58hqqoA_kgPYDCMf2Q5hvkxcD7m3ISnxmFH_NTe8P/pub?gid=319719436&single=true&output=csv",
+};
+
+// ============================================================
+// MAPEAMENTO DE ÍCONES (para converter string → componente)
+// ============================================================
+const iconMap: Record<string, React.ElementType> = {
+  PenTool,
+  Globe,
+  Volume2,
+  TrendingUp,
+  Radio,
+  ShieldCheck,
+  Zap,
+  BarChart3,
+};
+
+function getIconComponent(iconName: string): React.ElementType {
+  return iconMap[iconName] || PenTool;
+}
+
+// ============================================================
+// FUNÇÃO PARA BUSCAR E PARSEAR CSV (com tratamento de erro)
+// ============================================================
+async function fetchSheet<T>(url: string): Promise<T[]> {
+  try {
+    const response = await fetch(url, { cache: "no-store", mode: "cors" });
+    if (!response.ok) {
+      console.warn(`HTTP error ${response.status} ao buscar ${url}`);
+      return [];
+    }
+    const csvText = await response.text();
+    return new Promise((resolve) => {
+      Papa.parse(csvText, {
+        header: true,
+        skipEmptyLines: true,
+        complete: (result) => resolve(result.data as T[]),
+        error: (error) => {
+          console.error("Erro ao parsear CSV:", error);
+          resolve([]);
+        },
+      });
+    });
+  } catch (error) {
+    console.error("Erro na requisição da planilha:", error);
+    return [];
+  }
+}
+
+// ============================================================
+// COMPONENTES REUTILIZÁVEIS
+// ============================================================
+const NoiseOverlay = () => (
+  <div
+    className="fixed inset-0 z-[9999] pointer-events-none opacity-[0.03] mix-blend-overlay"
+    style={{
+      backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+    }}
+  />
+);
+
+const MagneticButton = ({ children, className, onClick, disabled }: any) => (
+  <motion.button
+    whileHover={!disabled ? { scale: 1.02 } : {}}
+    whileTap={!disabled ? { scale: 0.98 } : {}}
+    className={`relative overflow-hidden group ${className} ${
+      disabled ? "opacity-50 cursor-not-allowed" : ""
+    }`}
+    onClick={!disabled ? onClick : undefined}
+    disabled={disabled}
+  >
+    <span className="relative z-10">{children}</span>
+    {!disabled && (
+      <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
+    )}
+  </motion.button>
+);
+
+const SectionHeader = ({
+  subtitle,
+  title,
+}: {
+  subtitle: string;
+  title: string;
+}) => (
+  <div className="mb-12">
+    <div className="flex items-center gap-2 text-blue-500 font-mono text-xs tracking-widest uppercase mb-3">
+      <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse" />
+      {subtitle}
+    </div>
+    <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight">
+      {title}
+    </h2>
+  </div>
+);
+
+// ============================================================
+// MODAL DE LICENCIAMENTO
+// ============================================================
+const QuoteModal = ({ track, onClose, tiposLicenca, links }: any) => {
+  const handleWhatsApp = (licenseTitle: string) => {
+    const message = `Olá! Tenho interesse em licenciar a música "${track.title}" (ID: ${track.id}) para a modalidade: ${licenseTitle}.`;
+    window.open(
+      `${links.whatsapp}?text=${encodeURIComponent(message)}`,
+      "_blank"
+    );
+  };
+
+  const handleGhostwriter = () => {
+    window.open(links.formularioEncomenda, "_blank");
+  };
+
+  return (
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md overflow-y-auto">
+      <motion.div
+        initial={{ scale: 0.95, opacity: 0, y: 20 }}
+        animate={{ scale: 1, opacity: 1, y: 0 }}
+        className="bg-slate-900 border border-white/10 w-full max-w-6xl shadow-2xl relative max-h-[90vh] overflow-y-auto"
+      >
+        <div className="sticky top-0 bg-slate-900 z-10 p-6 border-b border-white/5 flex justify-between items-center">
+          <div>
+            <span className="text-[10px] font-bold text-blue-500 uppercase tracking-widest border border-blue-500/20 px-2 py-1">
+              Licenciamento
+            </span>
+            <h3 className="text-2xl font-black text-white mt-2">
+              {track.title}
+            </h3>
+            <p className="text-slate-400 font-mono text-xs">
+              ID: {track.id} // {track.bpm} BPM
+            </p>
+          </div>
+          <button
+            onClick={onClose}
+            className="text-slate-400 hover:text-white p-2"
+          >
+            <X size={24} />
+          </button>
+        </div>
+
+        <div className="px-6 pt-4">
+          <button
+            onClick={handleGhostwriter}
+            className="w-full py-4 bg-gradient-to-r from-yellow-600/20 to-yellow-800/20 border border-yellow-500/30 text-white font-bold uppercase tracking-widest hover:bg-yellow-600/30 transition-colors flex items-center justify-center gap-3 group"
+          >
+            <PenTool
+              size={20}
+              className="text-yellow-500 group-hover:rotate-12 transition-transform"
+            />
+            <span>GHOSTWRITING OU MÚSICA SOB ENCOMENDA</span>
+            <ArrowRight size={18} className="text-yellow-500" />
+          </button>
+        </div>
+
+        <div className="p-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {tiposLicenca.map((license: any) => {
+              const Icon = license.icon;
+              return (
+                <div
+                  key={license.id}
+                  className="bg-slate-800/50 border border-white/5 p-6 hover:border-blue-500/30 transition-colors flex flex-col"
+                >
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 bg-blue-600/20 flex items-center justify-center">
+                      <Icon className="w-5 h-5 text-blue-500" />
+                    </div>
+                    <div>
+                      <h4 className="text-white font-bold text-sm uppercase tracking-wider">
+                        {license.title}
+                      </h4>
+                      <p className="text-[10px] text-slate-500 font-mono">
+                        {license.subtitle}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="mb-4">
+                    <span className="text-2xl font-black text-white">
+                      {license.price}
+                    </span>
+                    <span className="text-[10px] text-slate-500 block">
+                      {license.payment}
+                    </span>
+                  </div>
+                  <div className="space-y-2 mb-4 flex-1">
+                    <h5 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                      O que você recebe:
+                    </h5>
+                    <ul className="space-y-1">
+                      {license.deliverables.map((item: string, idx: number) => (
+                        <li
+                          key={idx}
+                          className="text-xs text-slate-300 flex items-start gap-2"
+                        >
+                          <CheckCircle2
+                            size={12}
+                            className="text-emerald-500 mt-0.5 flex-shrink-0"
+                          />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="mb-6 p-3 bg-slate-900/80 border border-white/5">
+                    <p className="text-xs text-slate-400 italic">
+                      “{license.advantage}”
+                    </p>
+                  </div>
+                  <div className="flex gap-2 mt-auto">
+                    <button
+                      onClick={() => handleWhatsApp(license.title)}
+                      className="w-full py-2 bg-green-600 hover:bg-green-700 text-white text-[10px] font-bold uppercase tracking-widest transition-colors flex items-center justify-center gap-2"
+                    >
+                      <MessageCircle size={14} />
+                      Falar no WhatsApp
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </motion.div>
+    </div>
+  );
+};
+
+// ============================================================
+// MODAL DE LEAD
+// ============================================================
+const LeadModal = ({
+  service,
+  onClose,
+}: {
+  service: string;
+  onClose: () => void;
+}) => {
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const subject = `Interesse em ${service}`;
+    const body = `Nome: ${name}\nE-mail: ${email}\n\nGostaria de receber mais informações sobre ${service}.`;
+    window.location.href = `mailto:contato@lahit.com?subject=${encodeURIComponent(
+      subject
+    )}&body=${encodeURIComponent(body)}`;
+    setSubmitted(true);
+  };
+
+  return (
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
+      <motion.div
+        initial={{ scale: 0.95, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        className="bg-slate-900 border border-white/10 w-full max-w-md p-8 relative"
+      >
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 text-slate-400 hover:text-white"
+        >
+          <X size={20} />
+        </button>
+        <h3 className="text-2xl font-bold text-white mb-2">{service}</h3>
+        <p className="text-slate-400 mb-6">
+          Cadastre-se para receber novidades, promoções e conteúdos exclusivos
+          sobre {service}.
+        </p>
+        {!submitted ? (
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <input
+              type="text"
+              placeholder="Seu nome"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+              className="w-full bg-slate-800 border border-white/10 p-3 text-white text-sm focus:outline-none focus:border-blue-500"
+            />
+            <input
+              type="email"
+              placeholder="Seu e-mail"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="w-full bg-slate-800 border border-white/10 p-3 text-white text-sm focus:outline-none focus:border-blue-500"
+            />
+            <button
+              type="submit"
+              className="w-full py-3 bg-blue-600 text-white font-bold uppercase tracking-widest hover:bg-blue-700 transition-colors flex items-center justify-center gap-2"
+            >
+              <Send size={16} /> Enviar
+            </button>
+          </form>
+        ) : (
+          <div className="text-center py-6">
+            <CheckCircle2 size={40} className="text-emerald-500 mx-auto mb-4" />
+            <p className="text-white">
+              Obrigado! Em breve você receberá nossas novidades.
+            </p>
+          </div>
+        )}
+      </motion.div>
+    </div>
+  );
+};
+
+// ============================================================
+// NAVBAR
+// ============================================================
+const Navbar = ({ links }: { links: any }) => {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollToSection = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  return (
+    <nav
+      className={`fixed top-0 w-full z-50 transition-all duration-500 border-b ${
+        scrolled
+          ? "bg-slate-950/80 backdrop-blur-md border-white/5 py-4"
+          : "bg-transparent border-transparent py-6"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+        <div
+          className="flex items-center gap-3 cursor-pointer group"
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        >
+          <div className="w-10 h-10 relative bg-gradient-to-br from-slate-700 to-slate-900 border border-white/10 shadow-[4px_4px_0px_0px_rgba(30,41,59,1)] flex items-center justify-center">
+            <div className="absolute top-0 right-0 w-3 h-3 bg-blue-600" />
+            <span className="font-black text-white text-lg tracking-tighter relative z-10 leading-none mt-1 ml-1">
+              LA
+            </span>
+          </div>
+          <div className="flex flex-col leading-none">
+            <span className="text-lg font-black tracking-tighter text-white">
+              L'A
+            </span>
+            <span className="text-[10px] font-bold tracking-[0.4em] text-blue-500 uppercase">
+              HIT
+            </span>
+          </div>
+        </div>
+        <div className="hidden md:flex items-center gap-8 text-xs font-bold tracking-widest text-slate-400 uppercase">
+          <button
+            onClick={() => scrollToSection("catalog")}
+            className="hover:text-white"
+          >
+            Catálogo
+          </button>
+          <button
+            onClick={() => scrollToSection("services")}
+            className="hover:text-white"
+          >
+            Serviços
+          </button>
+          <button
+            onClick={() => scrollToSection("cases")}
+            className="hover:text-white"
+          >
+            Cases
+          </button>
+        </div>
+        <div className="w-24" /> {/* espaçador */}
+      </div>
+    </nav>
+  );
+};
+
+// ============================================================
+// HERO BACKGROUND
+// ============================================================
+const DynamicTerrainCanvas = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
+    let frame = 0;
+
+    const lines: any[] = [];
+    const gap = 30;
+    const rows = Math.ceil(height / gap) + 2;
+
+    for (let i = 0; i < rows; i++) {
+      lines.push({
+        y: i * gap,
+        baseY: i * gap,
+        speed: 0.02 + Math.random() * 0.02,
+        amplitude: 15 + Math.random() * 20,
+        offset: Math.random() * Math.PI * 2,
+      });
+    }
+
+    const animate = () => {
+      ctx.fillStyle = "rgba(2, 6, 23, 0.2)";
+      ctx.fillRect(0, 0, width, height);
+
+      ctx.lineWidth = 1;
+
+      lines.forEach((line, i) => {
+        const gradient = ctx.createLinearGradient(0, 0, width, 0);
+        gradient.addColorStop(0, "rgba(2, 6, 23, 0)");
+        gradient.addColorStop(
+          0.5,
+          `rgba(59, 130, 246, ${0.1 + (i / rows) * 0.3})`
+        );
+        gradient.addColorStop(1, "rgba(2, 6, 23, 0)");
+
+        ctx.beginPath();
+        ctx.strokeStyle = gradient;
+
+        for (let x = 0; x <= width; x += 10) {
+          const wave1 =
+            Math.sin(x * 0.003 + frame * line.speed + line.offset) *
+            line.amplitude;
+          const wave2 =
+            Math.cos(x * 0.01 - frame * 0.01) * (line.amplitude * 0.5);
+          const y = line.baseY + wave1 + wave2;
+
+          if (x === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+      });
+
+      frame++;
+      requestAnimationFrame(animate);
+    };
+
+    const rafId = requestAnimationFrame(animate);
+    const handleResize = () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    };
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      cancelAnimationFrame(rafId);
+    };
+  }, []);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className="absolute inset-0 w-full h-full pointer-events-none"
+    />
+  );
+};
+
+// ============================================================
+// HERO
+// ============================================================
+const Hero = () => {
+  const scrollToCatalog = () =>
+    document.getElementById("catalog")?.scrollIntoView({ behavior: "smooth" });
+
+  return (
+    <section className="relative h-screen flex items-center justify-center overflow-hidden bg-slate-950">
+      <DynamicTerrainCanvas />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#020617_90%)]" />
+
+      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full pt-28 md:pt-25">
+        <div className="max-w-4xl mx-auto text-center md:text-left md:mx-0">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <h1 className="text-5xl md:text-8xl font-black tracking-tighter text-white leading-[0.9] mb-8">
+              TRANSFORMANDO <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-400">
+                IDEIAS
+              </span>{" "}
+              EM <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-400">
+                ATIVOS.
+              </span>
+            </h1>
+          </motion.div>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4, duration: 1 }}
+            className="text-xl text-slate-400 max-w-lg leading-relaxed mb-10 border-l-2 border-blue-600 pl-6 mx-auto md:mx-0"
+          >
+            Engenharia de Hits baseada em dados. Transformamos ondas sonoras em
+            propriedades intelectuais de alto rendimento.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6 }}
+            className="flex flex-wrap gap-4 justify-center md:justify-start"
+          >
+            <MagneticButton
+              onClick={scrollToCatalog}
+              className="px-10 py-5 bg-blue-600 text-white font-bold tracking-widest uppercase hover:bg-blue-700 shadow-[0_10px_40px_-10px_rgba(37,99,235,0.5)]"
+            >
+              Explorar Catálogo
+            </MagneticButton>
+            <MagneticButton
+              disabled
+              className="px-10 py-5 border border-white/10 text-slate-300 font-bold uppercase tracking-widest flex items-center gap-3 backdrop-blur-sm"
+            >
+              <Play size={14} /> Showreel
+            </MagneticButton>
+          </motion.div>
+        </div>
+      </div>
+
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.2 }}
+        className="absolute bottom-10 right-10 text-slate-700 font-mono text-xs flex flex-col items-end gap-1"
+      >
+        <span>SCROLL_Y: DETECTED</span>
+        <span>LATENCY: 4ms</span>
+      </motion.div>
+    </section>
+  );
+};
+
+// ============================================================
+// SMART CATALOG (com SoundCloud, sem login, grade original)
+// ============================================================
+const SmartCatalog = ({
+  catalogo,
+  filteredTracks,
+  setFilteredTracks,
+  onLicenseClick,
+}: any) => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [activeFilter, setActiveFilter] = useState("TODOS");
+
+  const filters = [
+    "TODOS",
+    ...Array.from(new Set(catalogo.map((t: any) => t.genre))),
+  ];
+
+  useEffect(() => {
+    let filtered = catalogo;
+    if (activeFilter !== "TODOS")
+      filtered = filtered.filter((t: any) => t.genre === activeFilter);
+    if (searchTerm.trim() !== "") {
+      const term = searchTerm.toLowerCase();
+      filtered = filtered.filter(
+        (t: any) =>
+          t.title.toLowerCase().includes(term) ||
+          t.artist.toLowerCase().includes(term) ||
+          t.genre.toLowerCase().includes(term) ||
+          t.mood.toLowerCase().includes(term) ||
+          t.bpm.toString().includes(term)
+      );
+    }
+    setFilteredTracks(filtered);
+  }, [searchTerm, activeFilter, catalogo, setFilteredTracks]);
+
+  const getSoundCloudEmbed = (url: string) => {
+    const encodedUrl = encodeURIComponent(url);
+    return `https://w.soundcloud.com/player/?url=${encodedUrl}&color=%23ff5500&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false`;
+  };
+
+  return (
+    <section
+      id="catalog"
+      className="py-32 bg-slate-950 border-t border-white/5 relative"
+    >
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        <SectionHeader subtitle="Inventory" title="O Cofre." />
+
+        <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+          <div className="relative w-full max-w-lg">
+            <div className="flex items-center bg-slate-900 border-b border-white/20 hover:border-blue-500 transition-colors py-4">
+              <Search size={20} className="text-slate-500 mr-4" />
+              <input
+                type="text"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                placeholder="Buscar por título, artista, gênero, mood ou BPM..."
+                className="bg-transparent border-none text-sm text-white w-full focus:outline-none placeholder:text-slate-600 font-mono uppercase"
+              />
+              {searchTerm && (
+                <button
+                  onClick={() => setSearchTerm("")}
+                  className="text-slate-400 hover:text-white mr-2"
+                >
+                  <X size={16} />
+                </button>
+              )}
+            </div>
+          </div>
+
+          <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide w-full md:w-auto">
+            {filters.map((filter) => (
+              <button
+                key={filter}
+                onClick={() => setActiveFilter(filter)}
+                className={`px-6 py-3 text-[10px] font-bold uppercase tracking-widest border transition-all whitespace-nowrap ${
+                  activeFilter === filter
+                    ? "bg-white text-slate-950 border-white"
+                    : "text-slate-400 border-white/5 hover:border-white/20 bg-slate-900"
+                }`}
+              >
+                {filter}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* GRADE ORIGINAL: 3 colunas */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredTracks.map((track: any) => (
+            <div
+              key={track.id}
+              className="group relative bg-slate-900/40 border border-white/5 hover:border-white/20 transition-all rounded-lg overflow-hidden"
+            >
+              <div className="p-4">
+                {/* Gênero */}
+                <div className="mb-2">
+                  <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest bg-slate-950 px-2 py-0.5 rounded">
+                    {track.genre}
+                  </span>
+                </div>
+
+                {/* Título e artista */}
+                <h3 className="text-lg font-black text-white group-hover:text-blue-400 transition-colors truncate tracking-tight mb-1">
+                  {track.title}
+                </h3>
+                <p className="text-xs text-slate-500 uppercase tracking-widest mb-3">
+                  {track.artist}
+                </p>
+
+                {/* Player do SoundCloud */}
+                <div className="mb-3">
+                  <iframe
+                    width="100%"
+                    height="166"
+                    scrolling="no"
+                    frameBorder="no"
+                    allow="autoplay"
+                    src={getSoundCloudEmbed(track.audioUrl)}
+                    className="rounded"
+                  />
+                </div>
+
+                {/* Metadados e botão de licenciar */}
+                <div className="flex items-center justify-between">
+                  <div className="flex gap-3 text-[9px] font-mono text-slate-400">
+                    <span className="flex items-center gap-1">
+                      <Music size={10} /> {track.bpm} BPM
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <Layers size={10} /> {track.mood}
+                    </span>
+                  </div>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onLicenseClick(track);
+                    }}
+                    className="text-[9px] bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded uppercase tracking-wider"
+                  >
+                    Licenciar
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {filteredTracks.length === 0 && (
+          <div className="text-center py-12 text-slate-400">
+            Nenhuma faixa encontrada para sua busca.
+          </div>
+        )}
+      </div>
+    </section>
+  );
+};
+
+// ============================================================
+// BENTO STATS
+// ============================================================
+const BentoStats = () => (
+  <section className="py-20 bg-slate-900 px-6">
+    <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 grid-rows-2 gap-4 h-auto md:h-[500px]">
+      <div className="col-span-1 md:col-span-2 row-span-2 bg-gradient-to-br from-slate-800 to-slate-900 border border-white/10 rounded-3xl p-10 flex flex-col justify-between relative overflow-hidden group">
+        <div className="absolute top-0 right-0 p-32 bg-blue-600/10 blur-[100px] rounded-full" />
+        <ShieldCheck className="text-blue-500 w-12 h-12 mb-6" />
+        <div>
+          <h3 className="text-3xl font-bold text-white mb-2">
+            100% Royalty Free.
+          </h3>
+          <p className="text-slate-400">
+            Modelo flexível. Você dono do seu ativo.
+          </p>
+        </div>
+        <div className="mt-8 border-t border-white/5 pt-8 flex gap-8">
+          <div>
+            <span className="block text-2xl font-bold text-white">500+</span>
+            <span className="text-xs text-slate-500 uppercase tracking-widest">
+              Ativos
+            </span>
+          </div>
+          <div>
+            <span className="block text-2xl font-bold text-white">50M</span>
+            <span className="text-xs text-slate-500 uppercase tracking-widest">
+              Streams
+            </span>
+          </div>
+        </div>
+      </div>
+      <div className="col-span-1 md:col-span-2 bg-slate-800/40 border border-white/5 rounded-3xl p-8 flex items-center justify-between hover:border-blue-500/30 transition-colors">
+        <div>
+          <h4 className="text-xl font-bold text-white">Stems Profissionais.</h4>
+          <p className="text-sm text-slate-400 mt-1">
+            Multi-track wav files inclusos.
+          </p>
+        </div>
+        <Layers className="text-slate-600 w-8 h-8" />
+      </div>
+      <div className="col-span-1 bg-slate-800/40 border border-white/5 rounded-3xl p-8 flex flex-col justify-center items-center text-center">
+        <BarChart3 className="text-blue-500 w-10 h-10 mb-4" />
+        <h4 className="text-lg font-bold text-white">Data Driven</h4>
+      </div>
+      <div className="col-span-1 bg-blue-600 rounded-3xl p-8 flex flex-col justify-center items-center text-center relative overflow-hidden">
+        <Zap className="text-white w-10 h-10 mb-4 relative z-10" />
+        <h4 className="text-lg font-bold text-white relative z-10">
+          Entrega Rápida
+        </h4>
+      </div>
+    </div>
+  </section>
+);
+
+// ============================================================
+// SERVIÇOS
+// ============================================================
+const Services = ({ servicos, links, onLeadOpen }: any) => {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedService, setSelectedService] = useState<any>(null);
+
+  const openDetails = (service: any) => {
+    setSelectedService(service);
+    setModalOpen(true);
+  };
+
+  return (
+    <section
+      id="services"
+      className="py-32 bg-slate-900 border-t border-white/5"
+    >
+      <div className="max-w-7xl mx-auto px-6">
+        <SectionHeader subtitle="Solutions" title="Para Empresas." />
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 justify-items-center">
+          {servicos.map((s: any, i: number) => {
+            const Icon = s.icon;
+            return (
+              <div
+                key={i}
+                className={`w-full max-w-sm group p-8 bg-slate-950 border ${
+                  s.highlight
+                    ? "border-yellow-500/50 shadow-lg shadow-yellow-500/10"
+                    : "border-white/5"
+                } hover:border-blue-500/30 transition-all duration-500 flex flex-col items-start justify-between relative overflow-hidden`}
+              >
+                {s.highlight && (
+                  <div className="absolute top-3 right-3 bg-yellow-500 text-black text-[8px] font-bold px-2 py-1 rounded-full">
+                    MAIS POPULAR
+                  </div>
+                )}
+
+                <Icon
+                  className={`w-10 h-10 ${
+                    s.highlight ? "text-yellow-500" : "text-slate-600"
+                  } group-hover:scale-110 transition-transform mb-6`}
+                />
+
+                <h3 className="text-xl font-bold text-white mb-2">{s.title}</h3>
+                <p className="text-slate-400 text-sm leading-relaxed mb-6">
+                  {s.desc}
+                </p>
+
+                <ul className="space-y-2 mb-6 text-xs text-slate-300 w-full">
+                  {s.id === "liberacao_simples" && (
+                    <>
+                      <li className="flex items-center gap-2">
+                        <CheckCircle2 size={12} className="text-emerald-500" />{" "}
+                        WAV Masterizado
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <CheckCircle2 size={12} className="text-emerald-500" />{" "}
+                        ISRC incluso
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <CheckCircle2 size={12} className="text-emerald-500" />{" "}
+                        R$ 500+
+                      </li>
+                    </>
+                  )}
+                  {s.id === "exclusividade" && (
+                    <>
+                      <li className="flex items-center gap-2">
+                        <CheckCircle2 size={12} className="text-emerald-500" />{" "}
+                        Retirada do catálogo
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <CheckCircle2 size={12} className="text-emerald-500" />{" "}
+                        Guia de voz
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <CheckCircle2 size={12} className="text-emerald-500" />{" "}
+                        R$ 2.500
+                      </li>
+                    </>
+                  )}
+                  {s.id !== "liberacao_simples" && s.id !== "exclusividade" && (
+                    <li className="text-slate-500 italic">Sob consulta</li>
+                  )}
+                </ul>
+
+                <div className="flex gap-3 w-full mt-auto">
+                  {s.id === "distro" ? (
+                    <a
+                      href={s.external}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 py-3 bg-blue-600 text-white text-xs font-bold uppercase tracking-widest text-center hover:bg-blue-700 transition-colors"
+                    >
+                      {s.cta}
+                    </a>
+                  ) : (
+                    <>
+                      <button
+                        onClick={() => openDetails(s)}
+                        className="flex-1 py-3 border border-white/20 text-white text-xs font-bold uppercase tracking-widest hover:bg-white/5 transition-colors"
+                      >
+                        {s.cta}
+                      </button>
+                      <button
+                        onClick={() => window.open(links.whatsapp, "_blank")}
+                        className="py-3 px-4 bg-green-600 hover:bg-green-700 text-white transition-colors"
+                        title="Falar no WhatsApp"
+                      >
+                        <MessageCircle size={14} />
+                      </button>
+                    </>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <AnimatePresence>
+        {modalOpen && selectedService && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              className="bg-slate-900 border border-white/10 w-full max-w-lg p-8 relative"
+            >
+              <button
+                onClick={() => setModalOpen(false)}
+                className="absolute top-4 right-4 text-slate-400 hover:text-white"
+              >
+                <X size={20} />
+              </button>
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-12 h-12 bg-blue-600/20 flex items-center justify-center">
+                  <selectedService.icon className="w-6 h-6 text-blue-500" />
+                </div>
+                <h3 className="text-2xl font-bold text-white">
+                  {selectedService.title}
+                </h3>
+              </div>
+              <p className="text-slate-300 mb-6">{selectedService.desc}</p>
+              <h4 className="text-sm font-bold text-white mb-3">
+                O que está incluso:
+              </h4>
+              <ul className="space-y-2 mb-6">
+                {selectedService.id === "liberacao_simples" && (
+                  <>
+                    <li className="flex items-start gap-2 text-sm text-slate-300">
+                      <CheckCircle2
+                        size={16}
+                        className="text-emerald-500 mt-0.5"
+                      />{" "}
+                      Arquivo WAV masterizado (24bit/48kHz)
+                    </li>
+                    <li className="flex items-start gap-2 text-sm text-slate-300">
+                      <CheckCircle2
+                        size={16}
+                        className="text-emerald-500 mt-0.5"
+                      />{" "}
+                      Geração de código ISRC
+                    </li>
+                    <li className="flex items-start gap-2 text-sm text-slate-300">
+                      <CheckCircle2
+                        size={16}
+                        className="text-emerald-500 mt-0.5"
+                      />{" "}
+                      Liberação para gravação e distribuição
+                    </li>
+                    <li className="flex items-start gap-2 text-sm text-slate-300">
+                      <CheckCircle2
+                        size={16}
+                        className="text-emerald-500 mt-0.5"
+                      />{" "}
+                      Preço: a partir de R$ 500
+                    </li>
+                  </>
+                )}
+                {selectedService.id === "exclusividade" && (
+                  <>
+                    <li className="flex items-start gap-2 text-sm text-slate-300">
+                      <CheckCircle2
+                        size={16}
+                        className="text-emerald-500 mt-0.5"
+                      />{" "}
+                      Retirada imediata do catálogo (ninguém mais compra)
+                    </li>
+                    <li className="flex items-start gap-2 text-sm text-slate-300">
+                      <CheckCircle2
+                        size={16}
+                        className="text-emerald-500 mt-0.5"
+                      />{" "}
+                      Guia de voz + playback
+                    </li>
+                    <li className="flex items-start gap-2 text-sm text-slate-300">
+                      <CheckCircle2
+                        size={16}
+                        className="text-emerald-500 mt-0.5"
+                      />{" "}
+                      ISRC e liberação para gravação
+                    </li>
+                    <li className="flex items-start gap-2 text-sm text-slate-300">
+                      <CheckCircle2
+                        size={16}
+                        className="text-emerald-500 mt-0.5"
+                      />{" "}
+                      Preço: R$ 2.500 (taxa de reserva)
+                    </li>
+                  </>
+                )}
+                {selectedService.id === "ghost" && (
+                  <>
+                    <li className="flex items-start gap-2 text-sm text-slate-300">
+                      <CheckCircle2
+                        size={16}
+                        className="text-emerald-500 mt-0.5"
+                      />{" "}
+                      Composição inédita
+                    </li>
+                    <li className="flex items-start gap-2 text-sm text-slate-300">
+                      <CheckCircle2
+                        size={16}
+                        className="text-emerald-500 mt-0.5"
+                      />{" "}
+                      2 rodadas de revisão
+                    </li>
+                    <li className="flex items-start gap-2 text-sm text-slate-300">
+                      <CheckCircle2
+                        size={16}
+                        className="text-emerald-500 mt-0.5"
+                      />{" "}
+                      Contrato de cessão de direitos
+                    </li>
+                    <li className="flex items-start gap-2 text-sm text-slate-300">
+                      <CheckCircle2
+                        size={16}
+                        className="text-emerald-500 mt-0.5"
+                      />{" "}
+                      Preço sob consulta
+                    </li>
+                  </>
+                )}
+                {selectedService.id === "sync" && (
+                  <>
+                    <li className="flex items-start gap-2 text-sm text-slate-300">
+                      <CheckCircle2
+                        size={16}
+                        className="text-emerald-500 mt-0.5"
+                      />{" "}
+                      Licença para audiovisual/games (a partir de R$ 850)
+                    </li>
+                    <li className="flex items-start gap-2 text-sm text-slate-300">
+                      <CheckCircle2
+                        size={16}
+                        className="text-emerald-500 mt-0.5"
+                      />{" "}
+                      Documento de liberação
+                    </li>
+                    <li className="flex items-start gap-2 text-sm text-slate-300">
+                      <CheckCircle2
+                        size={16}
+                        className="text-emerald-500 mt-0.5"
+                      />{" "}
+                      Licença vitalícia para 1 projeto
+                    </li>
+                    <li className="flex items-start gap-2 text-sm text-slate-300">
+                      <CheckCircle2
+                        size={16}
+                        className="text-emerald-500 mt-0.5"
+                      />{" "}
+                      Preço sob consulta para projetos maiores
+                    </li>
+                  </>
+                )}
+                {selectedService.id === "brand" && (
+                  <>
+                    <li className="flex items-start gap-2 text-sm text-slate-300">
+                      <CheckCircle2
+                        size={16}
+                        className="text-emerald-500 mt-0.5"
+                      />{" "}
+                      Criação de identidade sonora
+                    </li>
+                    <li className="flex items-start gap-2 text-sm text-slate-300">
+                      <CheckCircle2
+                        size={16}
+                        className="text-emerald-500 mt-0.5"
+                      />{" "}
+                      Jingles publicitários
+                    </li>
+                    <li className="flex items-start gap-2 text-sm text-slate-300">
+                      <CheckCircle2
+                        size={16}
+                        className="text-emerald-500 mt-0.5"
+                      />{" "}
+                      Consultoria estratégica
+                    </li>
+                    <li className="flex items-start gap-2 text-sm text-slate-300">
+                      <CheckCircle2
+                        size={16}
+                        className="text-emerald-500 mt-0.5"
+                      />{" "}
+                      Preço sob consulta
+                    </li>
+                  </>
+                )}
+              </ul>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => window.open(links.whatsapp, "_blank")}
+                  className="w-full py-3 bg-green-600 text-white font-bold uppercase tracking-widest hover:bg-green-700 transition-colors flex items-center justify-center gap-2"
+                >
+                  <MessageCircle size={18} />
+                  Falar no WhatsApp
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+    </section>
+  );
+};
+
+// ============================================================
+// SEÇÃO DE PROVA SOCIAL (CASES)
+// ============================================================
+const SocialProof = ({ cases }: { cases: any[] }) => {
+  return (
+    <section id="cases" className="py-32 bg-slate-950 border-t border-white/5">
+      <div className="max-w-7xl mx-auto px-6">
+        <SectionHeader subtitle="Resultados" title="Músicas em Ação." />
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {cases.map((item) => (
+            <a
+              key={item.id}
+              href={item.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group block bg-slate-900/50 border border-white/5 hover:border-blue-500/30 transition-all overflow-hidden"
+            >
+              <div className="aspect-video bg-slate-800 relative overflow-hidden">
+                {item.videoThumb ? (
+                  <img
+                    src={item.videoThumb}
+                    alt={item.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center bg-slate-800">
+                    <ImageIcon size={24} className="text-slate-600" />
+                  </div>
+                )}
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-60" />
+                <div className="absolute bottom-2 left-2 flex items-center gap-1 text-[10px] text-white bg-black/60 px-2 py-1 rounded-full">
+                  <span>{item.platform}</span>
+                  <ExternalLink size={10} />
+                </div>
+              </div>
+              <div className="p-4">
+                <h4 className="text-white font-bold text-sm mb-1 truncate">
+                  {item.title}
+                </h4>
+                <p className="text-slate-400 text-xs mb-2">{item.artist}</p>
+                <div className="flex items-center justify-between">
+                  <span className="text-emerald-500 text-xs font-bold">
+                    {item.plays} plays
+                  </span>
+                  <span className="text-blue-500 text-xs group-hover:underline">
+                    Ver mais
+                  </span>
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+
+        <p className="text-center text-slate-500 text-xs mt-12">
+          + Peça seu catálogo personalizado
+        </p>
+      </div>
+    </section>
+  );
+};
+
+// ============================================================
+// RODAPÉ
+// ============================================================
+const Footer = () => {
+  const scrollToSection = (id: string) =>
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+
+  return (
+    <footer className="bg-slate-950 py-20 border-t border-white/5 text-slate-500 text-xs font-mono relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        <div className="flex flex-col md:flex-row justify-between items-start gap-12 mb-20">
+          <div className="max-w-xs">
+            <div className="w-12 h-12 bg-slate-900 border border-white/10 mb-6 flex items-center justify-center">
+              <span className="font-black text-white text-xl">LA</span>
+            </div>
+            <p className="leading-relaxed text-slate-400">
+              Otimizando a indústria musical através da lógica, design e
+              estratégia. Brasil • Global
+            </p>
+          </div>
+          <div className="flex gap-12 md:gap-24">
+            <div>
+              <h5 className="text-white font-bold uppercase tracking-widest mb-6">
+                Plataforma
+              </h5>
+              <ul className="space-y-3">
+                <li>
+                  <button
+                    onClick={() => scrollToSection("catalog")}
+                    className="hover:text-blue-500"
+                  >
+                    Catálogo
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => scrollToSection("services")}
+                    className="hover:text-blue-500"
+                  >
+                    Serviços
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => scrollToSection("cases")}
+                    className="hover:text-blue-500"
+                  >
+                    Cases
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between gap-4">
+          <p>© 2026 L'A HIT HOLDINGS. TODOS OS DIREITOS RESERVADOS.</p>
+          <p className="flex items-center gap-2">
+            <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />{" "}
+            SYSTEM STATUS: OPTIMAL
+          </p>
+        </div>
+      </div>
+      <div className="absolute bottom-0 left-0 text-[15vw] font-black text-white/[0.02] leading-none pointer-events-none select-none tracking-tighter">
+        L'A HIT
+      </div>
+    </footer>
+  );
+};
+
+// ============================================================
+// APP PRINCIPAL (sem login, sem TrendLab)
+// ============================================================
+export default function App() {
+  const [config, setConfig] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [currentTrack, setCurrentTrack] = useState<any>(null);
+  const [showQuoteModal, setShowQuoteModal] = useState(false);
+  const [showLeadModal, setShowLeadModal] = useState(false);
+  const [leadService, setLeadService] = useState("");
+  const [filteredTracks, setFilteredTracks] = useState<any[]>([]);
+
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const [catalogoRaw, servicosRaw, casesRaw, linksRaw, tiposLicencaRaw] = await Promise.all([
+          fetchSheet(SHEETS.catalogo),
+          fetchSheet(SHEETS.servicos),
+          fetchSheet(SHEETS.cases),
+          fetchSheet(SHEETS.links),
+          fetchSheet(SHEETS.tiposLicenca),
+        ]);
+
+        const catalogo =
+          catalogoRaw.length > 0
+            ? catalogoRaw.map((item: any) => ({
+                ...item,
+                id: Number(item.id) || 0,
+                bpm: Number(item.bpm) || 0,
+                price: Number(item.price) || 0,
+              }))
+            : FALLBACK_DATA.catalogo;
+
+        const servicos =
+          servicosRaw.length > 0
+            ? servicosRaw.map((item: any) => ({
+                ...item,
+                highlight: item.highlight === "true",
+                icon: getIconComponent(item.icon || "PenTool"),
+              }))
+            : FALLBACK_DATA.servicos.map((s) => ({
+                ...s,
+                icon: getIconComponent(s.icon),
+              }));
+
+        const cases =
+          casesRaw.length > 0
+            ? casesRaw.map((item: any) => ({ ...item, id: Number(item.id) || 0 }))
+            : FALLBACK_DATA.cases;
+
+        const links =
+          linksRaw.length > 0
+            ? linksRaw.reduce((acc: any, row: any) => {
+                acc[row.chave] = row.valor;
+                return acc;
+              }, {})
+            : FALLBACK_DATA.links;
+
+        const tiposLicenca =
+          tiposLicencaRaw.length > 0
+            ? tiposLicencaRaw.map((item: any) => ({
+                ...item,
+                deliverables: item.deliverables ? item.deliverables.split("|").map((s: string) => s.trim()) : [],
+                icon: getIconComponent(item.icon || "PenTool"),
+              }))
+            : FALLBACK_DATA.tiposLicenca.map((t) => ({ ...t, icon: getIconComponent(t.icon) }));
+
+        setConfig({ catalogo, servicos, cases, links, tiposLicenca });
+        setFilteredTracks(catalogo);
+      } catch (error) {
+        console.error("Erro crítico, usando fallback total", error);
+        setConfig({
+          catalogo: FALLBACK_DATA.catalogo,
+          servicos: FALLBACK_DATA.servicos.map((s) => ({ ...s, icon: getIconComponent(s.icon) })),
+          cases: FALLBACK_DATA.cases,
+          links: FALLBACK_DATA.links,
+          tiposLicenca: FALLBACK_DATA.tiposLicenca.map((t) => ({ ...t, icon: getIconComponent(t.icon) })),
+        });
+        setFilteredTracks(FALLBACK_DATA.catalogo);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadData();
+  }, []);
+
+  const handleLicenseClick = (track: any) => {
+    setCurrentTrack(track);
+    setShowQuoteModal(true);
+  };
+
+  const handleLeadOpen = (service: string) => {
+    setLeadService(service);
+    setShowLeadModal(true);
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-slate-950 flex items-center justify-center">
+        <Loader2 size={40} className="animate-spin text-blue-500" />
+      </div>
+    );
+  }
+
+  if (!config) {
+    return (
+      <div className="min-h-screen bg-slate-950 flex items-center justify-center text-white">
+        Erro ao carregar dados. Tente novamente mais tarde.
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-slate-950 text-slate-50 font-sans selection:bg-blue-600 selection:text-white overflow-x-hidden">
+      <NoiseOverlay />
+      <Navbar links={config.links} />
+      <main className="relative z-10">
+        <Hero />
+        {/* TrendLab removido */}
+        <SmartCatalog
+          catalogo={config.catalogo}
+          filteredTracks={filteredTracks}
+          setFilteredTracks={setFilteredTracks}
+          onLicenseClick={handleLicenseClick}
+        />
+        <BentoStats />
+        <Services servicos={config.servicos} links={config.links} onLeadOpen={handleLeadOpen} />
+        <SocialProof cases={config.cases} />
+      </main>
+      <Footer />
+      <AnimatePresence>
+        {showQuoteModal && currentTrack && (
+          <QuoteModal
+            track={currentTrack}
+            onClose={() => setShowQuoteModal(false)}
+            tiposLicenca={config.tiposLicenca}
+            links={config.links}
+          />
+        )}
+        {showLeadModal && (
+          <LeadModal service={leadService} onClose={() => setShowLeadModal(false)} />
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
