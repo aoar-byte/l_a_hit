@@ -1471,7 +1471,7 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
 const SocialProof = ({ cases }: { cases: any[] }) => {
   // Função para corrigir o caminho da imagem
   const getImageUrl = (path: string) => {
-    if (!path) return "https://picsum.photos/id/100/400/300";
+    if (!path) return null;
     
     // Se já é uma URL completa, retorna ela
     if (path.startsWith("http")) return path;
@@ -1487,7 +1487,22 @@ const SocialProof = ({ cases }: { cases: any[] }) => {
 
   const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
     console.error("Erro ao carregar imagem:", e.currentTarget.src);
-    e.currentTarget.src = "https://picsum.photos/id/100/400/300";
+    // Não mostra imagem de fallback, apenas esconde ou mostra placeholder
+    e.currentTarget.style.display = "none";
+    // Mostra o placeholder
+    const parent = e.currentTarget.parentElement;
+    if (parent) {
+      const placeholder = parent.querySelector(".image-placeholder");
+      if (placeholder) (placeholder as HTMLElement).style.display = "flex";
+    }
+  };
+
+  // Formata o número de plays (opcional)
+  const formatPlays = (plays: string) => {
+    if (!plays || plays === "0" || plays === "0 plays" || plays.trim() === "") {
+      return null;
+    }
+    return plays;
   };
 
   return (
@@ -1498,6 +1513,8 @@ const SocialProof = ({ cases }: { cases: any[] }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {cases.map((item) => {
             const imageSrc = getImageUrl(item.videoThumb || item.image);
+            const playsValue = formatPlays(item.plays);
+            
             return (
               <a
                 key={item.id}
@@ -1506,32 +1523,76 @@ const SocialProof = ({ cases }: { cases: any[] }) => {
                 rel="noopener noreferrer"
                 className="group block bg-slate-900/50 border border-white/5 hover:border-blue-500/30 transition-all overflow-hidden"
               >
-                <div className="aspect-video bg-slate-800 relative overflow-hidden">
-                  <img
-                    src={imageSrc}
-                    alt={item.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    onError={handleImageError}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-60" />
-                  <div className="absolute bottom-2 left-2 flex items-center gap-1 text-[10px] text-white bg-black/60 px-2 py-1 rounded-full">
-                    <span>{item.platform}</span>
+                {/* Container da imagem com aspect-ratio fixo e object-fit cover */}
+                <div className="relative w-full aspect-video bg-slate-800 overflow-hidden">
+                  {imageSrc ? (
+                    <img
+                      src={imageSrc}
+                      alt={item.title}
+                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      onError={handleImageError}
+                    />
+                  ) : null}
+                  
+                  {/* Placeholder quando não tem imagem */}
+                  <div 
+                    className="image-placeholder absolute inset-0 flex items-center justify-center bg-gradient-to-br from-slate-800 to-slate-900"
+                    style={{ display: imageSrc ? "none" : "flex" }}
+                  >
+                    <div className="text-center">
+                      <ImageIcon size={32} className="text-slate-600 mx-auto mb-2" />
+                      <span className="text-[10px] text-slate-500 uppercase tracking-wider">
+                        {item.platform}
+                      </span>
+                    </div>
+                  </div>
+                  
+                  {/* Gradiente inferior */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-60 pointer-events-none" />
+                  
+                  {/* Badge da plataforma */}
+                  <div className="absolute bottom-2 left-2 flex items-center gap-1 text-[10px] text-white bg-black/60 backdrop-blur-sm px-2 py-1 rounded-full z-10">
+                    {item.platform === "YouTube" && <Youtube size={10} className="text-red-500" />}
+                    {item.platform === "Spotify" && <Music size={10} className="text-green-500" />}
+                    {item.platform === "Instagram Reels" && <Instagram size={10} className="text-pink-500" />}
+                    {item.platform === "TikTok" && <Music size={10} className="text-cyan-500" />}
+                    <span className="font-medium">{item.platform}</span>
                     <ExternalLink size={10} />
                   </div>
                 </div>
+                
+                {/* Conteúdo textual */}
                 <div className="p-4">
-                  <h4 className="text-white font-bold text-sm mb-1 truncate">
+                  <h4 className="text-white font-bold text-sm mb-1 truncate group-hover:text-blue-400 transition-colors">
                     {item.title}
                   </h4>
-                  <p className="text-slate-400 text-xs mb-2">{item.artist}</p>
-                  <div className="flex items-center justify-between">
-                    <span className="text-emerald-500 text-xs font-bold">
-                      {item.plays} plays
-                    </span>
-                    <span className="text-blue-500 text-xs group-hover:underline">
-                      Ver mais
-                    </span>
-                  </div>
+                  <p className="text-slate-400 text-xs mb-2 truncate">
+                    {item.artist}
+                  </p>
+                  
+                  {/* Só mostra plays se tiver valor válido */}
+                  {playsValue && (
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-1">
+                        <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
+                        <span className="text-emerald-500 text-xs font-bold">
+                          {playsValue}
+                        </span>
+                      </div>
+                      <span className="text-blue-500 text-xs group-hover:underline opacity-0 group-hover:opacity-100 transition-opacity">
+                        Ver mais
+                      </span>
+                    </div>
+                  )}
+                  
+                  {/* Se não tem plays, mostra apenas o link */}
+                  {!playsValue && (
+                    <div className="flex justify-end">
+                      <span className="text-blue-500 text-xs group-hover:underline opacity-0 group-hover:opacity-100 transition-opacity">
+                        Ver mais
+                      </span>
+                    </div>
+                  )}
                 </div>
               </a>
             );
@@ -1545,7 +1606,6 @@ const SocialProof = ({ cases }: { cases: any[] }) => {
     </section>
   );
 };
-
 // ============================================================
 // RODAPÉ
 // ============================================================
