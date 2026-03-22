@@ -1561,6 +1561,107 @@ const Footer = () => {
 };
 
 // ============================================================
+// COMPONENTE: PLAYER DE MÚSICA FIXO (TOCANDO ÁUDIO REAL)
+// ============================================================
+const PersistentPlayer = ({ track, isPlaying, setIsPlaying, onLicenseClick }: any) => {
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [progress, setProgress] = useState(0);
+  const [currentTime, setCurrentTime] = useState("0:00");
+
+  const formatTime = (time: number) => {
+    if (isNaN(time)) return "0:00";
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+  };
+
+  useEffect(() => {
+    if (!audioRef.current) return;
+    if (isPlaying && track) {
+      audioRef.current.play().catch(e => console.error("Erro áudio:", e));
+    } else {
+      audioRef.current.pause();
+    }
+  }, [isPlaying, track]);
+
+  const handleTimeUpdate = () => {
+    if (audioRef.current) {
+      const current = audioRef.current.currentTime;
+      const duration = audioRef.current.duration;
+      setCurrentTime(formatTime(current));
+      setProgress((current / duration) * 100);
+    }
+  };
+
+  const handleEnded = () => {
+    setIsPlaying(false);
+    setProgress(0);
+    setCurrentTime("0:00");
+  };
+
+  return (
+    <AnimatePresence>
+      {track && (
+        <motion.div
+          initial={{ y: 100 }}
+          animate={{ y: 0 }}
+          exit={{ y: 100 }}
+          className="fixed bottom-0 left-0 w-full bg-slate-900/95 backdrop-blur-xl border-t border-white/10 p-4 z-50 shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.5)]"
+        >
+          <audio
+            ref={audioRef}
+            src={track.audioUrl} 
+            onTimeUpdate={handleTimeUpdate}
+            onEnded={handleEnded}
+            preload="auto"
+          />
+
+          <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+            <div className="flex items-center gap-4 w-1/4">
+              <div className="w-12 h-12 bg-slate-800 rounded-md relative flex items-center justify-center shrink-0 border border-white/5">
+                  <Music size={20} className="text-blue-500" />
+                  {isPlaying && <div className="absolute inset-0 bg-blue-500/20 rounded-md animate-pulse" />}
+              </div>
+              <div className="overflow-hidden">
+                <h4 className="text-white font-bold text-sm truncate">{track.title}</h4>
+                <p className="text-slate-500 text-xs truncate">{track.artist}</p>
+              </div>
+            </div>
+
+            <div className="flex flex-col items-center w-2/4">
+              <div className="flex items-center gap-6 mb-2">
+                <button 
+                  onClick={() => setIsPlaying(!isPlaying)}
+                  className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-slate-900 hover:scale-105 transition-transform shadow-lg"
+                >
+                  {isPlaying ? <Pause size={20} fill="currentColor" /> : <Play size={20} fill="currentColor" className="ml-1" />}
+                </button>
+              </div>
+              
+              <div className="w-full flex items-center gap-3">
+                <span className="text-[10px] text-slate-500 font-mono w-8 text-right">{currentTime}</span>
+                <div className="h-1 bg-slate-800 rounded-full flex-1 overflow-hidden relative">
+                  <div className="h-full bg-blue-500 absolute top-0 left-0 transition-all duration-100 ease-linear" style={{ width: `${progress}%` }} /> 
+                </div>
+              </div>
+            </div>
+
+            <div className="w-1/4 flex justify-end">
+              <button
+                onClick={() => onLicenseClick(track)}
+                className="px-5 py-2 bg-blue-600/10 text-blue-400 border border-blue-500/20 text-xs font-bold rounded hover:bg-blue-600 hover:text-white transition-all shadow-sm"
+              >
+                LICENCIAR FAIXA
+              </button>
+            </div>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+};
+
+// ============================================================
 // APP PRINCIPAL (sem BentoStats)
 // ============================================================
 export default function App() {
@@ -1679,15 +1780,26 @@ export default function App() {
       <main className="relative z-10">
         <Hero />
         <SmartCatalog
-          catalogo={config.catalogo}
-          filteredTracks={filteredTracks}
-          setFilteredTracks={setFilteredTracks}
-          onLicenseClick={handleLicenseClick}
-        />
+  catalogo={config.catalogo}
+  filteredTracks={filteredTracks}
+  setFilteredTracks={setFilteredTracks}
+  onLicenseClick={handleLicenseClick}
+  currentTrack={currentTrack}           // <-- ADICIONADO
+  setCurrentTrack={setCurrentTrack}     // <-- ADICIONADO
+  isPlaying={isPlaying}                 // <-- ADICIONADO
+  setIsPlaying={setIsPlaying}           // <-- ADICIONADO
+/>
         <Services servicos={config.servicos} links={config.links} onLeadOpen={handleLeadOpen} />
         <SocialProof cases={config.cases} />
       </main>
       <Footer />
+       {/* ADICIONE ESTA LINHA AQUI */}
+      <PersistentPlayer
+        track={currentTrack}
+        isPlaying={isPlaying}
+        setIsPlaying={setIsPlaying}
+        onLicenseClick={handleLicenseClick}
+      />
       <AnimatePresence>
         {showQuoteModal && currentTrack && (
           <QuoteModal
