@@ -1466,7 +1466,7 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
 };
 
 // ============================================================
-// SEÇÃO DE PROVA SOCIAL (CASES - CORRIGIDA)
+// SEÇÃO DE PROVA SOCIAL (CASES - IMAGENS CORRIGIDAS)
 // ============================================================
 const SocialProof = ({ cases }: { cases: any[] }) => {
   // Função para corrigir o caminho da imagem
@@ -1487,9 +1487,7 @@ const SocialProof = ({ cases }: { cases: any[] }) => {
 
   const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
     console.error("Erro ao carregar imagem:", e.currentTarget.src);
-    // Não mostra imagem de fallback, apenas esconde ou mostra placeholder
     e.currentTarget.style.display = "none";
-    // Mostra o placeholder
     const parent = e.currentTarget.parentElement;
     if (parent) {
       const placeholder = parent.querySelector(".image-placeholder");
@@ -1497,7 +1495,6 @@ const SocialProof = ({ cases }: { cases: any[] }) => {
     }
   };
 
-  // Formata o número de plays (opcional)
   const formatPlays = (plays: string) => {
     if (!plays || plays === "0" || plays === "0 plays" || plays.trim() === "") {
       return null;
@@ -1523,15 +1520,17 @@ const SocialProof = ({ cases }: { cases: any[] }) => {
                 rel="noopener noreferrer"
                 className="group block bg-slate-900/50 border border-white/5 hover:border-blue-500/30 transition-all overflow-hidden"
               >
-                {/* Container da imagem com aspect-ratio fixo e object-fit cover */}
-                <div className="relative w-full aspect-video bg-slate-800 overflow-hidden">
+                {/* Container da imagem - CORRIGIDO PARA CENTRALIZAR */}
+                <div className="relative w-full bg-slate-800 overflow-hidden" style={{ aspectRatio: "16/9" }}>
                   {imageSrc ? (
-                    <img
-                      src={imageSrc}
-                      alt={item.title}
-                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      onError={handleImageError}
-                    />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <img
+                        src={imageSrc}
+                        alt={item.title}
+                        className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                        onError={handleImageError}
+                      />
+                    </div>
                   ) : null}
                   
                   {/* Placeholder quando não tem imagem */}
@@ -1606,6 +1605,7 @@ const SocialProof = ({ cases }: { cases: any[] }) => {
     </section>
   );
 };
+
 // ============================================================
 // RODAPÉ
 // ============================================================
