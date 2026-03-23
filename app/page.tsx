@@ -390,7 +390,7 @@ const SectionHeader = ({
 );
 
 // ============================================================
-// MODAL DE LICENCIAMENTO
+// MODAL DE LICENCIAMENTO (SEM O BOTÃO GHOSTWRITING)
 // ============================================================
 const QuoteModal = ({ track, onClose, tiposLicenca, links }: any) => {
   const handleWhatsApp = (licenseTitle: string) => {
@@ -399,10 +399,6 @@ const QuoteModal = ({ track, onClose, tiposLicenca, links }: any) => {
       `${links.whatsapp}?text=${encodeURIComponent(message)}`,
       "_blank"
     );
-  };
-
-  const handleGhostwriter = () => {
-    window.open(links.formularioEncomenda, "_blank");
   };
 
   return (
@@ -432,19 +428,7 @@ const QuoteModal = ({ track, onClose, tiposLicenca, links }: any) => {
           </button>
         </div>
 
-        <div className="px-6 pt-4">
-          <button
-            onClick={handleGhostwriter}
-            className="w-full py-4 bg-gradient-to-r from-yellow-600/20 to-yellow-800/20 border border-yellow-500/30 text-white font-bold uppercase tracking-widest hover:bg-yellow-600/30 transition-colors flex items-center justify-center gap-3 group"
-          >
-            <PenTool
-              size={20}
-              className="text-yellow-500 group-hover:rotate-12 transition-transform"
-            />
-            <span>GHOSTWRITING OU MÚSICA SOB ENCOMENDA</span>
-            <ArrowRight size={18} className="text-yellow-500" />
-          </button>
-        </div>
+        {/* BOTÃO REMOVIDO - ESTA SEÇÃO FOI ELIMINADA */}
 
         <div className="p-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
