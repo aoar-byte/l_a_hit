@@ -1140,7 +1140,7 @@ const PersistentPlayer = ({ track, isPlaying, setIsPlaying, onLicenseClick }: an
 };
 
 // ============================================================
-// SERVIÇOS
+// SERVIÇOS (VERSÃO CORRIGIDA)
 // ============================================================
 const Services = ({ servicos, links, onLeadOpen }: any) => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -1151,6 +1151,13 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
     setModalOpen(true);
   };
 
+  // Função para limpar e formatar a descrição
+  const formatDescription = (desc: string) => {
+    if (!desc) return "";
+    // Substitui | por quebras de linha
+    return desc.split("|").map(part => part.trim()).filter(part => part);
+  };
+
   return (
     <section
       id="services"
@@ -1159,17 +1166,20 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
       <div className="max-w-7xl mx-auto px-6">
         <SectionHeader subtitle="Solutions" title="Para Empresas." />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 justify-items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {servicos.map((s: any, i: number) => {
             const Icon = s.icon;
+            const descLines = formatDescription(s.desc);
+            const isDistro = s.id === "distro" || s.title?.toLowerCase().includes("distribui");
+            
             return (
               <div
                 key={i}
-                className={`w-full max-w-sm group p-8 bg-slate-950 border ${
+                className={`w-full group p-6 bg-slate-950 border ${
                   s.highlight
                     ? "border-yellow-500/50 shadow-lg shadow-yellow-500/10"
                     : "border-white/5"
-                } hover:border-blue-500/30 transition-all duration-500 flex flex-col items-start justify-between relative overflow-hidden`}
+                } hover:border-blue-500/30 transition-all duration-500 flex flex-col items-start justify-between relative overflow-hidden min-h-[480px]`}
               >
                 {s.highlight && (
                   <div className="absolute top-3 right-3 bg-yellow-500 text-black text-[8px] font-bold px-2 py-1 rounded-full">
@@ -1179,62 +1189,43 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
 
                 <Icon
                   className={`w-10 h-10 ${
-                    s.highlight ? "text-yellow-500" : "text-slate-600"
-                  } group-hover:scale-110 transition-transform mb-6`}
+                    s.highlight ? "text-yellow-500" : "text-blue-500"
+                  } group-hover:scale-110 transition-transform mb-4`}
                 />
 
-                <h3 className="text-xl font-bold text-white mb-2">{s.title}</h3>
-                <p className="text-slate-400 text-sm leading-relaxed mb-6">
-                  {s.desc}
-                </p>
+                <h3 className="text-xl font-bold text-white mb-3">{s.title}</h3>
+                
+                {/* Descrição formatada com lista */}
+                <div className="mb-4 flex-1">
+                  {descLines.length > 1 ? (
+                    <ul className="space-y-2">
+                      {descLines.map((line, idx) => (
+                        <li key={idx} className="text-slate-400 text-xs leading-relaxed flex items-start gap-2">
+                          <span className="text-blue-500 mt-0.5">•</span>
+                          <span>{line}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="text-slate-400 text-xs leading-relaxed">
+                      {s.desc}
+                    </p>
+                  )}
+                </div>
 
-                <ul className="space-y-2 mb-6 text-xs text-slate-300 w-full">
-                  {s.id === "liberacao_simples" && (
-                    <>
-                      <li className="flex items-center gap-2">
-                        <CheckCircle2 size={12} className="text-emerald-500" />{" "}
-                        WAV Masterizado
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <CheckCircle2 size={12} className="text-emerald-500" />{" "}
-                        ISRC incluso
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <CheckCircle2 size={12} className="text-emerald-500" />{" "}
-                        R$ 500+
-                      </li>
-                    </>
-                  )}
-                  {s.id === "exclusividade" && (
-                    <>
-                      <li className="flex items-center gap-2">
-                        <CheckCircle2 size={12} className="text-emerald-500" />{" "}
-                        Retirada do catálogo
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <CheckCircle2 size={12} className="text-emerald-500" />{" "}
-                        Guia de voz
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <CheckCircle2 size={12} className="text-emerald-500" />{" "}
-                        R$ 2.500
-                      </li>
-                    </>
-                  )}
-                  {s.id !== "liberacao_simples" && s.id !== "exclusividade" && (
-                    <li className="text-slate-500 italic">Sob consulta</li>
-                  )}
-                </ul>
+                <div className="text-[10px] text-emerald-500 font-mono mb-4">
+                  *Sob consulta*
+                </div>
 
                 <div className="flex gap-3 w-full mt-auto">
-                  {s.id === "distro" ? (
+                  {isDistro ? (
                     <a
-                      href={s.external}
+                      href={s.external || links.whatsapp}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex-1 py-3 bg-blue-600 text-white text-xs font-bold uppercase tracking-widest text-center hover:bg-blue-700 transition-colors"
                     >
-                      {s.cta}
+                      {s.cta || "CONHECER PARCEIRO"}
                     </a>
                   ) : (
                     <>
@@ -1242,7 +1233,7 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
                         onClick={() => openDetails(s)}
                         className="flex-1 py-3 border border-white/20 text-white text-xs font-bold uppercase tracking-widest hover:bg-white/5 transition-colors"
                       >
-                        {s.cta}
+                        {s.cta || "CONSULTAR"}
                       </button>
                       <button
                         onClick={() => window.open(links.whatsapp, "_blank")}
@@ -1260,13 +1251,14 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
         </div>
       </div>
 
+      {/* MODAL DE DETALHES */}
       <AnimatePresence>
         {modalOpen && selectedService && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
             <motion.div
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              className="bg-slate-900 border border-white/10 w-full max-w-lg p-8 relative"
+              className="bg-slate-900 border border-white/10 w-full max-w-lg p-8 relative max-h-[80vh] overflow-y-auto"
             >
               <button
                 onClick={() => setModalOpen(false)}
@@ -1275,186 +1267,41 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
                 <X size={20} />
               </button>
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-blue-600/20 flex items-center justify-center">
+                <div className="w-12 h-12 bg-blue-600/20 flex items-center justify-center rounded-full">
                   <selectedService.icon className="w-6 h-6 text-blue-500" />
                 </div>
                 <h3 className="text-2xl font-bold text-white">
                   {selectedService.title}
                 </h3>
               </div>
-              <p className="text-slate-300 mb-6">{selectedService.desc}</p>
-              <h4 className="text-sm font-bold text-white mb-3">
-                O que está incluso:
-              </h4>
-              <ul className="space-y-2 mb-6">
-                {selectedService.id === "liberacao_simples" && (
-                  <>
-                    <li className="flex items-start gap-2 text-sm text-slate-300">
-                      <CheckCircle2
-                        size={16}
-                        className="text-emerald-500 mt-0.5"
-                      />{" "}
-                      Arquivo WAV masterizado (24bit/48kHz)
-                    </li>
-                    <li className="flex items-start gap-2 text-sm text-slate-300">
-                      <CheckCircle2
-                        size={16}
-                        className="text-emerald-500 mt-0.5"
-                      />{" "}
-                      Geração de código ISRC
-                    </li>
-                    <li className="flex items-start gap-2 text-sm text-slate-300">
-                      <CheckCircle2
-                        size={16}
-                        className="text-emerald-500 mt-0.5"
-                      />{" "}
-                      Liberação para gravação e distribuição
-                    </li>
-                    <li className="flex items-start gap-2 text-sm text-slate-300">
-                      <CheckCircle2
-                        size={16}
-                        className="text-emerald-500 mt-0.5"
-                      />{" "}
-                      Preço: a partir de R$ 500
-                    </li>
-                  </>
-                )}
-                {selectedService.id === "exclusividade" && (
-                  <>
-                    <li className="flex items-start gap-2 text-sm text-slate-300">
-                      <CheckCircle2
-                        size={16}
-                        className="text-emerald-500 mt-0.5"
-                      />{" "}
-                      Retirada imediata do catálogo (ninguém mais compra)
-                    </li>
-                    <li className="flex items-start gap-2 text-sm text-slate-300">
-                      <CheckCircle2
-                        size={16}
-                        className="text-emerald-500 mt-0.5"
-                      />{" "}
-                      Guia de voz + playback
-                    </li>
-                    <li className="flex items-start gap-2 text-sm text-slate-300">
-                      <CheckCircle2
-                        size={16}
-                        className="text-emerald-500 mt-0.5"
-                      />{" "}
-                      ISRC e liberação para gravação
-                    </li>
-                    <li className="flex items-start gap-2 text-sm text-slate-300">
-                      <CheckCircle2
-                        size={16}
-                        className="text-emerald-500 mt-0.5"
-                      />{" "}
-                      Preço: R$ 2.500 (taxa de reserva)
-                    </li>
-                  </>
-                )}
-                {selectedService.id === "ghost" && (
-                  <>
-                    <li className="flex items-start gap-2 text-sm text-slate-300">
-                      <CheckCircle2
-                        size={16}
-                        className="text-emerald-500 mt-0.5"
-                      />{" "}
-                      Composição inédita
-                    </li>
-                    <li className="flex items-start gap-2 text-sm text-slate-300">
-                      <CheckCircle2
-                        size={16}
-                        className="text-emerald-500 mt-0.5"
-                      />{" "}
-                      2 rodadas de revisão
-                    </li>
-                    <li className="flex items-start gap-2 text-sm text-slate-300">
-                      <CheckCircle2
-                        size={16}
-                        className="text-emerald-500 mt-0.5"
-                      />{" "}
-                      Contrato de cessão de direitos
-                    </li>
-                    <li className="flex items-start gap-2 text-sm text-slate-300">
-                      <CheckCircle2
-                        size={16}
-                        className="text-emerald-500 mt-0.5"
-                      />{" "}
-                      Preço sob consulta
-                    </li>
-                  </>
-                )}
-                {selectedService.id === "sync" && (
-                  <>
-                    <li className="flex items-start gap-2 text-sm text-slate-300">
-                      <CheckCircle2
-                        size={16}
-                        className="text-emerald-500 mt-0.5"
-                      />{" "}
-                      Licença para audiovisual/games (a partir de R$ 850)
-                    </li>
-                    <li className="flex items-start gap-2 text-sm text-slate-300">
-                      <CheckCircle2
-                        size={16}
-                        className="text-emerald-500 mt-0.5"
-                      />{" "}
-                      Documento de liberação
-                    </li>
-                    <li className="flex items-start gap-2 text-sm text-slate-300">
-                      <CheckCircle2
-                        size={16}
-                        className="text-emerald-500 mt-0.5"
-                      />{" "}
-                      Licença vitalícia para 1 projeto
-                    </li>
-                    <li className="flex items-start gap-2 text-sm text-slate-300">
-                      <CheckCircle2
-                        size={16}
-                        className="text-emerald-500 mt-0.5"
-                      />{" "}
-                      Preço sob consulta para projetos maiores
-                    </li>
-                  </>
-                )}
-                {selectedService.id === "brand" && (
-                  <>
-                    <li className="flex items-start gap-2 text-sm text-slate-300">
-                      <CheckCircle2
-                        size={16}
-                        className="text-emerald-500 mt-0.5"
-                      />{" "}
-                      Criação de identidade sonora
-                    </li>
-                    <li className="flex items-start gap-2 text-sm text-slate-300">
-                      <CheckCircle2
-                        size={16}
-                        className="text-emerald-500 mt-0.5"
-                      />{" "}
-                      Jingles publicitários
-                    </li>
-                    <li className="flex items-start gap-2 text-sm text-slate-300">
-                      <CheckCircle2
-                        size={16}
-                        className="text-emerald-500 mt-0.5"
-                      />{" "}
-                      Consultoria estratégica
-                    </li>
-                    <li className="flex items-start gap-2 text-sm text-slate-300">
-                      <CheckCircle2
-                        size={16}
-                        className="text-emerald-500 mt-0.5"
-                      />{" "}
-                      Preço sob consulta
-                    </li>
-                  </>
-                )}
-              </ul>
+              
+              <div className="mb-6">
+                <h4 className="text-sm font-bold text-white mb-3 uppercase tracking-wider">
+                  Sobre o serviço
+                </h4>
+                <div className="space-y-3">
+                  {formatDescription(selectedService.desc).map((line, idx) => (
+                    <p key={idx} className="text-slate-300 text-sm leading-relaxed">
+                      {line}
+                    </p>
+                  ))}
+                </div>
+              </div>
+
+              <div className="mb-6 p-4 bg-slate-800/50 border border-white/5 rounded-lg">
+                <p className="text-emerald-500 text-xs font-mono mb-2">*Sob consulta*</p>
+                <p className="text-slate-400 text-xs">
+                  Entre em contato para receber um orçamento personalizado para o seu projeto.
+                </p>
+              </div>
+
               <div className="flex gap-3">
                 <button
                   onClick={() => window.open(links.whatsapp, "_blank")}
                   className="w-full py-3 bg-green-600 text-white font-bold uppercase tracking-widest hover:bg-green-700 transition-colors flex items-center justify-center gap-2"
                 >
                   <MessageCircle size={18} />
-                  Falar no WhatsApp
+                  FALAR NO WHATSAPP
                 </button>
               </div>
             </motion.div>
