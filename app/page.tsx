@@ -1208,7 +1208,7 @@ const PersistentPlayer = ({
 };
 
 // ============================================================
-// SERVIÇOS (TODOS OS CARDS LADO A LADO - UMA LINHA)
+// SERVIÇOS (COM CATEGORIA DA PLANILHA E FUNDO PARA AMBOS)
 // ============================================================
 const Services = ({ servicos, links, onLeadOpen }: any) => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -1224,14 +1224,9 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
     return desc.split("|").map(part => part.trim()).filter(part => part);
   };
 
-  // Separa os serviços por categoria
-  const servicosEmpresas = servicos.filter((s: any) => 
-    s.id === "sync" || s.id === "brand"
-  );
-  
-  const servicosArtistas = servicos.filter((s: any) => 
-    s.id === "ghost" || s.id === "distro" || s.id === "marketing"
-  );
+  // Separa os serviços pela coluna "categoria" da planilha
+  const servicosEmpresas = servicos.filter((s: any) => s.categoria === "empresas");
+  const servicosArtistas = servicos.filter((s: any) => s.categoria === "artistas");
 
   return (
     <section
@@ -1255,12 +1250,12 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
           </p>
         </div>
 
-        {/* LADO A LADO - EMPRESAS E ARTISTAS */}
+        {/* LADO A LADO - AMBAS COM FUNDO DIFERENCIADO */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           
-          {/* COLUNA ESQUERDA - EMPRESAS */}
-          <div>
-            <div className="mb-6">
+          {/* COLUNA ESQUERDA - EMPRESAS (COM FUNDO) */}
+          <div className="bg-gradient-to-br from-slate-800/30 to-slate-900/30 rounded-2xl p-5 border border-blue-500/20">
+            <div className="mb-5">
               <div className="flex items-center gap-2 text-blue-500 font-mono text-xs tracking-widest uppercase mb-2">
                 <span className="w-1.5 h-1.5 bg-blue-500 rounded-full" />
                 B2B Solutions
@@ -1273,7 +1268,6 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
               </p>
             </div>
 
-            {/* CARDS LADO A LADO - 2 cards em linha */}
             <div className="grid grid-cols-2 gap-4">
               {servicosEmpresas.map((s: any, i: number) => {
                 const Icon = s.icon;
@@ -1332,8 +1326,8 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
             </div>
           </div>
 
-          {/* COLUNA DIREITA - ARTISTAS (COM FUNDO DIFERENCIADO) */}
-          <div className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-2xl p-5 border border-white/5">
+          {/* COLUNA DIREITA - ARTISTAS (COM FUNDO) */}
+          <div className="bg-gradient-to-br from-slate-800/30 to-slate-900/30 rounded-2xl p-5 border border-emerald-500/20">
             <div className="mb-5">
               <div className="flex items-center gap-2 text-emerald-500 font-mono text-xs tracking-widest uppercase mb-2">
                 <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
@@ -1343,11 +1337,10 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
                 Para Artistas.
               </h3>
               <p className="text-slate-400 text-sm mt-1">
-                Soluções completas para sua carreira musical.
+                Soluções completas para sua carreira musical, do estúdio ao streaming.
               </p>
             </div>
 
-            {/* CARDS LADO A LADO - 3 cards em linha */}
             <div className="grid grid-cols-3 gap-3">
               {servicosArtistas.map((s: any, i: number) => {
                 const Icon = s.icon;
