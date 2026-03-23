@@ -976,9 +976,18 @@ const SmartCatalog = ({
 };
 
 // ============================================================
-// PLAYER DE MÚSICA FIXO (CORRIGIDO)
+// PLAYER DE MÚSICA FIXO (COM BOTÃO FECHAR, PRÓXIMO E AUTO PLAY)
 // ============================================================
-const PersistentPlayer = ({ track, isPlaying, setIsPlaying, onLicenseClick }: any) => {
+const PersistentPlayer = ({ 
+  track, 
+  isPlaying, 
+  setIsPlaying, 
+  onLicenseClick,
+  currentTrack,
+  setCurrentTrack,
+  filteredTracks,
+  isPlayingAuto
+}: any) => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [progress, setProgress] = useState(0);
   const [currentTime, setCurrentTime] = useState("0:00");
@@ -992,6 +1001,56 @@ const PersistentPlayer = ({ track, isPlaying, setIsPlaying, onLicenseClick }: an
     return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   };
 
+  // Função para tocar próxima música
+  const playNext = () => {
+    if (!filteredTracks || filteredTracks.length === 0) return;
+    
+    const currentIndex = filteredTracks.findIndex((t: any) => t.id === currentTrack?.id);
+    const nextIndex = (currentIndex + 1) % filteredTracks.length;
+    const nextTrack = filteredTracks[nextIndex];
+    
+    if (nextTrack) {
+      setCurrentTrack(nextTrack);
+      setIsPlaying(true);
+    }
+  };
+
+  // Função para tocar música anterior
+  const playPrevious = () => {
+    if (!filteredTracks || filteredTracks.length === 0) return;
+    
+    const currentIndex = filteredTracks.findIndex((t: any) => t.id === currentTrack?.id);
+    const prevIndex = (currentIndex - 1 + filteredTracks.length) % filteredTracks.length;
+    const prevTrack = filteredTracks[prevIndex];
+    
+    if (prevTrack) {
+      setCurrentTrack(prevTrack);
+      setIsPlaying(true);
+    }
+  };
+
+  // Função para fechar o player
+  const closePlayer = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+    }
+    setCurrentTrack(null);
+    setIsPlaying(false);
+    setProgress(0);
+    setCurrentTime("0:00");
+  };
+
+  // Auto-play: quando a música termina, toca a próxima
+  const handleEnded = () => {
+    if (isPlayingAuto && filteredTracks && filteredTracks.length > 0) {
+      playNext();
+    } else {
+      setIsPlaying(false);
+      setProgress(0);
+      setCurrentTime("0:00");
+    }
+  };
+
   // Reset quando a track muda
   useEffect(() => {
     if (audioRef.current) {
@@ -1002,7 +1061,6 @@ const PersistentPlayer = ({ track, isPlaying, setIsPlaying, onLicenseClick }: an
       setDuration("0:00");
       setAudioLoaded(false);
       
-      // Se a nova track deve tocar automaticamente
       if (isPlaying && track) {
         setTimeout(() => {
           audioRef.current?.play().catch(e => console.error("Erro ao reproduzir:", e));
@@ -1037,12 +1095,6 @@ const PersistentPlayer = ({ track, isPlaying, setIsPlaying, onLicenseClick }: an
     }
   };
 
-  const handleEnded = () => {
-    setIsPlaying(false);
-    setProgress(0);
-    setCurrentTime("0:00");
-  };
-
   const handleSeek = (e: React.MouseEvent<HTMLDivElement>) => {
     if (audioRef.current && audioLoaded) {
       const rect = e.currentTarget.getBoundingClientRect();
@@ -1072,19 +1124,40 @@ const PersistentPlayer = ({ track, isPlaying, setIsPlaying, onLicenseClick }: an
         />
 
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4 flex-wrap md:flex-nowrap">
-          <div className="flex items-center gap-4 w-full md:w-1/4">
+          {/* INFO DA MÚSICA */}
+          <div className="flex items-center gap-4 w-full md:w-1/3">
             <div className="w-12 h-12 bg-slate-800 rounded-md relative flex items-center justify-center shrink-0 border border-white/5">
               <Music size={20} className="text-blue-500" />
               {isPlaying && <div className="absolute inset-0 bg-blue-500/20 rounded-md animate-pulse" />}
             </div>
-            <div className="overflow-hidden">
+            <div className="overflow-hidden flex-1">
               <h4 className="text-white font-bold text-sm truncate">{track.title}</h4>
               <p className="text-slate-500 text-xs truncate">{track.artist}</p>
             </div>
+            
+            {/* BOTÃO FECHAR */}
+            <button
+              onClick={closePlayer}
+              className="text-slate-500 hover:text-white transition-colors p-1"
+              title="Fechar player"
+            >
+              <X size={18} />
+            </button>
           </div>
 
+          {/* CONTROLES CENTRAIS */}
           <div className="flex flex-col items-center w-full md:w-2/4">
-            <div className="flex items-center gap-6 mb-2">
+            <div className="flex items-center gap-4 mb-2">
+              {/* BOTÃO ANTERIOR */}
+              <button 
+                onClick={playPrevious}
+                className="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-white flex items-center justify-center transition-all"
+                title="Música anterior"
+              >
+                <SkipBack size={16} fill="currentColor" />
+              </button>
+              
+              {/* BOTÃO PLAY/PAUSE */}
               <button 
                 onClick={() => setIsPlaying(!isPlaying)}
                 className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-slate-900 hover:scale-105 transition-transform shadow-lg"
@@ -1092,8 +1165,18 @@ const PersistentPlayer = ({ track, isPlaying, setIsPlaying, onLicenseClick }: an
               >
                 {isPlaying ? <Pause size={20} fill="currentColor" /> : <Play size={20} fill="currentColor" className="ml-1" />}
               </button>
+              
+              {/* BOTÃO PRÓXIMO */}
+              <button 
+                onClick={playNext}
+                className="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-white flex items-center justify-center transition-all"
+                title="Próxima música"
+              >
+                <SkipForward size={16} fill="currentColor" />
+              </button>
             </div>
             
+            {/* BARRA DE PROGRESSO */}
             <div className="w-full flex items-center gap-3">
               <span className="text-[10px] text-slate-500 font-mono w-8 text-right">{currentTime}</span>
               <div 
@@ -1109,6 +1192,7 @@ const PersistentPlayer = ({ track, isPlaying, setIsPlaying, onLicenseClick }: an
             </div>
           </div>
 
+          {/* AÇÃO - LICENCIAR */}
           <div className="w-full md:w-1/4 flex justify-end">
             <button
               onClick={() => onLicenseClick(track)}
@@ -1659,11 +1743,15 @@ if (casesRaw.length > 0) {
       </main>
       <Footer />
       <PersistentPlayer
-        track={currentTrack}
-        isPlaying={isPlaying}
-        setIsPlaying={setIsPlaying}
-        onLicenseClick={handleLicenseClick}
-      />
+  track={currentTrack}
+  isPlaying={isPlaying}
+  setIsPlaying={setIsPlaying}
+  onLicenseClick={handleLicenseClick}
+  currentTrack={currentTrack}
+  setCurrentTrack={setCurrentTrack}
+  filteredTracks={filteredTracks}
+  isPlayingAuto={true}  // ← ATIVA AUTO PLAY (true = toca próxima, false = para)
+/>
       <AnimatePresence>
         {showQuoteModal && currentTrack && (
           <QuoteModal
