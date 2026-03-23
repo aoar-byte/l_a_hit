@@ -1466,7 +1466,7 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
 };
 
 // ============================================================
-// SEÇÃO DE PROVA SOCIAL (CASES - COM CONTROLE POR PLANILHA)
+// SEÇÃO DE PROVA SOCIAL (CASES)
 // ============================================================
 const SocialProof = ({ cases }: { cases: any[] }) => {
   const [imageErrors, setImageErrors] = useState<Record<string, boolean>>({});
@@ -1479,31 +1479,24 @@ const SocialProof = ({ cases }: { cases: any[] }) => {
     return cleanPath;
   };
 
-  // FUNÇÃO QUE LÊ O ENQUADRAMENTO DA PLANILHA
+  // FUNÇÃO QUE CONVERTE O VALOR DA PLANILHA EM POSIÇÃO CSS
   const getObjectPosition = (enquadramento: string) => {
-    const positions: Record<string, string> = {
-      "face": "center 20%",      // Rosto
-      "rosto": "center 20%",
-      "center": "center center",  // Centralizado
-      "centro": "center center",
-      "top": "center 0%",         // Topo
-      "topo": "center 0%",
-      "bottom": "center 100%",    // Base
-      "base": "center 100%",
-      "body": "center 40%",       // Corpo inteiro
-      "corpo": "center 40%",
-      "left": "0% center",        // Esquerda
-      "esquerda": "0% center",
-      "right": "100% center",     // Direita
-      "direita": "100% center",
-    };
-    
-    // Se tiver valor personalizado (ex: "70% 30%")
-    if (enquadramento && enquadramento.includes("%")) {
-      return enquadramento;
+    switch(enquadramento) {
+      case "face":
+        return "center 20%";      // Mostra o rosto
+      case "top":
+        return "center 0%";       // Mostra o topo
+      case "body":
+        return "center 40%";      // Mostra corpo inteiro
+      case "bottom":
+        return "center 100%";     // Mostra a base
+      case "left":
+        return "0% center";       // Mostra lado esquerdo
+      case "right":
+        return "100% center";     // Mostra lado direito
+      default:
+        return "center center";   // Centralizado padrão
     }
-    
-    return positions[enquadramento?.toLowerCase()] || "center center";
   };
 
   const handleImageError = (id: string | number) => {
@@ -1535,13 +1528,11 @@ const SocialProof = ({ cases }: { cases: any[] }) => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {cases.map((item) => {
-            // Usa image como prioridade, fallback para videoThumb
             const imageSrc = getImageUrl(item.image || item.videoThumb);
             const playsValue = formatPlays(item.plays);
             const hasError = imageErrors[item.id];
-            // LÊ O VALOR DA COLUNA enquadramento
             const objectPosition = getObjectPosition(item.enquadramento);
-            
+
             return (
               <a
                 key={item.id}
@@ -1557,10 +1548,7 @@ const SocialProof = ({ cases }: { cases: any[] }) => {
                       src={imageSrc}
                       alt={item.title}
                       className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      style={{
-                        // APLICA O POSICIONAMENTO DEFINIDO NA PLANILHA
-                        objectPosition: objectPosition,
-                      }}
+                      style={{ objectPosition }} // ← AQUI APLICA O ENQUADRAMENTO
                       onError={() => handleImageError(item.id)}
                     />
                   ) : (
