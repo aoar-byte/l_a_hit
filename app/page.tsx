@@ -1479,44 +1479,26 @@ const SocialProof = ({ cases }: { cases: any[] }) => {
     return cleanPath;
   };
 
-  // FUNÇÃO QUE MAPEIA O VALOR DA PLANILHA PARA objectPosition
+  // FUNÇÃO QUE LÊ O ENQUADRAMENTO DA PLANILHA
   const getObjectPosition = (enquadramento: string) => {
     const positions: Record<string, string> = {
-      // Para rostos e close-ups
-      "face": "center 20%",
+      "face": "center 20%",      // Rosto
       "rosto": "center 20%",
-      "close": "center 20%",
-      
-      // Centralizado padrão
-      "center": "center center",
+      "center": "center center",  // Centralizado
       "centro": "center center",
-      "default": "center center",
-      
-      // Foco no topo
-      "top": "center 0%",
+      "top": "center 0%",         // Topo
       "topo": "center 0%",
-      "cabeca": "center 0%",
-      
-      // Foco na base
-      "bottom": "center 100%",
+      "bottom": "center 100%",    // Base
       "base": "center 100%",
-      "pe": "center 100%",
-      
-      // Corpo inteiro
-      "body": "center 40%",
+      "body": "center 40%",       // Corpo inteiro
       "corpo": "center 40%",
-      "full": "center 40%",
-      
-      // Lateral esquerda
-      "left": "0% center",
+      "left": "0% center",        // Esquerda
       "esquerda": "0% center",
-      
-      // Lateral direita
-      "right": "100% center",
+      "right": "100% center",     // Direita
       "direita": "100% center",
     };
     
-    // Se tiver valor personalizado, usa ele (ex: "70% 30%")
+    // Se tiver valor personalizado (ex: "70% 30%")
     if (enquadramento && enquadramento.includes("%")) {
       return enquadramento;
     }
@@ -1535,6 +1517,17 @@ const SocialProof = ({ cases }: { cases: any[] }) => {
     return plays;
   };
 
+  if (!cases || cases.length === 0) {
+    return (
+      <section id="cases" className="py-32 bg-slate-950 border-t border-white/5">
+        <div className="max-w-7xl mx-auto px-6">
+          <SectionHeader subtitle="Resultados" title="Músicas em Ação." />
+          <p className="text-center text-slate-400">Nenhum case encontrado.</p>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section id="cases" className="py-32 bg-slate-950 border-t border-white/5">
       <div className="max-w-7xl mx-auto px-6">
@@ -1542,12 +1535,12 @@ const SocialProof = ({ cases }: { cases: any[] }) => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {cases.map((item) => {
+            // Usa image como prioridade, fallback para videoThumb
             const imageSrc = getImageUrl(item.image || item.videoThumb);
             const playsValue = formatPlays(item.plays);
             const hasError = imageErrors[item.id];
-            
-            // LÊ O VALOR DA PLANILHA
-            const objectPosition = getObjectPosition(item.enquadramento || item.foco || "center");
+            // LÊ O VALOR DA COLUNA enquadramento
+            const objectPosition = getObjectPosition(item.enquadramento);
             
             return (
               <a
@@ -1641,6 +1634,7 @@ const SocialProof = ({ cases }: { cases: any[] }) => {
     </section>
   );
 };
+
 // ============================================================
 // RODAPÉ
 // ============================================================
