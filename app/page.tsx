@@ -1208,20 +1208,13 @@ const PersistentPlayer = ({
 };
 
 // ============================================================
-// SERVIÇOS - TODOS OS CARDS COM MESMA ALTURA PADRONIZADA
+// SERVIÇOS - APENAS PADRONIZAR TAMANHO DOS CARDS
 // ============================================================
 const Services = ({ servicos, links }: any) => {
   const [selected, setSelected] = useState<any>(null);
 
   const empresas = servicos.filter((s: any) => s.categoria === "empresas");
   const artistas = servicos.filter((s: any) => s.categoria === "artistas");
-
-  // Função para garantir altura consistente
-  const getDescricaoCurta = (desc: string) => {
-    if (!desc) return "Sob consulta";
-    const primeiraLinha = desc.split("|")[0];
-    return primeiraLinha.length > 80 ? primeiraLinha.substring(0, 77) + "..." : primeiraLinha;
-  };
 
   return (
     <section id="services" className="py-24 bg-slate-900 border-t border-white/5">
@@ -1242,7 +1235,7 @@ const Services = ({ servicos, links }: any) => {
         <div className="grid md:grid-cols-2 gap-8">
           
           {/* COLUNA EMPRESAS */}
-          <div className="bg-gradient-to-br from-blue-950/30 to-slate-950 rounded-2xl border border-blue-500/20 overflow-hidden">
+          <div className="bg-gradient-to-br from-blue-950/30 to-slate-950 rounded-2xl border border-blue-500/20 overflow-hidden h-fit">
             <div className="p-6 border-b border-blue-500/20 bg-blue-950/20">
               <div className="flex items-center gap-2 text-blue-500 font-mono text-xs mb-1">
                 <span className="w-1.5 h-1.5 bg-blue-500 rounded-full" />
@@ -1256,32 +1249,23 @@ const Services = ({ servicos, links }: any) => {
             
             <div className="p-6 space-y-4">
               {empresas.map((s: any, i: number) => (
-                <div key={i} className="bg-slate-800/80 rounded-xl p-5 hover:bg-slate-800 transition border border-white/5 hover:border-blue-500/30 h-full">
-                  <div className="flex flex-col h-full">
-                    {/* Ícone */}
-                    <div className="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center mb-4">
+                <div key={i} className="bg-slate-800/80 rounded-xl p-5 hover:bg-slate-800 transition border border-white/5 hover:border-blue-500/30">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center flex-shrink-0">
                       {s.icon && <s.icon className="w-6 h-6 text-blue-500" />}
                     </div>
-                    
-                    {/* Título */}
-                    <h4 className="text-white font-bold text-lg mb-2 min-h-[56px]">
-                      {s.title}
-                    </h4>
-                    
-                    {/* Descrição */}
-                    <p className="text-slate-400 text-sm mb-4 min-h-[60px]">
-                      {getDescricaoCurta(s.desc)}
-                    </p>
-                    
-                    {/* Preço e Botão - Sempre no final */}
-                    <div className="flex items-center justify-between mt-auto pt-3 border-t border-white/10">
-                      <span className="text-emerald-500 text-xs font-medium">💰 Sob consulta</span>
-                      <button 
-                        onClick={() => setSelected(s)}
-                        className="text-blue-400 text-xs hover:text-blue-300 font-medium flex items-center gap-1"
-                      >
-                        Ver detalhes →
-                      </button>
+                    <div className="flex-1">
+                      <h4 className="text-white font-bold text-lg mb-1">{s.title}</h4>
+                      <p className="text-slate-400 text-sm mb-3 line-clamp-2">{s.desc?.split("|")[0]}</p>
+                      <div className="flex items-center justify-between">
+                        <span className="text-emerald-500 text-xs">💰 Sob consulta</span>
+                        <button 
+                          onClick={() => setSelected(s)}
+                          className="text-blue-400 text-xs hover:text-blue-300"
+                        >
+                          Detalhes →
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -1290,7 +1274,7 @@ const Services = ({ servicos, links }: any) => {
           </div>
 
           {/* COLUNA ARTISTAS */}
-          <div className="bg-gradient-to-br from-emerald-950/30 to-slate-950 rounded-2xl border border-emerald-500/20 overflow-hidden">
+          <div className="bg-gradient-to-br from-emerald-950/30 to-slate-950 rounded-2xl border border-emerald-500/20 overflow-hidden h-fit">
             <div className="p-6 border-b border-emerald-500/20 bg-emerald-950/20">
               <div className="flex items-center gap-2 text-emerald-500 font-mono text-xs mb-1">
                 <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
@@ -1304,35 +1288,28 @@ const Services = ({ servicos, links }: any) => {
             
             <div className="p-6 space-y-4">
               {artistas.map((s: any, i: number) => (
-                <div key={i} className="bg-slate-800/80 rounded-xl p-5 hover:bg-slate-800 transition border border-white/5 hover:border-emerald-500/30 h-full">
-                  <div className="flex flex-col h-full">
-                    {/* Ícone */}
-                    <div className="w-12 h-12 bg-emerald-500/10 rounded-xl flex items-center justify-center mb-4">
+                <div key={i} className="bg-slate-800/80 rounded-xl p-5 hover:bg-slate-800 transition border border-white/5 hover:border-emerald-500/30">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-emerald-500/10 rounded-xl flex items-center justify-center flex-shrink-0">
                       {s.icon && <s.icon className="w-6 h-6 text-emerald-500" />}
                     </div>
-                    
-                    {/* Título + Badge */}
-                    <div className="flex items-center gap-2 mb-2 min-h-[32px]">
-                      <h4 className="text-white font-bold text-lg">{s.title}</h4>
-                      {s.id === "distro" && (
-                        <span className="bg-emerald-500/20 text-emerald-400 text-[9px] px-2 py-0.5 rounded whitespace-nowrap">DESTAQUE</span>
-                      )}
-                    </div>
-                    
-                    {/* Descrição */}
-                    <p className="text-slate-400 text-sm mb-4 min-h-[60px]">
-                      {getDescricaoCurta(s.desc)}
-                    </p>
-                    
-                    {/* Preço e Botão - Sempre no final */}
-                    <div className="flex items-center justify-between mt-auto pt-3 border-t border-white/10">
-                      <span className="text-emerald-500 text-xs font-medium">💰 Sob consulta</span>
-                      <button 
-                        onClick={() => setSelected(s)}
-                        className="text-emerald-400 text-xs hover:text-emerald-300 font-medium flex items-center gap-1"
-                      >
-                        Ver detalhes →
-                      </button>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <h4 className="text-white font-bold text-lg">{s.title}</h4>
+                        {s.id === "distro" && (
+                          <span className="bg-emerald-500/20 text-emerald-400 text-[9px] px-2 py-0.5 rounded">DESTAQUE</span>
+                        )}
+                      </div>
+                      <p className="text-slate-400 text-sm mb-3 line-clamp-2">{s.desc?.split("|")[0]}</p>
+                      <div className="flex items-center justify-between">
+                        <span className="text-emerald-500 text-xs">💰 Sob consulta</span>
+                        <button 
+                          onClick={() => setSelected(s)}
+                          className="text-emerald-400 text-xs hover:text-emerald-300"
+                        >
+                          Detalhes →
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
