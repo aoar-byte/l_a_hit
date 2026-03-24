@@ -1208,91 +1208,90 @@ const PersistentPlayer = ({
 };
 
 // ============================================================
-// SERVIÇOS (VERSÃO SIMPLIFICADA)
+// SERVIÇOS (SIMPLES E LIMPO)
 // ============================================================
 const Services = ({ servicos, links }: any) => {
-  const [modalOpen, setModalOpen] = useState(false);
-  const [selectedService, setSelectedService] = useState<any>(null);
+  const [selected, setSelected] = useState<any>(null);
 
-  // Separa serviços por categoria
+  // Separa por categoria
   const empresas = servicos.filter((s: any) => s.categoria === "empresas");
   const artistas = servicos.filter((s: any) => s.categoria === "artistas");
 
   return (
-    <section id="services" className="py-24 bg-slate-900 border-t border-white/5">
+    <section id="services" className="py-24 bg-slate-900">
       <div className="max-w-7xl mx-auto px-6">
         
-        {/* TÍTULO */}
-        <div className="text-center mb-12">
-          <div className="text-blue-500 text-sm font-mono mb-2">SOLUTIONS</div>
-          <h2 className="text-4xl font-bold text-white mb-2">Soluções Integradas</h2>
+        {/* TÍTULO SIMPLES */}
+        <div className="text-center mb-16">
+          <p className="text-blue-500 text-sm font-mono mb-2">SOLUTIONS</p>
+          <h2 className="text-4xl font-bold text-white mb-3">Soluções Integradas</h2>
           <p className="text-slate-400">Atendemos tanto o mercado corporativo quanto artistas independentes.</p>
         </div>
 
-        {/* 2 COLUNAS */}
+        {/* DUAS COLUNAS IGUAIS */}
         <div className="grid md:grid-cols-2 gap-8">
           
-          {/* COLUNA ESQUERDA - EMPRESAS */}
-          <div className="bg-slate-800/50 rounded-xl border border-blue-500/20 overflow-hidden">
-            <div className="p-5 border-b border-blue-500/20 bg-blue-500/5">
-              <h3 className="text-blue-400 text-sm font-mono mb-1">B2B SOLUTIONS</h3>
-              <h4 className="text-xl font-bold text-white">Para Empresas.</h4>
-              <p className="text-slate-400 text-sm">Licenciamento e identidade sonora para marcas, agências e produtoras.</p>
+          {/* COLUNA 1 - EMPRESAS */}
+          <div>
+            <div className="bg-blue-500/10 rounded-lg p-6 mb-6 border-l-4 border-blue-500">
+              <h3 className="text-blue-400 font-mono text-sm mb-1">B2B SOLUTIONS</h3>
+              <h4 className="text-2xl font-bold text-white">Para Empresas.</h4>
+              <p className="text-slate-400 mt-1">Licenciamento e identidade sonora para marcas.</p>
             </div>
-            <div className="divide-y divide-white/5">
-              {empresas.map((servico: any, i: number) => (
-                <div key={i} className="p-5 hover:bg-white/5 transition">
+            
+            <div className="space-y-4">
+              {empresas.map((s: any, i: number) => (
+                <div key={i} className="bg-slate-800 rounded-lg p-5 hover:bg-slate-800/80 transition">
                   <div className="flex justify-between items-start">
-                    <div>
-                      <h5 className="font-bold text-white mb-1">{servico.title}</h5>
-                      <p className="text-sm text-slate-400">{servico.desc?.split("|")[0]}</p>
-                      <span className="text-xs text-emerald-500 mt-2 inline-block">Sob consulta</span>
+                    <div className="flex-1">
+                      <h5 className="text-white font-bold text-lg mb-2">{s.title}</h5>
+                      <p className="text-slate-400 text-sm">{s.desc?.split("|")[0]}</p>
+                      <div className="flex items-center gap-3 mt-3">
+                        <span className="text-emerald-500 text-xs">💰 Sob consulta</span>
+                        <button 
+                          onClick={() => setSelected(s)}
+                          className="text-blue-400 text-xs hover:text-blue-300"
+                        >
+                          Ver detalhes →
+                        </button>
+                      </div>
                     </div>
-                    <button 
-                      onClick={() => {
-                        setSelectedService(servico);
-                        setModalOpen(true);
-                      }}
-                      className="text-xs text-blue-400 hover:text-blue-300"
-                    >
-                      DETALHES
-                    </button>
                   </div>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* COLUNA DIREITA - ARTISTAS */}
-          <div className="bg-slate-800/50 rounded-xl border border-emerald-500/20 overflow-hidden">
-            <div className="p-5 border-b border-emerald-500/20 bg-emerald-500/5">
-              <h3 className="text-emerald-400 text-sm font-mono mb-1">ARTIST SOLUTIONS</h3>
-              <h4 className="text-xl font-bold text-white">Para Artistas.</h4>
-              <p className="text-slate-400 text-sm">Soluções completas para sua carreira musical, do estúdio ao streaming.</p>
+          {/* COLUNA 2 - ARTISTAS */}
+          <div>
+            <div className="bg-emerald-500/10 rounded-lg p-6 mb-6 border-l-4 border-emerald-500">
+              <h3 className="text-emerald-400 font-mono text-sm mb-1">ARTIST SOLUTIONS</h3>
+              <h4 className="text-2xl font-bold text-white">Para Artistas.</h4>
+              <p className="text-slate-400 mt-1">Soluções completas para sua carreira musical.</p>
             </div>
-            <div className="divide-y divide-white/5">
-              {artistas.map((servico: any, i: number) => (
-                <div key={i} className="p-5 hover:bg-white/5 transition">
+            
+            <div className="space-y-4">
+              {artistas.map((s: any, i: number) => (
+                <div key={i} className="bg-slate-800 rounded-lg p-5 hover:bg-slate-800/80 transition">
                   <div className="flex justify-between items-start">
-                    <div>
-                      <div className="flex items-center gap-2 mb-1">
-                        <h5 className="font-bold text-white">{servico.title}</h5>
-                        {servico.id === "distro" && (
-                          <span className="text-[9px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded">DESTAQUE</span>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-2">
+                        <h5 className="text-white font-bold text-lg">{s.title}</h5>
+                        {s.id === "distro" && (
+                          <span className="bg-emerald-500/20 text-emerald-400 text-[10px] px-2 py-0.5 rounded">DESTAQUE</span>
                         )}
                       </div>
-                      <p className="text-sm text-slate-400">{servico.desc?.split("|")[0]}</p>
-                      <span className="text-xs text-emerald-500 mt-2 inline-block">Sob consulta</span>
+                      <p className="text-slate-400 text-sm">{s.desc?.split("|")[0]}</p>
+                      <div className="flex items-center gap-3 mt-3">
+                        <span className="text-emerald-500 text-xs">💰 Sob consulta</span>
+                        <button 
+                          onClick={() => setSelected(s)}
+                          className="text-emerald-400 text-xs hover:text-emerald-300"
+                        >
+                          Ver detalhes →
+                        </button>
+                      </div>
                     </div>
-                    <button 
-                      onClick={() => {
-                        setSelectedService(servico);
-                        setModalOpen(true);
-                      }}
-                      className="text-xs text-emerald-400 hover:text-emerald-300"
-                    >
-                      DETALHES
-                    </button>
                   </div>
                 </div>
               ))}
@@ -1302,24 +1301,27 @@ const Services = ({ servicos, links }: any) => {
       </div>
 
       {/* MODAL SIMPLES */}
-      {modalOpen && selectedService && (
-        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4" onClick={() => setModalOpen(false)}>
-          <div className="bg-slate-900 rounded-xl max-w-md w-full p-6 border border-white/10" onClick={e => e.stopPropagation()}>
+      {selected && (
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4" onClick={() => setSelected(null)}>
+          <div className="bg-slate-900 rounded-2xl max-w-md w-full p-6 border border-white/10" onClick={e => e.stopPropagation()}>
             <div className="flex justify-between items-start mb-4">
-              <h3 className="text-xl font-bold text-white">{selectedService.title}</h3>
-              <button onClick={() => setModalOpen(false)} className="text-slate-400 hover:text-white">✕</button>
+              <h3 className="text-2xl font-bold text-white">{selected.title}</h3>
+              <button onClick={() => setSelected(null)} className="text-slate-400 hover:text-white text-2xl leading-none">×</button>
             </div>
-            <div className="space-y-3 text-slate-300">
-              {selectedService.desc?.split("|").map((item: string, i: number) => (
-                <p key={i}>• {item.trim()}</p>
+            <div className="space-y-2 text-slate-300">
+              {selected.desc?.split("|").map((item: string, i: number) => (
+                <p key={i} className="flex gap-2">
+                  <span className="text-emerald-500">•</span>
+                  {item.trim()}
+                </p>
               ))}
             </div>
             <div className="mt-6 pt-4 border-t border-white/10">
               <button 
                 onClick={() => window.open(links.whatsapp, "_blank")}
-                className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition"
+                className="w-full bg-green-600 text-white py-3 rounded-xl hover:bg-green-700 transition font-medium"
               >
-                FALAR NO WHATSAPP
+                📱 Falar no WhatsApp
               </button>
             </div>
           </div>
