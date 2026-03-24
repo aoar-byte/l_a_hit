@@ -1208,7 +1208,7 @@ const PersistentPlayer = ({
 };
 
 // ============================================================
-// SERVIÇOS - APENAS PADRONIZAR TAMANHO DOS CARDS
+// SERVIÇOS - VERSÃO QUE FUNCIONAVA COM CARDS PADRONIZADOS
 // ============================================================
 const Services = ({ servicos, links }: any) => {
   const [selected, setSelected] = useState<any>(null);
@@ -1221,48 +1221,34 @@ const Services = ({ servicos, links }: any) => {
       <div className="max-w-7xl mx-auto px-6">
         
         {/* TÍTULO */}
-        <div className="text-center mb-12">
-          <div className="flex items-center justify-center gap-2 text-blue-500 font-mono text-[10px] tracking-widest uppercase mb-2">
-            <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse" />
-            SOLUTIONS
-            <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse" />
-          </div>
-          <h2 className="text-4xl font-black text-white">Soluções Integradas</h2>
-          <p className="text-slate-400 mt-2">Atendemos tanto o mercado corporativo quanto artistas independentes.</p>
+        <div className="text-center mb-16">
+          <div className="text-blue-500 text-sm font-mono mb-2">SOLUTIONS</div>
+          <h2 className="text-4xl font-bold text-white">Soluções Integradas</h2>
+          <p className="text-slate-400 mt-2">Atendemos mercado corporativo e artistas independentes</p>
         </div>
 
         {/* 2 COLUNAS */}
         <div className="grid md:grid-cols-2 gap-8">
           
           {/* COLUNA EMPRESAS */}
-          <div className="bg-gradient-to-br from-blue-950/30 to-slate-950 rounded-2xl border border-blue-500/20 overflow-hidden h-fit">
-            <div className="p-6 border-b border-blue-500/20 bg-blue-950/20">
-              <div className="flex items-center gap-2 text-blue-500 font-mono text-xs mb-1">
-                <span className="w-1.5 h-1.5 bg-blue-500 rounded-full" />
-                B2B SOLUTIONS
-              </div>
-              <h3 className="text-2xl font-bold text-white">Para Empresas.</h3>
-              <p className="text-slate-400 text-sm mt-1">
-                Licenciamento e identidade sonora para marcas, agências e produtoras.
-              </p>
+          <div>
+            <div className="mb-6">
+              <h3 className="text-blue-500 text-xl font-bold">B2B SOLUTIONS</h3>
+              <p className="text-slate-400 text-sm mt-1">Para Empresas. Licenciamento e identidade sonora para marcas, agências e produtoras.</p>
             </div>
-            
-            <div className="p-6 space-y-4">
-              {empresas.map((s: any, i: number) => (
-                <div key={i} className="bg-slate-800/80 rounded-xl p-5 hover:bg-slate-800 transition border border-white/5 hover:border-blue-500/30">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center flex-shrink-0">
+            <div className="space-y-4">
+              {empresas.map((s, i) => (
+                <div key={i} className="bg-slate-800 rounded-lg p-5 hover:bg-slate-800/80 transition">
+                  <div className="flex gap-4">
+                    <div className="w-12 h-12 bg-blue-500/10 rounded-lg flex items-center justify-center flex-shrink-0">
                       {s.icon && <s.icon className="w-6 h-6 text-blue-500" />}
                     </div>
                     <div className="flex-1">
                       <h4 className="text-white font-bold text-lg mb-1">{s.title}</h4>
-                      <p className="text-slate-400 text-sm mb-3 line-clamp-2">{s.desc?.split("|")[0]}</p>
-                      <div className="flex items-center justify-between">
-                        <span className="text-emerald-500 text-xs">💰 Sob consulta</span>
-                        <button 
-                          onClick={() => setSelected(s)}
-                          className="text-blue-400 text-xs hover:text-blue-300"
-                        >
+                      <p className="text-slate-400 text-sm mb-3">{s.desc?.split("|")[0]}</p>
+                      <div className="flex justify-between items-center">
+                        <span className="text-emerald-500 text-xs">Sob consulta</span>
+                        <button onClick={() => setSelected(s)} className="text-blue-400 text-sm hover:text-blue-300">
                           Detalhes →
                         </button>
                       </div>
@@ -1274,23 +1260,16 @@ const Services = ({ servicos, links }: any) => {
           </div>
 
           {/* COLUNA ARTISTAS */}
-          <div className="bg-gradient-to-br from-emerald-950/30 to-slate-950 rounded-2xl border border-emerald-500/20 overflow-hidden h-fit">
-            <div className="p-6 border-b border-emerald-500/20 bg-emerald-950/20">
-              <div className="flex items-center gap-2 text-emerald-500 font-mono text-xs mb-1">
-                <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
-                ARTIST SOLUTIONS
-              </div>
-              <h3 className="text-2xl font-bold text-white">Para Artistas.</h3>
-              <p className="text-slate-400 text-sm mt-1">
-                Soluções completas para sua carreira musical, do estúdio ao streaming.
-              </p>
+          <div>
+            <div className="mb-6">
+              <h3 className="text-emerald-500 text-xl font-bold">ARTIST SOLUTIONS</h3>
+              <p className="text-slate-400 text-sm mt-1">Para Artistas. Soluções completas para sua carreira musical, do estúdio ao streaming.</p>
             </div>
-            
-            <div className="p-6 space-y-4">
-              {artistas.map((s: any, i: number) => (
-                <div key={i} className="bg-slate-800/80 rounded-xl p-5 hover:bg-slate-800 transition border border-white/5 hover:border-emerald-500/30">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-emerald-500/10 rounded-xl flex items-center justify-center flex-shrink-0">
+            <div className="space-y-4">
+              {artistas.map((s, i) => (
+                <div key={i} className="bg-slate-800 rounded-lg p-5 hover:bg-slate-800/80 transition">
+                  <div className="flex gap-4">
+                    <div className="w-12 h-12 bg-emerald-500/10 rounded-lg flex items-center justify-center flex-shrink-0">
                       {s.icon && <s.icon className="w-6 h-6 text-emerald-500" />}
                     </div>
                     <div className="flex-1">
@@ -1300,13 +1279,10 @@ const Services = ({ servicos, links }: any) => {
                           <span className="bg-emerald-500/20 text-emerald-400 text-[9px] px-2 py-0.5 rounded">DESTAQUE</span>
                         )}
                       </div>
-                      <p className="text-slate-400 text-sm mb-3 line-clamp-2">{s.desc?.split("|")[0]}</p>
-                      <div className="flex items-center justify-between">
-                        <span className="text-emerald-500 text-xs">💰 Sob consulta</span>
-                        <button 
-                          onClick={() => setSelected(s)}
-                          className="text-emerald-400 text-xs hover:text-emerald-300"
-                        >
+                      <p className="text-slate-400 text-sm mb-3">{s.desc?.split("|")[0]}</p>
+                      <div className="flex justify-between items-center">
+                        <span className="text-emerald-500 text-xs">Sob consulta</span>
+                        <button onClick={() => setSelected(s)} className="text-emerald-400 text-sm hover:text-emerald-300">
                           Detalhes →
                         </button>
                       </div>
