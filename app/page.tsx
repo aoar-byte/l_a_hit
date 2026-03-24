@@ -1208,7 +1208,7 @@ const PersistentPlayer = ({
 };
 
 // ============================================================
-// SERVIÇOS - CARDS VERTICAIS
+// SERVIÇOS - TODOS VISÍVEIS, LADO A LADO
 // ============================================================
 const Services = ({ servicos, links }: any) => {
   const [selected, setSelected] = useState<any>(null);
@@ -1221,49 +1221,61 @@ const Services = ({ servicos, links }: any) => {
       <div className="max-w-7xl mx-auto px-6">
         
         {/* TÍTULO */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-12">
           <h2 className="text-4xl font-bold text-white">Soluções Integradas</h2>
           <p className="text-slate-400 mt-2">Atendemos mercado corporativo e artistas independentes</p>
         </div>
 
-        {/* 2 COLUNAS */}
-        <div className="grid md:grid-cols-2 gap-8">
+        {/* DUAS COLUNAS COM TODOS OS CARDS VISÍVEIS */}
+        <div className="grid md:grid-cols-2 gap-6">
           
-          {/* COLUNA ESQUERDA */}
+          {/* COLUNA EMPRESAS */}
           <div>
-            <h3 className="text-blue-500 text-lg font-bold mb-4">B2B SOLUTIONS</h3>
-            <p className="text-slate-400 text-sm mb-6">Para Empresas. Licenciamento e identidade sonora para marcas, agências e produtoras.</p>
-            
-            {empresas.map((s, i) => (
-              <div key={i} className="bg-slate-800 rounded-lg p-5 mb-4">
-                <h4 className="text-white font-bold mb-2">{s.title}</h4>
-                <p className="text-slate-400 text-sm mb-3">{s.desc?.split("|")[0]}</p>
-                <div className="flex justify-between items-center">
-                  <span className="text-emerald-500 text-xs">Sob consulta</span>
-                  <button onClick={() => setSelected(s)} className="text-blue-400 text-xs">Ver detalhes →</button>
+            <h3 className="text-blue-500 text-xl font-bold mb-4">Para Empresas</h3>
+            <div className="space-y-4">
+              {empresas.map((s, i) => (
+                <div key={i} className="bg-slate-800 rounded-lg p-5 border border-white/5">
+                  <h4 className="text-white font-bold text-lg mb-2">{s.title}</h4>
+                  <p className="text-slate-400 text-sm mb-3">{s.desc?.split("|")[0]}</p>
+                  <div className="flex justify-between items-center">
+                    <span className="text-emerald-500 text-xs">Sob consulta</span>
+                    <button 
+                      onClick={() => setSelected(s)}
+                      className="text-blue-400 text-sm hover:text-blue-300"
+                    >
+                      Detalhes →
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
 
-          {/* COLUNA DIREITA */}
+          {/* COLUNA ARTISTAS */}
           <div>
-            <h3 className="text-emerald-500 text-lg font-bold mb-4">ARTIST SOLUTIONS</h3>
-            <p className="text-slate-400 text-sm mb-6">Para Artistas. Soluções completas para sua carreira musical, do estúdio ao streaming.</p>
-            
-            {artistas.map((s, i) => (
-              <div key={i} className="bg-slate-800 rounded-lg p-5 mb-4">
-                <div className="flex items-center gap-2 mb-2">
-                  <h4 className="text-white font-bold">{s.title}</h4>
-                  {s.id === "distro" && <span className="bg-emerald-500/20 text-emerald-400 text-[9px] px-2 py-0.5 rounded">DESTAQUE</span>}
+            <h3 className="text-emerald-500 text-xl font-bold mb-4">Para Artistas</h3>
+            <div className="space-y-4">
+              {artistas.map((s, i) => (
+                <div key={i} className="bg-slate-800 rounded-lg p-5 border border-white/5">
+                  <div className="flex items-center gap-2 mb-2">
+                    <h4 className="text-white font-bold text-lg">{s.title}</h4>
+                    {s.id === "distro" && (
+                      <span className="bg-emerald-500/20 text-emerald-400 text-[10px] px-2 py-0.5 rounded">DESTAQUE</span>
+                    )}
+                  </div>
+                  <p className="text-slate-400 text-sm mb-3">{s.desc?.split("|")[0]}</p>
+                  <div className="flex justify-between items-center">
+                    <span className="text-emerald-500 text-xs">Sob consulta</span>
+                    <button 
+                      onClick={() => setSelected(s)}
+                      className="text-emerald-400 text-sm hover:text-emerald-300"
+                    >
+                      Detalhes →
+                    </button>
+                  </div>
                 </div>
-                <p className="text-slate-400 text-sm mb-3">{s.desc?.split("|")[0]}</p>
-                <div className="flex justify-between items-center">
-                  <span className="text-emerald-500 text-xs">Sob consulta</span>
-                  <button onClick={() => setSelected(s)} className="text-emerald-400 text-xs">Ver detalhes →</button>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </div>
