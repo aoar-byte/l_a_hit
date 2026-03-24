@@ -1208,15 +1208,27 @@ const PersistentPlayer = ({
 };
 
 // ============================================================
-// SERVIÇOS - TODOS OS CARDS NA MESMA LINHA HORIZONTAL COM SCROLL
+// SERVIÇOS - TODOS OS 7 CARDS NA MESMA LINHA HORIZONTAL
 // ============================================================
 const Services = ({ servicos, links }: any) => {
   const [selected, setSelected] = useState<any>(null);
 
-  const empresas = servicos.filter((s: any) => s.categoria === "empresas");
-  const artistas = servicos.filter((s: any) => s.categoria === "artistas");
-  
-  const todosServicos = [...empresas, ...artistas];
+  // Mapeamento dos serviços com os dados corretos
+  const servicosCompletos = [
+    { id: "sync", title: "Sync Licensing (Audiovisual)", desc: "Licenciamento para Cinema, TV e Games.", categoria: "empresas", icon: "Globe" },
+    { id: "brand", title: "Jingles & Sonic Branding", desc: "Trilhas originais para campanhas de alcance nacional e tráfego pago.", categoria: "empresas", icon: "Volume2" },
+    { id: "ghost", title: "Ghostwriting", desc: "Produção fantasma para artistas de Tier-1.", categoria: "empresas", icon: "PenTool" },
+    { id: "distro", title: "Distribuição", desc: "Distribuição em todas as plataformas digitais.", categoria: "artistas", icon: "TrendingUp", destaque: true },
+    { id: "incentivi", title: "Editais de incentivo a cultura", desc: "Suporte para leis de incentivo e captação de recursos.", categoria: "artistas", icon: "Award" },
+    { id: "anals", title: "Análise de carreira", desc: "Análise de dados e estratégias para crescimento artístico.", categoria: "artistas", icon: "BarChart3" },
+    { id: "dgt", title: "Digital Marketing", desc: "Estratégias de marketing musical e tráfego pago.", categoria: "artistas", icon: "Zap" }
+  ];
+
+  // Função para pegar ícone
+  const getIcon = (iconName: string) => {
+    const icons: Record<string, any> = { Globe, Volume2, PenTool, TrendingUp, Award, BarChart3, Zap };
+    return icons[iconName] || PenTool;
+  };
 
   return (
     <section id="services" className="py-24 bg-slate-900 border-t border-white/5">
@@ -1241,11 +1253,12 @@ const Services = ({ servicos, links }: any) => {
           </div>
         </div>
 
-        {/* CARDS HORIZONTAIS COM SCROLL - NÃO QUEBRA */}
+        {/* TODOS OS 7 CARDS LADO A LADO COM SCROLL */}
         <div className="overflow-x-auto pb-4">
           <div className="flex gap-6 min-w-max">
-            {todosServicos.map((s: any, i: number) => {
+            {servicosCompletos.map((s: any, i: number) => {
               const isEmpresa = s.categoria === "empresas";
+              const Icon = getIcon(s.icon);
               return (
                 <div
                   key={i}
@@ -1258,7 +1271,7 @@ const Services = ({ servicos, links }: any) => {
                   <div className={`w-14 h-14 rounded-xl flex items-center justify-center mb-5 ${
                     isEmpresa ? "bg-blue-500/10" : "bg-emerald-500/10"
                   }`}>
-                    {s.icon && <s.icon className={`w-7 h-7 ${isEmpresa ? "text-blue-500" : "text-emerald-500"}`} />}
+                    <Icon className={`w-7 h-7 ${isEmpresa ? "text-blue-500" : "text-emerald-500"}`} />
                   </div>
                   
                   {/* Título */}
@@ -1266,11 +1279,11 @@ const Services = ({ servicos, links }: any) => {
                   
                   {/* Descrição */}
                   <p className="text-slate-400 text-sm mb-4 flex-1">
-                    {s.desc?.split("|")[0] || "Sob consulta"}
+                    {s.desc}
                   </p>
                   
                   {/* Badge Destaque */}
-                  {s.id === "distro" && (
+                  {s.destaque && (
                     <div className="mb-3">
                       <span className="bg-emerald-500/20 text-emerald-400 text-[10px] px-2 py-1 rounded-full font-bold">
                         DESTAQUE
@@ -1306,9 +1319,7 @@ const Services = ({ servicos, links }: any) => {
               <button onClick={() => setSelected(null)} className="text-slate-400 text-2xl">×</button>
             </div>
             <div className="space-y-2">
-              {selected.desc?.split("|").map((item: string, i: number) => (
-                <p key={i} className="text-slate-300">• {item.trim()}</p>
-              ))}
+              <p className="text-slate-300">• {selected.desc}</p>
             </div>
             <button 
               onClick={() => window.open(links.whatsapp, "_blank")}
