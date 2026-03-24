@@ -1208,7 +1208,7 @@ const PersistentPlayer = ({
 };
 
 // ============================================================
-// SERVIÇOS - TODOS OS CARDS HORIZONTAIS, TOPO E BASE ALINHADOS
+// SERVIÇOS - CARDS HORIZONTAIS COM FUNDO E CABEÇALHOS
 // ============================================================
 const Services = ({ servicos, links }: any) => {
   const [selected, setSelected] = useState<any>(null);
@@ -1216,7 +1216,6 @@ const Services = ({ servicos, links }: any) => {
   const empresas = servicos.filter((s: any) => s.categoria === "empresas");
   const artistas = servicos.filter((s: any) => s.categoria === "artistas");
   
-  // Todos os serviços juntos
   const todosServicos = [...empresas, ...artistas];
 
   return (
@@ -1231,18 +1230,18 @@ const Services = ({ servicos, links }: any) => {
         </div>
 
         {/* CABEÇALHOS ACIMA DOS CARDS */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <div className="col-span-1 sm:col-span-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
+          <div>
             <h3 className="text-blue-500 text-xl font-bold">B2B SOLUTIONS</h3>
             <p className="text-slate-400 text-sm">Para Empresas. Licenciamento e identidade sonora.</p>
           </div>
-          <div className="col-span-1 sm:col-span-2">
+          <div>
             <h3 className="text-emerald-500 text-xl font-bold">ARTIST SOLUTIONS</h3>
             <p className="text-slate-400 text-sm">Para Artistas. Soluções para sua carreira musical.</p>
           </div>
         </div>
 
-        {/* TODOS OS CARDS HORIZONTAIS COM MESMA ALTURA */}
+        {/* TODOS OS CARDS HORIZONTAIS COM FUNDO */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {todosServicos.map((s: any, i: number) => {
             const isEmpresa = s.categoria === "empresas";
@@ -1251,7 +1250,7 @@ const Services = ({ servicos, links }: any) => {
                 key={i}
                 className={`bg-slate-800 rounded-xl p-6 border flex flex-col h-full ${
                   isEmpresa ? "border-blue-500/20 hover:border-blue-500/50" : "border-emerald-500/20 hover:border-emerald-500/50"
-                } transition-all duration-300`}
+                } transition-all duration-300 shadow-lg`}
               >
                 {/* Ícone */}
                 <div className={`w-14 h-14 rounded-xl flex items-center justify-center mb-5 ${
@@ -1261,7 +1260,7 @@ const Services = ({ servicos, links }: any) => {
                 </div>
                 
                 {/* Título */}
-                <h4 className="text-white font-bold text-xl mb-2">{s.title}</h4>
+                <h4 className="text-white font-bold text-lg mb-2">{s.title}</h4>
                 
                 {/* Descrição */}
                 <p className="text-slate-400 text-sm mb-4 flex-1">
@@ -1277,7 +1276,7 @@ const Services = ({ servicos, links }: any) => {
                   </div>
                 )}
                 
-                {/* Preço e Botão - Sempre no final */}
+                {/* Preço e Botão */}
                 <div className="flex items-center justify-between pt-4 border-t border-white/10 mt-auto">
                   <span className="text-emerald-500 text-sm font-medium">Sob consulta</span>
                   <button 
