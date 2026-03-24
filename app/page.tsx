@@ -1270,10 +1270,10 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
         </div>
 
         {/* DUAS COLUNAS LADO A LADO COM ALTURA IGUAL */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
           
           {/* COLUNA ESQUERDA - EMPRESAS */}
-          <div className="bg-gradient-to-br from-blue-950/40 to-slate-950 rounded-2xl border border-blue-500/20 overflow-hidden h-full">
+          <div className="bg-gradient-to-br from-blue-950/40 to-slate-950 rounded-2xl border border-blue-500/20 overflow-hidden flex flex-col h-full">
             <div className="p-6 pb-3 border-b border-blue-500/20">
               <div className="flex items-center gap-2 text-blue-500 font-mono text-[11px] tracking-widest uppercase mb-1">
                 <span className="w-1.5 h-1.5 bg-blue-500 rounded-full" />
@@ -1287,8 +1287,8 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
               </p>
             </div>
 
-            <div className="p-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div className="p-6 flex-1">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 h-full">
                 {servicosEmpresas.map((s: any, i: number) => {
                   const Icon = s.icon;
                   const resumo = getResumo(s);
@@ -1352,7 +1352,7 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
           </div>
 
           {/* COLUNA DIREITA - ARTISTAS */}
-          <div className="bg-gradient-to-br from-emerald-950/40 to-slate-950 rounded-2xl border border-emerald-500/20 overflow-hidden h-full">
+          <div className="bg-gradient-to-br from-emerald-950/40 to-slate-950 rounded-2xl border border-emerald-500/20 overflow-hidden flex flex-col h-full">
             <div className="p-6 pb-3 border-b border-emerald-500/20">
               <div className="flex items-center gap-2 text-emerald-500 font-mono text-[11px] tracking-widest uppercase mb-1">
                 <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
@@ -1366,8 +1366,8 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
               </p>
             </div>
 
-            <div className="p-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div className="p-6 flex-1">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 h-full">
                 {servicosArtistas.map((s: any, i: number) => {
                   const Icon = s.icon;
                   const resumo = getResumo(s);
@@ -1420,14 +1420,16 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
                           </p>
                         </div>
                         
-                        {/* Logo Parceiro */}
-                        {s.external && s.external !== "" && (
-                          <div className="flex justify-center items-center mb-4 min-h-[32px]">
+                        {/* Logo Parceiro - altura consistente */}
+                        <div className="min-h-[32px] flex justify-center items-center mb-4">
+                          {s.external && s.external !== "" ? (
                             <div className="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center">
                               <span className="text-[8px] text-emerald-400 font-mono">PARCEIRO</span>
                             </div>
-                          </div>
-                        )}
+                          ) : (
+                            <div className="h-12" /> // espaço vazio para manter altura consistente
+                          )}
+                        </div>
                         
                         {/* Preço */}
                         <div className="text-center mb-4">
