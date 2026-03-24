@@ -1208,7 +1208,7 @@ const PersistentPlayer = ({
 };
 
 // ============================================================
-// SERVIÇOS (COM QUANTIDADE IGUAL DE CARDS POR COLUNA)
+// SERVIÇOS (VERSÃO SIMPLIFICADA E CORRIGIDA)
 // ============================================================
 const Services = ({ servicos, links, onLeadOpen }: any) => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -1219,7 +1219,6 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
     setModalOpen(true);
   };
 
-  // FUNÇÃO MELHORADA PARA FORMATAR DESCRIÇÃO
   const formatDescription = (desc: string) => {
     if (!desc) return [];
     if (Array.isArray(desc)) return desc;
@@ -1229,168 +1228,90 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
     if (desc.includes("\n")) {
       return desc.split("\n").map(part => part.trim()).filter(part => part);
     }
-    if (desc.includes(";")) {
-      return desc.split(";").map(part => part.trim()).filter(part => part);
-    }
     return [desc];
   };
 
-  // Define o resumo para cada card
-  const getResumo = (id: string, desc?: string) => {
-    const resumos: Record<string, string> = {
-      sync: "Licenciamento para Cinema, TV e Games",
-      brand: "Trilhas originais para campanhas de alcance nacional",
-      ghost: "Produção fantasma para artistas de Tier-1",
-      distro: "Distribuição digital, marketing e editais",
-      marketing: "Estratégias de marketing e análise de carreira",
-    };
-    
-    if (id === "distro" && desc) {
-      const items = formatDescription(desc);
-      if (items.length > 0) {
-        return items.slice(0, 2).join(" • ");
-      }
-    }
-    
-    return resumos[id] || "Sob consulta";
-  };
-
-  // Trunca título longo
-  const getTituloAbreviado = (titulo: string) => {
-    if (titulo.length > 28) {
-      return titulo.substring(0, 28) + "...";
-    }
-    return titulo;
-  };
-
-  // FILTROS CORRETOS
-  const servicosEmpresas = servicos.filter((s: any) => s.categoria === "empresas");
-  const servicosArtistas = servicos.filter((s: any) => s.categoria === "artistas");
-
-  // GARANTE QUE AMBAS AS COLUNAS TENHAM O MESMO NÚMERO DE CARDS
-  // Encontra o número máximo de cards entre as duas colunas
-  const maxCards = Math.max(servicosEmpresas.length, servicosArtistas.length);
-  
-  // Completa a coluna com cards vazios (placeholders) se necessário
-  const padArray = (arr: any[], length: number) => {
-    const padded = [...arr];
-    while (padded.length < length) {
-      padded.push(null); // Card vazio/placeholder
-    }
-    return padded;
-  };
-
-  const empresasPadded = padArray(servicosEmpresas, maxCards);
-  const artistasPadded = padArray(servicosArtistas, maxCards);
+  // Serviços organizados por categoria
+  const b2bServices = servicos.filter((s: any) => s.categoria === "empresas");
+  const artistServices = servicos.filter((s: any) => s.categoria === "artistas");
 
   return (
-    <section
-      id="services"
-      className="py-24 bg-slate-900 border-t border-white/5"
-    >
+    <section id="services" className="py-24 bg-slate-900 border-t border-white/5">
       <div className="max-w-7xl mx-auto px-6">
         
-        {/* TÍTULO PRINCIPAL */}
-        <div className="mb-12 text-center">
-          <div className="flex items-center justify-center gap-2 text-blue-500 font-mono text-[10px] tracking-widest uppercase mb-2">
+        {/* CABEÇALHO */}
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center gap-2 bg-blue-500/10 px-4 py-2 rounded-full mb-4">
             <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse" />
-            SOLUTIONS
+            <span className="text-blue-500 font-mono text-[10px] tracking-widest uppercase">SOLUTIONS</span>
             <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse" />
           </div>
-          <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight">
+          <h2 className="text-4xl md:text-5xl font-black text-white tracking-tight mb-3">
             Soluções Integradas
           </h2>
-          <p className="text-slate-400 text-sm mt-3 max-w-2xl mx-auto">
+          <p className="text-slate-400 text-base max-w-2xl mx-auto">
             Atendemos tanto o mercado corporativo quanto artistas independentes.
           </p>
         </div>
 
-        {/* DUAS COLUNAS COM ALTURA IGUAL E MESMA QUANTIDADE DE CARDS */}
+        {/* GRID PRINCIPAL - 2 COLUNAS */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           
-          {/* COLUNA ESQUERDA - EMPRESAS */}
-          <div className="bg-gradient-to-br from-blue-950/40 to-slate-950 rounded-2xl border border-blue-500/20 overflow-hidden h-full flex flex-col">
-            <div className="p-6 pb-3 border-b border-blue-500/20">
-              <div className="flex items-center gap-2 text-blue-500 font-mono text-[11px] tracking-widest uppercase mb-1">
-                <span className="w-1.5 h-1.5 bg-blue-500 rounded-full" />
-                B2B SOLUTIONS
+          {/* COLUNA B2B */}
+          <div className="bg-gradient-to-br from-blue-950/30 to-slate-950 rounded-2xl border border-blue-500/20 overflow-hidden">
+            <div className="p-6 border-b border-blue-500/20 bg-blue-950/20">
+              <div className="flex items-center gap-2 mb-2">
+                <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center">
+                  <span className="text-blue-500 text-sm font-bold">B2B</span>
+                </div>
+                <span className="text-blue-500 font-mono text-xs tracking-wider">SOLUTIONS</span>
               </div>
-              <h3 className="text-2xl font-bold text-white">
-                Para Empresas.
-              </h3>
-              <p className="text-slate-400 text-xs mt-1">
+              <h3 className="text-2xl font-bold text-white">Para Empresas.</h3>
+              <p className="text-slate-400 text-sm mt-1">
                 Licenciamento e identidade sonora para marcas, agências e produtoras.
               </p>
             </div>
-
-            <div className="p-6 flex-1">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 h-full">
-                {empresasPadded.map((s: any, i: number) => {
-                  // Se for placeholder (card vazio), renderiza um elemento invisível que mantém a estrutura
-                  if (!s) {
-                    return (
-                      <div
-                        key={`empty-${i}`}
-                        className="opacity-0 pointer-events-none"
-                        style={{ visibility: 'hidden' }}
-                      >
-                        <div className="p-5 h-full" />
-                      </div>
-                    );
-                  }
-                  
-                  const Icon = s.icon;
-                  const resumo = getResumo(s.id, s.desc);
-                  const tituloAbreviado = getTituloAbreviado(s.title);
-                  
+            <div className="p-6">
+              <div className="space-y-4">
+                {b2bServices.map((service: any, idx: number) => {
+                  const Icon = service.icon;
                   return (
                     <div
-                      key={i}
-                      className="group bg-slate-950/80 border border-blue-500/20 hover:border-blue-500/40 rounded-xl transition-all duration-300 overflow-hidden flex flex-col h-full"
+                      key={idx}
+                      className="group bg-slate-950/60 border border-blue-500/20 hover:border-blue-500/40 rounded-xl transition-all duration-300"
                     >
-                      <div className="p-5 flex flex-col h-full">
-                        {/* Ícone */}
-                        <div className="flex justify-center mb-4">
-                          <div className="w-14 h-14 bg-blue-500/10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                            <Icon className="w-7 h-7 text-blue-500" />
+                      <div className="p-5">
+                        <div className="flex items-start gap-4">
+                          <div className="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                            <Icon className="w-6 h-6 text-blue-500" />
                           </div>
-                        </div>
-                        
-                        {/* Título */}
-                        <div className="min-h-[56px] flex items-center justify-center mb-3">
-                          <h4 className="text-base font-bold text-white text-center leading-tight line-clamp-2">
-                            {tituloAbreviado}
-                          </h4>
-                        </div>
-                        
-                        {/* Resumo */}
-                        <div className="min-h-[60px] flex items-center justify-center mb-4">
-                          <p className="text-slate-400 text-xs text-center leading-relaxed line-clamp-3">
-                            {resumo}
-                          </p>
-                        </div>
-                        
-                        {/* Preço */}
-                        <div className="text-center mb-4">
-                          <span className="text-[10px] text-emerald-500 font-mono bg-emerald-500/10 px-2 py-1 rounded">
-                            Sob consulta
-                          </span>
-                        </div>
-                        
-                        {/* Botões */}
-                        <div className="flex gap-2 justify-center mt-auto pt-2">
-                          <button
-                            onClick={() => openDetails(s)}
-                            className="px-4 py-2 border border-blue-500/30 text-blue-400 text-[10px] font-bold uppercase tracking-widest hover:bg-blue-500/10 hover:text-blue-300 transition-colors rounded-lg"
-                          >
-                            DETALHES
-                          </button>
-                          <button
-                            onClick={() => window.open(links.whatsapp, "_blank")}
-                            className="p-2 bg-green-600 hover:bg-green-700 text-white transition-colors rounded-lg"
-                          >
-                            <MessageCircle size={14} />
-                          </button>
+                          <div className="flex-1 min-w-0">
+                            <h4 className="text-white font-bold text-lg mb-1 truncate">
+                              {service.title}
+                            </h4>
+                            <p className="text-slate-400 text-sm mb-3 line-clamp-2">
+                              {service.desc?.split("|")[0] || "Sob consulta"}
+                            </p>
+                            <div className="flex items-center justify-between">
+                              <span className="text-emerald-500 text-xs font-mono bg-emerald-500/10 px-2 py-1 rounded">
+                                Sob consulta
+                              </span>
+                              <div className="flex gap-2">
+                                <button
+                                  onClick={() => openDetails(service)}
+                                  className="text-blue-400 hover:text-blue-300 text-xs font-bold uppercase tracking-wider transition-colors"
+                                >
+                                  DETALHES
+                                </button>
+                                <button
+                                  onClick={() => window.open(links.whatsapp, "_blank")}
+                                  className="text-green-500 hover:text-green-400 transition-colors"
+                                >
+                                  <MessageCircle size={16} />
+                                </button>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -1400,123 +1321,89 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
             </div>
           </div>
 
-          {/* COLUNA DIREITA - ARTISTAS */}
-          <div className="bg-gradient-to-br from-emerald-950/40 to-slate-950 rounded-2xl border border-emerald-500/20 overflow-hidden h-full flex flex-col">
-            <div className="p-6 pb-3 border-b border-emerald-500/20">
-              <div className="flex items-center gap-2 text-emerald-500 font-mono text-[11px] tracking-widest uppercase mb-1">
-                <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
-                ARTIST SOLUTIONS
+          {/* COLUNA ARTISTAS */}
+          <div className="bg-gradient-to-br from-emerald-950/30 to-slate-950 rounded-2xl border border-emerald-500/20 overflow-hidden">
+            <div className="p-6 border-b border-emerald-500/20 bg-emerald-950/20">
+              <div className="flex items-center gap-2 mb-2">
+                <div className="w-8 h-8 bg-emerald-500/20 rounded-lg flex items-center justify-center">
+                  <span className="text-emerald-500 text-sm font-bold">🎵</span>
+                </div>
+                <span className="text-emerald-500 font-mono text-xs tracking-wider">ARTIST SOLUTIONS</span>
               </div>
-              <h3 className="text-2xl font-bold text-white">
-                Para Artistas.
-              </h3>
-              <p className="text-slate-400 text-xs mt-1">
+              <h3 className="text-2xl font-bold text-white">Para Artistas.</h3>
+              <p className="text-slate-400 text-sm mt-1">
                 Soluções completas para sua carreira musical, do estúdio ao streaming.
               </p>
             </div>
-
-            <div className="p-6 flex-1">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 h-full">
-                {artistasPadded.map((s: any, i: number) => {
-                  // Se for placeholder (card vazio), renderiza um elemento invisível que mantém a estrutura
-                  if (!s) {
-                    return (
-                      <div
-                        key={`empty-${i}`}
-                        className="opacity-0 pointer-events-none"
-                        style={{ visibility: 'hidden' }}
-                      >
-                        <div className="p-5 h-full" />
-                      </div>
-                    );
-                  }
-                  
-                  const Icon = s.icon;
-                  const resumo = getResumo(s.id, s.desc);
-                  const tituloAbreviado = getTituloAbreviado(s.title);
-                  const isDistro = s.id === "distro";
-                  const isMarketing = s.id === "marketing";
+            <div className="p-6">
+              <div className="space-y-4">
+                {artistServices.map((service: any, idx: number) => {
+                  const Icon = service.icon;
+                  const isDistro = service.id === "distro";
                   
                   return (
                     <div
-                      key={i}
-                      className={`group bg-slate-950/80 border rounded-xl transition-all duration-300 overflow-hidden flex flex-col h-full ${
-                        isDistro || isMarketing
-                          ? "border-emerald-500/30 hover:border-emerald-500/50"
+                      key={idx}
+                      className={`group bg-slate-950/60 border rounded-xl transition-all duration-300 ${
+                        isDistro 
+                          ? "border-emerald-500/30 hover:border-emerald-500/50" 
                           : "border-emerald-500/20 hover:border-emerald-500/40"
                       }`}
                     >
-                      <div className="p-5 flex flex-col h-full">
-                        {/* Ícone */}
-                        <div className="flex justify-center mb-4">
-                          <div className={`w-14 h-14 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform ${
-                            isDistro || isMarketing ? "bg-emerald-500/15" : "bg-emerald-500/10"
+                      <div className="p-5">
+                        <div className="flex items-start gap-4">
+                          <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform ${
+                            isDistro ? "bg-emerald-500/15" : "bg-emerald-500/10"
                           }`}>
-                            <Icon className={`w-7 h-7 ${
-                              isDistro || isMarketing ? "text-emerald-400" : "text-emerald-500"
+                            <Icon className={`w-6 h-6 ${
+                              isDistro ? "text-emerald-400" : "text-emerald-500"
                             }`} />
                           </div>
-                        </div>
-                        
-                        {/* Título */}
-                        <div className="min-h-[56px] flex items-center justify-center mb-2">
-                          <h4 className={`text-base font-bold text-center leading-tight line-clamp-2 ${
-                            isDistro || isMarketing ? "text-emerald-400" : "text-white"
-                          }`}>
-                            {tituloAbreviado}
-                          </h4>
-                        </div>
-                        
-                        {/* Badge DESTAQUE */}
-                        {(isDistro || isMarketing) && (
-                          <div className="flex justify-center mb-3">
-                            <span className="text-[8px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full font-bold">
-                              DESTAQUE
-                            </span>
-                          </div>
-                        )}
-                        
-                        {/* Resumo */}
-                        <div className="min-h-[60px] flex items-center justify-center mb-4">
-                          <p className="text-slate-400 text-xs text-center leading-relaxed line-clamp-3">
-                            {resumo}
-                          </p>
-                        </div>
-                        
-                        {/* Logo Parceiro */}
-                        {isDistro && (
-                          <div className="flex justify-center items-center mb-4 min-h-[32px]">
-                            <div className="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center">
-                              <span className="text-[8px] text-emerald-400 font-mono">PARCEIRO</span>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 mb-1">
+                              <h4 className={`font-bold text-lg truncate ${
+                                isDistro ? "text-emerald-400" : "text-white"
+                              }`}>
+                                {service.title}
+                              </h4>
+                              {isDistro && (
+                                <span className="text-[8px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full font-bold">
+                                  DESTAQUE
+                                </span>
+                              )}
+                            </div>
+                            <p className="text-slate-400 text-sm mb-3 line-clamp-2">
+                              {service.desc?.split("|")[0] || "Sob consulta"}
+                            </p>
+                            {isDistro && (
+                              <div className="mb-2">
+                                <span className="text-[9px] text-emerald-400 font-mono bg-emerald-500/10 px-2 py-0.5 rounded">
+                                  🚀 Em parceria
+                                </span>
+                              </div>
+                            )}
+                            <div className="flex items-center justify-between">
+                              <span className="text-emerald-500 text-xs font-mono bg-emerald-500/10 px-2 py-1 rounded">
+                                Sob consulta
+                              </span>
+                              <div className="flex gap-2">
+                                <button
+                                  onClick={() => openDetails(service)}
+                                  className={`text-xs font-bold uppercase tracking-wider transition-colors ${
+                                    isDistro ? "text-emerald-400 hover:text-emerald-300" : "text-emerald-400 hover:text-emerald-300"
+                                  }`}
+                                >
+                                  DETALHES
+                                </button>
+                                <button
+                                  onClick={() => window.open(links.whatsapp, "_blank")}
+                                  className="text-green-500 hover:text-green-400 transition-colors"
+                                >
+                                  <MessageCircle size={16} />
+                                </button>
+                              </div>
                             </div>
                           </div>
-                        )}
-                        
-                        {/* Preço */}
-                        <div className="text-center mb-4">
-                          <span className="text-[10px] text-emerald-500 font-mono bg-emerald-500/10 px-2 py-1 rounded">
-                            Sob consulta
-                          </span>
-                        </div>
-                        
-                        {/* Botões */}
-                        <div className="flex gap-2 justify-center mt-auto pt-2">
-                          <button
-                            onClick={() => openDetails(s)}
-                            className={`px-4 py-2 text-[10px] font-bold uppercase tracking-widest transition-colors rounded-lg ${
-                              isDistro || isMarketing
-                                ? "border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10"
-                                : "border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10"
-                            }`}
-                          >
-                            DETALHES
-                          </button>
-                          <button
-                            onClick={() => window.open(links.whatsapp, "_blank")}
-                            className="p-2 bg-green-600 hover:bg-green-700 text-white transition-colors rounded-lg"
-                          >
-                            <MessageCircle size={14} />
-                          </button>
                         </div>
                       </div>
                     </div>
