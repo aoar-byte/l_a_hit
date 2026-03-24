@@ -1208,7 +1208,7 @@ const PersistentPlayer = ({
 };
 
 // ============================================================
-// SERVIÇOS (VERSÃO EXTREMAMENTE SIMPLES)
+// SERVIÇOS - CARDS VERTICAIS
 // ============================================================
 const Services = ({ servicos, links }: any) => {
   const [selected, setSelected] = useState<any>(null);
@@ -1222,58 +1222,48 @@ const Services = ({ servicos, links }: any) => {
         
         {/* TÍTULO */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-white mb-3">Soluções Integradas</h2>
-          <p className="text-slate-400">Atendemos mercado corporativo e artistas independentes</p>
+          <h2 className="text-4xl font-bold text-white">Soluções Integradas</h2>
+          <p className="text-slate-400 mt-2">Atendemos mercado corporativo e artistas independentes</p>
         </div>
 
-        {/* DUAS COLUNAS */}
-        <div className="grid md:grid-cols-2 gap-12">
+        {/* 2 COLUNAS */}
+        <div className="grid md:grid-cols-2 gap-8">
           
-          {/* COLUNA 1 */}
+          {/* COLUNA ESQUERDA */}
           <div>
-            <div className="mb-8">
-              <h3 className="text-blue-500 text-xl font-bold mb-2">Para Empresas</h3>
-              <p className="text-slate-400 text-sm">Licenciamento e identidade sonora</p>
-            </div>
-            <div className="space-y-4">
-              {empresas.map((s, i) => (
-                <button
-                  key={i}
-                  onClick={() => setSelected(s)}
-                  className="w-full text-left p-5 bg-slate-800 rounded-lg hover:bg-slate-700 transition group"
-                >
-                  <div className="font-bold text-white mb-1 group-hover:text-blue-400">{s.title}</div>
-                  <div className="text-sm text-slate-400">{s.desc?.split("|")[0]}</div>
-                  <div className="text-xs text-emerald-500 mt-2">Sob consulta →</div>
-                </button>
-              ))}
-            </div>
+            <h3 className="text-blue-500 text-lg font-bold mb-4">B2B SOLUTIONS</h3>
+            <p className="text-slate-400 text-sm mb-6">Para Empresas. Licenciamento e identidade sonora para marcas, agências e produtoras.</p>
+            
+            {empresas.map((s, i) => (
+              <div key={i} className="bg-slate-800 rounded-lg p-5 mb-4">
+                <h4 className="text-white font-bold mb-2">{s.title}</h4>
+                <p className="text-slate-400 text-sm mb-3">{s.desc?.split("|")[0]}</p>
+                <div className="flex justify-between items-center">
+                  <span className="text-emerald-500 text-xs">Sob consulta</span>
+                  <button onClick={() => setSelected(s)} className="text-blue-400 text-xs">Ver detalhes →</button>
+                </div>
+              </div>
+            ))}
           </div>
 
-          {/* COLUNA 2 */}
+          {/* COLUNA DIREITA */}
           <div>
-            <div className="mb-8">
-              <h3 className="text-emerald-500 text-xl font-bold mb-2">Para Artistas</h3>
-              <p className="text-slate-400 text-sm">Soluções para sua carreira musical</p>
-            </div>
-            <div className="space-y-4">
-              {artistas.map((s, i) => (
-                <button
-                  key={i}
-                  onClick={() => setSelected(s)}
-                  className="w-full text-left p-5 bg-slate-800 rounded-lg hover:bg-slate-700 transition group"
-                >
-                  <div className="flex items-center gap-2 mb-1">
-                    <div className="font-bold text-white group-hover:text-emerald-400">{s.title}</div>
-                    {s.id === "distro" && (
-                      <span className="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded">Destaque</span>
-                    )}
-                  </div>
-                  <div className="text-sm text-slate-400">{s.desc?.split("|")[0]}</div>
-                  <div className="text-xs text-emerald-500 mt-2">Sob consulta →</div>
-                </button>
-              ))}
-            </div>
+            <h3 className="text-emerald-500 text-lg font-bold mb-4">ARTIST SOLUTIONS</h3>
+            <p className="text-slate-400 text-sm mb-6">Para Artistas. Soluções completas para sua carreira musical, do estúdio ao streaming.</p>
+            
+            {artistas.map((s, i) => (
+              <div key={i} className="bg-slate-800 rounded-lg p-5 mb-4">
+                <div className="flex items-center gap-2 mb-2">
+                  <h4 className="text-white font-bold">{s.title}</h4>
+                  {s.id === "distro" && <span className="bg-emerald-500/20 text-emerald-400 text-[9px] px-2 py-0.5 rounded">DESTAQUE</span>}
+                </div>
+                <p className="text-slate-400 text-sm mb-3">{s.desc?.split("|")[0]}</p>
+                <div className="flex justify-between items-center">
+                  <span className="text-emerald-500 text-xs">Sob consulta</span>
+                  <button onClick={() => setSelected(s)} className="text-emerald-400 text-xs">Ver detalhes →</button>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -1295,7 +1285,7 @@ const Services = ({ servicos, links }: any) => {
               onClick={() => window.open(links.whatsapp, "_blank")}
               className="w-full mt-6 bg-green-600 text-white py-3 rounded-lg hover:bg-green-700"
             >
-              WhatsApp
+              Falar no WhatsApp
             </button>
           </div>
         </div>
