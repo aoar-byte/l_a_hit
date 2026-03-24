@@ -1208,7 +1208,7 @@ const PersistentPlayer = ({
 };
 
 // ============================================================
-// SERVIÇOS - FUNDOS AZUL E VERDE NOS CABEÇALHOS
+// SERVIÇOS - TODOS OS CARDS NA MESMA LINHA HORIZONTAL COM SCROLL
 // ============================================================
 const Services = ({ servicos, links }: any) => {
   const [selected, setSelected] = useState<any>(null);
@@ -1229,68 +1229,71 @@ const Services = ({ servicos, links }: any) => {
           <p className="text-slate-400 mt-2">Atendemos mercado corporativo e artistas independentes</p>
         </div>
 
-        {/* CABEÇALHOS COM FUNDOS AZUL E VERDE */}
+        {/* CABEÇALHOS */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
           <div className="bg-gradient-to-r from-blue-950/40 to-blue-950/20 rounded-xl p-5 border border-blue-500/20">
             <h3 className="text-blue-500 text-xl font-bold">B2B SOLUTIONS</h3>
-            <p className="text-slate-400 text-sm mt-1">Para Empresas. Licenciamento e identidade sonora para marcas, agências e produtoras.</p>
+            <p className="text-slate-400 text-sm mt-1">Para Empresas. Licenciamento e identidade sonora.</p>
           </div>
           <div className="bg-gradient-to-r from-emerald-950/40 to-emerald-950/20 rounded-xl p-5 border border-emerald-500/20">
             <h3 className="text-emerald-500 text-xl font-bold">ARTIST SOLUTIONS</h3>
-            <p className="text-slate-400 text-sm mt-1">Para Artistas. Soluções completas para sua carreira musical, do estúdio ao streaming.</p>
+            <p className="text-slate-400 text-sm mt-1">Para Artistas. Soluções para sua carreira musical.</p>
           </div>
         </div>
 
-        {/* TODOS OS CARDS LADO A LADO */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {todosServicos.map((s: any, i: number) => {
-            const isEmpresa = s.categoria === "empresas";
-            return (
-              <div
-                key={i}
-                className={`bg-slate-800 rounded-xl p-6 border flex flex-col h-full ${
-                  isEmpresa ? "border-blue-500/20 hover:border-blue-500/50" : "border-emerald-500/20 hover:border-emerald-500/50"
-                } transition-all duration-300`}
-              >
-                {/* Ícone */}
-                <div className={`w-14 h-14 rounded-xl flex items-center justify-center mb-5 ${
-                  isEmpresa ? "bg-blue-500/10" : "bg-emerald-500/10"
-                }`}>
-                  {s.icon && <s.icon className={`w-7 h-7 ${isEmpresa ? "text-blue-500" : "text-emerald-500"}`} />}
-                </div>
-                
-                {/* Título */}
-                <h4 className="text-white font-bold text-lg mb-2">{s.title}</h4>
-                
-                {/* Descrição */}
-                <p className="text-slate-400 text-sm mb-4 flex-1">
-                  {s.desc?.split("|")[0] || "Sob consulta"}
-                </p>
-                
-                {/* Badge Destaque */}
-                {s.id === "distro" && (
-                  <div className="mb-3">
-                    <span className="bg-emerald-500/20 text-emerald-400 text-[10px] px-2 py-1 rounded-full font-bold">
-                      DESTAQUE
-                    </span>
+        {/* CARDS HORIZONTAIS COM SCROLL - NÃO QUEBRA */}
+        <div className="overflow-x-auto pb-4">
+          <div className="flex gap-6 min-w-max">
+            {todosServicos.map((s: any, i: number) => {
+              const isEmpresa = s.categoria === "empresas";
+              return (
+                <div
+                  key={i}
+                  className={`w-80 flex-shrink-0 bg-slate-800 rounded-xl p-6 border flex flex-col ${
+                    isEmpresa ? "border-blue-500/20 hover:border-blue-500/50" : "border-emerald-500/20 hover:border-emerald-500/50"
+                  } transition-all duration-300`}
+                  style={{ height: "420px" }}
+                >
+                  {/* Ícone */}
+                  <div className={`w-14 h-14 rounded-xl flex items-center justify-center mb-5 ${
+                    isEmpresa ? "bg-blue-500/10" : "bg-emerald-500/10"
+                  }`}>
+                    {s.icon && <s.icon className={`w-7 h-7 ${isEmpresa ? "text-blue-500" : "text-emerald-500"}`} />}
                   </div>
-                )}
-                
-                {/* Preço e Botão */}
-                <div className="flex items-center justify-between pt-4 border-t border-white/10 mt-auto">
-                  <span className="text-emerald-500 text-sm font-medium">Sob consulta</span>
-                  <button 
-                    onClick={() => setSelected(s)}
-                    className={`text-sm font-medium hover:underline ${
-                      isEmpresa ? "text-blue-400" : "text-emerald-400"
-                    }`}
-                  >
-                    Detalhes →
-                  </button>
+                  
+                  {/* Título */}
+                  <h4 className="text-white font-bold text-lg mb-2">{s.title}</h4>
+                  
+                  {/* Descrição */}
+                  <p className="text-slate-400 text-sm mb-4 flex-1">
+                    {s.desc?.split("|")[0] || "Sob consulta"}
+                  </p>
+                  
+                  {/* Badge Destaque */}
+                  {s.id === "distro" && (
+                    <div className="mb-3">
+                      <span className="bg-emerald-500/20 text-emerald-400 text-[10px] px-2 py-1 rounded-full font-bold">
+                        DESTAQUE
+                      </span>
+                    </div>
+                  )}
+                  
+                  {/* Preço e Botão */}
+                  <div className="flex items-center justify-between pt-4 border-t border-white/10 mt-auto">
+                    <span className="text-emerald-500 text-sm font-medium">Sob consulta</span>
+                    <button 
+                      onClick={() => setSelected(s)}
+                      className={`text-sm font-medium hover:underline ${
+                        isEmpresa ? "text-blue-400" : "text-emerald-400"
+                      }`}
+                    >
+                      Detalhes →
+                    </button>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
       </div>
 
