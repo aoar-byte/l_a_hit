@@ -1208,7 +1208,7 @@ const PersistentPlayer = ({
 };
 
 // ============================================================
-// SERVIÇOS (COM CATEGORIA DA PLANILHA E FUNDO PARA AMBOS)
+// SERVIÇOS (HÍBRIDO - RESUMO + BOTÃO DETALHES)
 // ============================================================
 const Services = ({ servicos, links, onLeadOpen }: any) => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -1222,6 +1222,18 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
   const formatDescription = (desc: string) => {
     if (!desc) return [];
     return desc.split("|").map(part => part.trim()).filter(part => part);
+  };
+
+  // Define o resumo para cada card (apenas 1 linha de destaque)
+  const getResumo = (id: string) => {
+    const resumos: Record<string, string> = {
+      sync: "Licenciamento para Cinema, TV e Games",
+      brand: "Trilhas originais para campanhas de alcance nacional",
+      ghost: "Produção fantasma para artistas de Tier-1",
+      distro: "Distribuição em todas as plataformas digitais",
+      marketing: "Estratégias de marketing musical e análise de carreira",
+    };
+    return resumos[id] || "Sob consulta";
   };
 
   // Separa os serviços pela coluna "categoria" da planilha
@@ -1239,7 +1251,7 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
         <div className="mb-12 text-center">
           <div className="flex items-center justify-center gap-2 text-blue-500 font-mono text-xs tracking-widest uppercase mb-2">
             <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse" />
-            Solutions
+            SOLUTIONS
             <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse" />
           </div>
           <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight">
@@ -1250,191 +1262,200 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
           </p>
         </div>
 
-        {/* LADO A LADO - AMBAS COM FUNDO DIFERENCIADO */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* CABEÇALHOS LADO A LADO COM CORES DIFERENCIADAS */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
           
-          {/* COLUNA ESQUERDA - EMPRESAS (COM FUNDO) */}
-          <div className="bg-gradient-to-br from-slate-800/30 to-slate-900/30 rounded-2xl p-5 border border-blue-500/20">
-            <div className="mb-5">
-              <div className="flex items-center gap-2 text-blue-500 font-mono text-xs tracking-widest uppercase mb-2">
-                <span className="w-1.5 h-1.5 bg-blue-500 rounded-full" />
-                B2B Solutions
-              </div>
-              <h3 className="text-2xl font-bold text-white">
-                Para Empresas.
-              </h3>
-              <p className="text-slate-400 text-sm mt-1">
-                Licenciamento e identidade sonora para marcas, agências e produtoras.
-              </p>
+          {/* CABEÇALHO EMPRESAS - FUNDO AZUL */}
+          <div className="bg-gradient-to-br from-blue-950/40 to-slate-900/80 rounded-2xl p-5 border border-blue-500/30">
+            <div className="flex items-center gap-2 text-blue-500 font-mono text-xs tracking-widest uppercase mb-2">
+              <span className="w-1.5 h-1.5 bg-blue-500 rounded-full" />
+              B2B SOLUTIONS
             </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              {servicosEmpresas.map((s: any, i: number) => {
-                const Icon = s.icon;
-                const descLines = formatDescription(s.desc);
-                
-                return (
-                  <div
-                    key={i}
-                    className="group bg-slate-950 border border-white/10 hover:border-blue-500/40 rounded-xl transition-all duration-300 overflow-hidden flex flex-col h-full"
-                  >
-                    <div className="p-4 flex flex-col h-full">
-                      <div className="flex items-start gap-2 mb-3">
-                        <div className="w-8 h-8 bg-blue-500/10 rounded-lg flex items-center justify-center shrink-0">
-                          <Icon className="w-4 h-4 text-blue-500" />
-                        </div>
-                        <h4 className="text-sm font-bold text-white leading-tight">
-                          {s.title}
-                        </h4>
-                      </div>
-                      
-                      <div className="space-y-1 mb-3 flex-1">
-                        {descLines.slice(0, 2).map((line, idx) => (
-                          <p key={idx} className="text-slate-400 text-[10px] leading-relaxed">
-                            {line}
-                          </p>
-                        ))}
-                        {descLines.length > 2 && (
-                          <p className="text-slate-500 text-[9px]">...</p>
-                        )}
-                      </div>
-
-                      <div className="mt-auto">
-                        <div className="text-[8px] text-emerald-500 font-mono mb-2">
-                          *Sob consulta*
-                        </div>
-                        <div className="flex gap-2">
-                          <button
-                            onClick={() => openDetails(s)}
-                            className="flex-1 py-1.5 border border-white/20 text-white text-[8px] font-bold uppercase tracking-widest hover:bg-white/5 transition-colors rounded"
-                          >
-                            {s.cta || "CONSULTAR"}
-                          </button>
-                          <button
-                            onClick={() => window.open(links.whatsapp, "_blank")}
-                            className="p-1.5 bg-green-600 hover:bg-green-700 text-white transition-colors rounded"
-                            title="Falar no WhatsApp"
-                          >
-                            <MessageCircle size={10} />
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
+            <h3 className="text-2xl font-bold text-white">
+              Para Empresas.
+            </h3>
+            <p className="text-slate-400 text-sm mt-1">
+              Licenciamento e identidade sonora para marcas, agências e produtoras.
+            </p>
           </div>
 
-          {/* COLUNA DIREITA - ARTISTAS (COM FUNDO) */}
-          <div className="bg-gradient-to-br from-slate-800/30 to-slate-900/30 rounded-2xl p-5 border border-emerald-500/20">
-            <div className="mb-5">
-              <div className="flex items-center gap-2 text-emerald-500 font-mono text-xs tracking-widest uppercase mb-2">
-                <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
-                Artist Solutions
-              </div>
-              <h3 className="text-2xl font-bold text-white">
-                Para Artistas.
-              </h3>
-              <p className="text-slate-400 text-sm mt-1">
-                Soluções completas para sua carreira musical, do estúdio ao streaming.
-              </p>
+          {/* CABEÇALHO ARTISTAS - FUNDO VERDE */}
+          <div className="bg-gradient-to-br from-emerald-950/40 to-slate-900/80 rounded-2xl p-5 border border-emerald-500/30">
+            <div className="flex items-center gap-2 text-emerald-500 font-mono text-xs tracking-widest uppercase mb-2">
+              <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
+              ARTIST SOLUTIONS
             </div>
+            <h3 className="text-2xl font-bold text-white">
+              Para Artistas.
+            </h3>
+            <p className="text-slate-400 text-sm mt-1">
+              Soluções completas para sua carreira musical, do estúdio ao streaming.
+            </p>
+          </div>
+        </div>
 
-            <div className="grid grid-cols-3 gap-3">
-              {servicosArtistas.map((s: any, i: number) => {
-                const Icon = s.icon;
-                const descLines = formatDescription(s.desc);
-                const isDistro = s.id === "distro";
-                const isMarketing = s.id === "marketing";
-                
-                return (
-                  <div
-                    key={i}
-                    className={`group bg-slate-950 border rounded-xl transition-all duration-300 overflow-hidden flex flex-col h-full ${
-                      isDistro || isMarketing
-                        ? "border-emerald-500/30 hover:border-emerald-500/50"
-                        : "border-white/10 hover:border-blue-500/40"
-                    }`}
-                  >
-                    <div className="p-3 flex flex-col h-full">
-                      <div className="flex items-start justify-between mb-2">
-                        <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 ${
-                          isDistro || isMarketing ? "bg-emerald-500/10" : "bg-blue-500/10"
-                        }`}>
-                          <Icon className={`w-3.5 h-3.5 ${
-                            isDistro || isMarketing ? "text-emerald-500" : "text-blue-500"
-                          }`} />
-                        </div>
-                        {(isDistro || isMarketing) && (
-                          <span className="text-[6px] bg-emerald-500/20 text-emerald-400 px-1 py-0.5 rounded-full">
-                            DESTAQUE
-                          </span>
-                        )}
-                      </div>
-                      
-                      <h4 className={`text-xs font-bold mb-2 leading-tight ${
-                        isDistro || isMarketing ? "text-emerald-400" : "text-white"
-                      }`}>
-                        {s.title}
-                      </h4>
-                      
-                      <div className="space-y-1 mb-2 flex-1">
-                        {descLines.slice(0, 2).map((line, idx) => (
-                          <p key={idx} className="text-slate-400 text-[9px] leading-relaxed line-clamp-2">
-                            {line}
-                          </p>
-                        ))}
-                      </div>
-
-                      {/* Logo do parceiro */}
-                      {isDistro && (
-                        <div className="mb-2">
-                          <img 
-                            src="/parceiro-logo.png" 
-                            alt="Parceiro"
-                            className="h-4 opacity-50 hover:opacity-100 transition-opacity"
-                            onError={(e) => {
-                              e.currentTarget.style.display = 'none';
-                            }}
-                          />
-                        </div>
-                      )}
-
-                      <div className="mt-auto">
-                        <div className="text-[7px] text-emerald-500 font-mono mb-1.5">
-                          *Sob consulta*
-                        </div>
-                        <div className="flex gap-1.5">
-                          <button
-                            onClick={() => openDetails(s)}
-                            className={`flex-1 py-1 text-[7px] font-bold uppercase tracking-widest transition-colors rounded ${
-                              isDistro || isMarketing
-                                ? "bg-emerald-600/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-600/30"
-                                : "border border-white/20 text-white hover:bg-white/5"
-                            }`}
-                          >
-                            {s.cta || "CONSULTAR"}
-                          </button>
-                          <button
-                            onClick={() => window.open(links.whatsapp, "_blank")}
-                            className="p-1 bg-green-600 hover:bg-green-700 text-white transition-colors rounded"
-                            title="Falar no WhatsApp"
-                          >
-                            <MessageCircle size={8} />
-                          </button>
-                        </div>
-                      </div>
+        {/* 5 CARDS LADO A LADO */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
+          
+          {/* CARDS EMPRESAS (FUNDO AZUL) */}
+          {servicosEmpresas.map((s: any, i: number) => {
+            const Icon = s.icon;
+            const resumo = getResumo(s.id);
+            const isDistro = s.id === "distro";
+            
+            return (
+              <div
+                key={i}
+                className="group bg-gradient-to-b from-slate-900 to-slate-950 border border-blue-500/30 hover:border-blue-500/60 rounded-xl transition-all duration-300 overflow-hidden flex flex-col"
+              >
+                <div className="p-5 flex flex-col h-full">
+                  {/* Ícone */}
+                  <div className="flex justify-center mb-4">
+                    <div className="w-14 h-14 bg-blue-500/10 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                      <Icon className="w-7 h-7 text-blue-500" />
                     </div>
                   </div>
-                );
-              })}
-            </div>
-          </div>
+                  
+                  {/* Título */}
+                  <h4 className="text-base font-bold text-white text-center mb-2">
+                    {s.title}
+                  </h4>
+                  
+                  {/* Resumo (apenas 1 linha de destaque) */}
+                  <p className="text-slate-400 text-xs text-center leading-relaxed mb-4">
+                    {resumo}
+                  </p>
+
+                  {/* Logo do parceiro (apenas no card Distribuição Digital) */}
+                  {isDistro && (
+                    <div className="flex justify-center mb-3">
+                      <img 
+                        src="/parceiro-logo.png" 
+                        alt="Parceiro"
+                        className="h-6 opacity-60 hover:opacity-100 transition-opacity"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none';
+                        }}
+                      />
+                    </div>
+                  )}
+
+                  {/* Preço e Botões */}
+                  <div className="mt-auto">
+                    <div className="text-[10px] text-emerald-500 font-mono text-center mb-3">
+                      *Sob consulta*
+                    </div>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => openDetails(s)}
+                        className="flex-1 py-2 border border-blue-500/30 text-blue-400 text-[10px] font-bold uppercase tracking-widest hover:bg-blue-500/10 transition-colors rounded"
+                      >
+                        DETALHES
+                      </button>
+                      <button
+                        onClick={() => window.open(links.whatsapp, "_blank")}
+                        className="p-2 bg-green-600 hover:bg-green-700 text-white transition-colors rounded"
+                        title="Falar no WhatsApp"
+                      >
+                        <MessageCircle size={14} />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+
+          {/* CARDS ARTISTAS (FUNDO VERDE) */}
+          {servicosArtistas.map((s: any, i: number) => {
+            const Icon = s.icon;
+            const resumo = getResumo(s.id);
+            const isDistro = s.id === "distro";
+            const isMarketing = s.id === "marketing";
+            
+            return (
+              <div
+                key={i}
+                className={`group bg-gradient-to-b from-slate-900 to-slate-950 border rounded-xl transition-all duration-300 overflow-hidden flex flex-col ${
+                  isDistro || isMarketing
+                    ? "border-emerald-500/30 hover:border-emerald-500/60"
+                    : "border-emerald-500/30 hover:border-emerald-500/60"
+                }`}
+              >
+                <div className="p-5 flex flex-col h-full">
+                  {/* Ícone */}
+                  <div className="flex justify-center mb-4">
+                    <div className="w-14 h-14 bg-emerald-500/10 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                      <Icon className="w-7 h-7 text-emerald-500" />
+                    </div>
+                  </div>
+                  
+                  {/* Título com badge de destaque */}
+                  <div className="text-center mb-2">
+                    <h4 className={`text-base font-bold ${
+                      isDistro || isMarketing ? "text-emerald-400" : "text-white"
+                    }`}>
+                      {s.title}
+                    </h4>
+                    {(isDistro || isMarketing) && (
+                      <span className="inline-block mt-1 text-[8px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full">
+                        DESTAQUE
+                      </span>
+                    )}
+                  </div>
+                  
+                  {/* Resumo (apenas 1 linha de destaque) */}
+                  <p className="text-slate-400 text-xs text-center leading-relaxed mb-4">
+                    {resumo}
+                  </p>
+
+                  {/* Logo do parceiro (apenas no card Distribuição Digital) */}
+                  {isDistro && (
+                    <div className="flex justify-center mb-3">
+                      <img 
+                        src="/parceiro-logo.png" 
+                        alt="Parceiro"
+                        className="h-6 opacity-60 hover:opacity-100 transition-opacity"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none';
+                        }}
+                      />
+                    </div>
+                  )}
+
+                  {/* Preço e Botões */}
+                  <div className="mt-auto">
+                    <div className="text-[10px] text-emerald-500 font-mono text-center mb-3">
+                      *Sob consulta*
+                    </div>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => openDetails(s)}
+                        className={`flex-1 py-2 text-[10px] font-bold uppercase tracking-widest transition-colors rounded ${
+                          isDistro || isMarketing
+                            ? "border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10"
+                            : "border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10"
+                        }`}
+                      >
+                        DETALHES
+                      </button>
+                      <button
+                        onClick={() => window.open(links.whatsapp, "_blank")}
+                        className="p-2 bg-green-600 hover:bg-green-700 text-white transition-colors rounded"
+                        title="Falar no WhatsApp"
+                      >
+                        <MessageCircle size={14} />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
 
-      {/* MODAL DE DETALHES */}
+      {/* MODAL DE DETALHES (COM INFORMAÇÕES COMPLETAS) */}
       <AnimatePresence>
         {modalOpen && selectedService && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
@@ -1471,19 +1492,17 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
                 </div>
               </div>
 
-              {(selectedService.id === "distro" || selectedService.id === "marketing") && (
+              {selectedService.external && (
                 <div className="mb-4 p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-lg">
-                  <p className="text-emerald-400 text-[9px] font-mono mb-1">🎯 SOLUÇÃO PARA ARTISTAS</p>
-                  {selectedService.id === "distro" && (
-                    <img 
-                      src="/parceiro-logo.png" 
-                      alt="Parceiro"
-                      className="h-5 opacity-80 mt-1"
-                      onError={(e) => {
-                        e.currentTarget.style.display = 'none';
-                      }}
-                    />
-                  )}
+                  <p className="text-emerald-400 text-[9px] font-mono mb-1">🚀 EM PARCERIA COM</p>
+                  <img 
+                    src="/parceiro-logo.png" 
+                    alt="Parceiro"
+                    className="h-5 opacity-80 mt-1"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                    }}
+                  />
                 </div>
               )}
 
