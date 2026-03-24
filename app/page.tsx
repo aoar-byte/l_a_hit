@@ -1208,7 +1208,7 @@ const PersistentPlayer = ({
 };
 
 // ============================================================
-// SERVIÇOS (FUNDO UNIFICADO POR CATEGORIA - RESPONSIVO)
+// SERVIÇOS (CARDS DO MESMO TAMANHO + ALINHADOS AO CENTRO)
 // ============================================================
 const Services = ({ servicos, links, onLeadOpen }: any) => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -1266,7 +1266,7 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           
           {/* COLUNA ESQUERDA - EMPRESAS (FUNDO AZUL UNIFICADO) */}
-          <div className="bg-gradient-to-br from-blue-950/40 to-blue-950/20 rounded-2xl border border-blue-500/30 overflow-hidden">
+          <div className="bg-gradient-to-br from-blue-950/40 to-blue-950/20 rounded-2xl border border-blue-500/30 overflow-hidden flex flex-col">
             {/* CABEÇALHO EMPRESAS */}
             <div className="p-6 pb-2 border-b border-blue-500/20">
               <div className="flex items-center gap-2 text-blue-500 font-mono text-xs tracking-widest uppercase mb-2">
@@ -1281,9 +1281,9 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
               </p>
             </div>
 
-            {/* CARDS EMPRESAS */}
-            <div className="p-6 pt-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            {/* CARDS EMPRESAS - MESMA ALTURA E CENTRALIZADOS */}
+            <div className="flex-1 p-6 pt-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 h-full">
                 {servicosEmpresas.map((s: any, i: number) => {
                   const Icon = s.icon;
                   const resumo = getResumo(s.id);
@@ -1291,35 +1291,35 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
                   return (
                     <div
                       key={i}
-                      className="group bg-slate-950/80 border border-blue-500/20 hover:border-blue-500/50 rounded-xl transition-all duration-300 overflow-hidden flex flex-col"
+                      className="group bg-slate-950/80 border border-blue-500/20 hover:border-blue-500/50 rounded-xl transition-all duration-300 overflow-hidden flex flex-col h-full"
                     >
-                      <div className="p-4 flex flex-col h-full">
+                      <div className="p-5 flex flex-col items-center text-center h-full">
                         {/* Ícone */}
-                        <div className="flex justify-center mb-3">
-                          <div className="w-12 h-12 bg-blue-500/10 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                            <Icon className="w-6 h-6 text-blue-500" />
+                        <div className="mb-4">
+                          <div className="w-14 h-14 bg-blue-500/10 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <Icon className="w-7 h-7 text-blue-500" />
                           </div>
                         </div>
                         
                         {/* Título */}
-                        <h4 className="text-sm font-bold text-white text-center mb-2">
+                        <h4 className="text-base font-bold text-white mb-3">
                           {s.title}
                         </h4>
                         
                         {/* Resumo (apenas 1 linha de destaque) */}
-                        <p className="text-slate-400 text-[11px] text-center leading-relaxed mb-4">
+                        <p className="text-slate-400 text-xs text-center leading-relaxed mb-4 flex-1">
                           {resumo}
                         </p>
 
-                        {/* Preço e Botões */}
-                        <div className="mt-auto">
-                          <div className="text-[9px] text-emerald-500 font-mono text-center mb-3">
+                        {/* Preço e Botões - SEMPRE NO FINAL */}
+                        <div className="w-full mt-auto">
+                          <div className="text-[10px] text-emerald-500 font-mono text-center mb-3">
                             *Sob consulta*
                           </div>
-                          <div className="flex gap-2">
+                          <div className="flex gap-2 justify-center">
                             <button
                               onClick={() => openDetails(s)}
-                              className="flex-1 py-1.5 border border-blue-500/30 text-blue-400 text-[9px] font-bold uppercase tracking-widest hover:bg-blue-500/10 transition-colors rounded"
+                              className="px-4 py-1.5 border border-blue-500/30 text-blue-400 text-[10px] font-bold uppercase tracking-widest hover:bg-blue-500/10 transition-colors rounded"
                             >
                               DETALHES
                             </button>
@@ -1328,7 +1328,7 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
                               className="p-1.5 bg-green-600 hover:bg-green-700 text-white transition-colors rounded"
                               title="Falar no WhatsApp"
                             >
-                              <MessageCircle size={12} />
+                              <MessageCircle size={14} />
                             </button>
                           </div>
                         </div>
@@ -1341,7 +1341,7 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
           </div>
 
           {/* COLUNA DIREITA - ARTISTAS (FUNDO VERDE UNIFICADO) */}
-          <div className="bg-gradient-to-br from-emerald-950/40 to-emerald-950/20 rounded-2xl border border-emerald-500/30 overflow-hidden">
+          <div className="bg-gradient-to-br from-emerald-950/40 to-emerald-950/20 rounded-2xl border border-emerald-500/30 overflow-hidden flex flex-col">
             {/* CABEÇALHO ARTISTAS */}
             <div className="p-6 pb-2 border-b border-emerald-500/20">
               <div className="flex items-center gap-2 text-emerald-500 font-mono text-xs tracking-widest uppercase mb-2">
@@ -1356,9 +1356,9 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
               </p>
             </div>
 
-            {/* CARDS ARTISTAS */}
-            <div className="p-6 pt-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {/* CARDS ARTISTAS - MESMA ALTURA E CENTRALIZADOS */}
+            <div className="flex-1 p-6 pt-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 h-full">
                 {servicosArtistas.map((s: any, i: number) => {
                   const Icon = s.icon;
                   const resumo = getResumo(s.id);
@@ -1368,46 +1368,46 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
                   return (
                     <div
                       key={i}
-                      className={`group bg-slate-950/80 border rounded-xl transition-all duration-300 overflow-hidden flex flex-col ${
+                      className={`group bg-slate-950/80 border rounded-xl transition-all duration-300 overflow-hidden flex flex-col h-full ${
                         isDistro || isMarketing
                           ? "border-emerald-500/30 hover:border-emerald-500/50"
                           : "border-emerald-500/20 hover:border-emerald-500/40"
                       }`}
                     >
-                      <div className="p-4 flex flex-col h-full">
+                      <div className="p-5 flex flex-col items-center text-center h-full">
                         {/* Ícone */}
-                        <div className="flex justify-center mb-3">
-                          <div className="w-12 h-12 bg-emerald-500/10 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                            <Icon className="w-6 h-6 text-emerald-500" />
+                        <div className="mb-4">
+                          <div className="w-14 h-14 bg-emerald-500/10 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <Icon className="w-7 h-7 text-emerald-500" />
                           </div>
                         </div>
                         
                         {/* Título com badge de destaque */}
-                        <div className="text-center mb-2">
-                          <h4 className={`text-sm font-bold ${
+                        <div className="mb-3">
+                          <h4 className={`text-base font-bold ${
                             isDistro || isMarketing ? "text-emerald-400" : "text-white"
                           }`}>
                             {s.title}
                           </h4>
                           {(isDistro || isMarketing) && (
-                            <span className="inline-block mt-1 text-[7px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full">
+                            <span className="inline-block mt-1 text-[8px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full">
                               DESTAQUE
                             </span>
                           )}
                         </div>
                         
                         {/* Resumo (apenas 1 linha de destaque) */}
-                        <p className="text-slate-400 text-[11px] text-center leading-relaxed mb-3">
+                        <p className="text-slate-400 text-xs text-center leading-relaxed mb-4 flex-1">
                           {resumo}
                         </p>
 
                         {/* Logo do parceiro (apenas no card Distribuição Digital) */}
                         {isDistro && (
-                          <div className="flex justify-center mb-2">
+                          <div className="mb-3">
                             <img 
                               src="/parceiro-logo.png" 
                               alt="Parceiro"
-                              className="h-5 opacity-60 hover:opacity-100 transition-opacity"
+                              className="h-6 opacity-60 hover:opacity-100 transition-opacity mx-auto"
                               onError={(e) => {
                                 e.currentTarget.style.display = 'none';
                               }}
@@ -1415,15 +1415,15 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
                           </div>
                         )}
 
-                        {/* Preço e Botões */}
-                        <div className="mt-auto">
-                          <div className="text-[9px] text-emerald-500 font-mono text-center mb-3">
+                        {/* Preço e Botões - SEMPRE NO FINAL */}
+                        <div className="w-full mt-auto">
+                          <div className="text-[10px] text-emerald-500 font-mono text-center mb-3">
                             *Sob consulta*
                           </div>
-                          <div className="flex gap-2">
+                          <div className="flex gap-2 justify-center">
                             <button
                               onClick={() => openDetails(s)}
-                              className={`flex-1 py-1.5 text-[9px] font-bold uppercase tracking-widest transition-colors rounded ${
+                              className={`px-4 py-1.5 text-[10px] font-bold uppercase tracking-widest transition-colors rounded ${
                                 isDistro || isMarketing
                                   ? "border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10"
                                   : "border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10"
@@ -1436,7 +1436,7 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
                               className="p-1.5 bg-green-600 hover:bg-green-700 text-white transition-colors rounded"
                               title="Falar no WhatsApp"
                             >
-                              <MessageCircle size={12} />
+                              <MessageCircle size={14} />
                             </button>
                           </div>
                         </div>
@@ -1450,7 +1450,7 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
         </div>
       </div>
 
-      {/* MODAL DE DETALHES (COM INFORMAÇÕES COMPLETAS) */}
+      {/* MODAL DE DETALHES */}
       <AnimatePresence>
         {modalOpen && selectedService && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
