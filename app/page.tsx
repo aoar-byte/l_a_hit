@@ -1208,90 +1208,90 @@ const PersistentPlayer = ({
 };
 
 // ============================================================
-// SERVIÇOS - VERSÃO QUE FUNCIONAVA COM CARDS PADRONIZADOS
+// SERVIÇOS - TODOS OS CARDS HORIZONTAIS, TOPO E BASE ALINHADOS
 // ============================================================
 const Services = ({ servicos, links }: any) => {
   const [selected, setSelected] = useState<any>(null);
 
   const empresas = servicos.filter((s: any) => s.categoria === "empresas");
   const artistas = servicos.filter((s: any) => s.categoria === "artistas");
+  
+  // Todos os serviços juntos
+  const todosServicos = [...empresas, ...artistas];
 
   return (
     <section id="services" className="py-24 bg-slate-900 border-t border-white/5">
       <div className="max-w-7xl mx-auto px-6">
         
         {/* TÍTULO */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-12">
           <div className="text-blue-500 text-sm font-mono mb-2">SOLUTIONS</div>
           <h2 className="text-4xl font-bold text-white">Soluções Integradas</h2>
           <p className="text-slate-400 mt-2">Atendemos mercado corporativo e artistas independentes</p>
         </div>
 
-        {/* 2 COLUNAS */}
-        <div className="grid md:grid-cols-2 gap-8">
-          
-          {/* COLUNA EMPRESAS */}
-          <div>
-            <div className="mb-6">
-              <h3 className="text-blue-500 text-xl font-bold">B2B SOLUTIONS</h3>
-              <p className="text-slate-400 text-sm mt-1">Para Empresas. Licenciamento e identidade sonora para marcas, agências e produtoras.</p>
-            </div>
-            <div className="space-y-4">
-              {empresas.map((s, i) => (
-                <div key={i} className="bg-slate-800 rounded-lg p-5 hover:bg-slate-800/80 transition">
-                  <div className="flex gap-4">
-                    <div className="w-12 h-12 bg-blue-500/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                      {s.icon && <s.icon className="w-6 h-6 text-blue-500" />}
-                    </div>
-                    <div className="flex-1">
-                      <h4 className="text-white font-bold text-lg mb-1">{s.title}</h4>
-                      <p className="text-slate-400 text-sm mb-3">{s.desc?.split("|")[0]}</p>
-                      <div className="flex justify-between items-center">
-                        <span className="text-emerald-500 text-xs">Sob consulta</span>
-                        <button onClick={() => setSelected(s)} className="text-blue-400 text-sm hover:text-blue-300">
-                          Detalhes →
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+        {/* CABEÇALHOS ACIMA DOS CARDS */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div className="col-span-1 sm:col-span-2">
+            <h3 className="text-blue-500 text-xl font-bold">B2B SOLUTIONS</h3>
+            <p className="text-slate-400 text-sm">Para Empresas. Licenciamento e identidade sonora.</p>
           </div>
+          <div className="col-span-1 sm:col-span-2">
+            <h3 className="text-emerald-500 text-xl font-bold">ARTIST SOLUTIONS</h3>
+            <p className="text-slate-400 text-sm">Para Artistas. Soluções para sua carreira musical.</p>
+          </div>
+        </div>
 
-          {/* COLUNA ARTISTAS */}
-          <div>
-            <div className="mb-6">
-              <h3 className="text-emerald-500 text-xl font-bold">ARTIST SOLUTIONS</h3>
-              <p className="text-slate-400 text-sm mt-1">Para Artistas. Soluções completas para sua carreira musical, do estúdio ao streaming.</p>
-            </div>
-            <div className="space-y-4">
-              {artistas.map((s, i) => (
-                <div key={i} className="bg-slate-800 rounded-lg p-5 hover:bg-slate-800/80 transition">
-                  <div className="flex gap-4">
-                    <div className="w-12 h-12 bg-emerald-500/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                      {s.icon && <s.icon className="w-6 h-6 text-emerald-500" />}
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-1">
-                        <h4 className="text-white font-bold text-lg">{s.title}</h4>
-                        {s.id === "distro" && (
-                          <span className="bg-emerald-500/20 text-emerald-400 text-[9px] px-2 py-0.5 rounded">DESTAQUE</span>
-                        )}
-                      </div>
-                      <p className="text-slate-400 text-sm mb-3">{s.desc?.split("|")[0]}</p>
-                      <div className="flex justify-between items-center">
-                        <span className="text-emerald-500 text-xs">Sob consulta</span>
-                        <button onClick={() => setSelected(s)} className="text-emerald-400 text-sm hover:text-emerald-300">
-                          Detalhes →
-                        </button>
-                      </div>
-                    </div>
-                  </div>
+        {/* TODOS OS CARDS HORIZONTAIS COM MESMA ALTURA */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {todosServicos.map((s: any, i: number) => {
+            const isEmpresa = s.categoria === "empresas";
+            return (
+              <div
+                key={i}
+                className={`bg-slate-800 rounded-xl p-6 border flex flex-col h-full ${
+                  isEmpresa ? "border-blue-500/20 hover:border-blue-500/50" : "border-emerald-500/20 hover:border-emerald-500/50"
+                } transition-all duration-300`}
+              >
+                {/* Ícone */}
+                <div className={`w-14 h-14 rounded-xl flex items-center justify-center mb-5 ${
+                  isEmpresa ? "bg-blue-500/10" : "bg-emerald-500/10"
+                }`}>
+                  {s.icon && <s.icon className={`w-7 h-7 ${isEmpresa ? "text-blue-500" : "text-emerald-500"}`} />}
                 </div>
-              ))}
-            </div>
-          </div>
+                
+                {/* Título */}
+                <h4 className="text-white font-bold text-xl mb-2">{s.title}</h4>
+                
+                {/* Descrição */}
+                <p className="text-slate-400 text-sm mb-4 flex-1">
+                  {s.desc?.split("|")[0] || "Sob consulta"}
+                </p>
+                
+                {/* Badge Destaque */}
+                {s.id === "distro" && (
+                  <div className="mb-3">
+                    <span className="bg-emerald-500/20 text-emerald-400 text-[10px] px-2 py-1 rounded-full font-bold">
+                      DESTAQUE
+                    </span>
+                  </div>
+                )}
+                
+                {/* Preço e Botão - Sempre no final */}
+                <div className="flex items-center justify-between pt-4 border-t border-white/10 mt-auto">
+                  <span className="text-emerald-500 text-sm font-medium">Sob consulta</span>
+                  <button 
+                    onClick={() => setSelected(s)}
+                    className={`text-sm font-medium hover:underline ${
+                      isEmpresa ? "text-blue-400" : "text-emerald-400"
+                    }`}
+                  >
+                    Detalhes →
+                  </button>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
 
