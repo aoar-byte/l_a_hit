@@ -977,7 +977,7 @@ const SmartCatalog = ({
 };
 
 // ============================================================
-// PLAYER DE MÚSICA FIXO (COM BOTÃO FECHAR, PRÓXIMO E AUTO PLAY)
+// PLAYER DE MÚSICA FIXO (COM BOTÃO FECHAR CORRIGIDO)
 // ============================================================
 const PersistentPlayer = ({ 
   track, 
@@ -1125,25 +1125,20 @@ const PersistentPlayer = ({
         />
 
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4 flex-wrap md:flex-nowrap">
-          {/* INFO DA MÚSICA */}
+          
+          {/* INFO DA MÚSICA COM BOTÃO FECHAR */}
           <div className="flex items-center gap-4 w-full md:w-1/3">
+            {/* Thumbnail/Ícone */}
             <div className="w-12 h-12 bg-slate-800 rounded-md relative flex items-center justify-center shrink-0 border border-white/5">
               <Music size={20} className="text-blue-500" />
               {isPlaying && <div className="absolute inset-0 bg-blue-500/20 rounded-md animate-pulse" />}
             </div>
+            
+            {/* Info da música */}
             <div className="overflow-hidden flex-1">
               <h4 className="text-white font-bold text-sm truncate">{track.title}</h4>
               <p className="text-slate-500 text-xs truncate">{track.artist}</p>
             </div>
-            
-            {/* BOTÃO FECHAR */}
-            <button
-              onClick={closePlayer}
-              className="text-slate-500 hover:text-white transition-colors p-1"
-              title="Fechar player"
-            >
-              <X size={18} />
-            </button>
           </div>
 
           {/* CONTROLES CENTRAIS */}
@@ -1193,13 +1188,23 @@ const PersistentPlayer = ({
             </div>
           </div>
 
-          {/* AÇÃO - LICENCIAR */}
-          <div className="w-full md:w-1/4 flex justify-end">
+          {/* AÇÃO - LICENCIAR + BOTÃO FECHAR */}
+          <div className="w-full md:w-1/4 flex items-center justify-end gap-3">
+            {/* BOTÃO LICENCIAR */}
             <button
               onClick={() => onLicenseClick(track)}
               className="px-5 py-2 bg-blue-600/10 text-blue-400 border border-blue-500/20 text-xs font-bold rounded hover:bg-blue-600 hover:text-white transition-all shadow-sm whitespace-nowrap"
             >
               LICENCIAR FAIXA
+            </button>
+            
+            {/* BOTÃO FECHAR - AGORA NA EXTREMA DIREITA */}
+            <button
+              onClick={closePlayer}
+              className="text-slate-500 hover:text-white hover:bg-slate-800/50 transition-colors p-2 rounded-full"
+              title="Fechar player"
+            >
+              <X size={18} />
             </button>
           </div>
         </div>
