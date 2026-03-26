@@ -902,7 +902,7 @@ const SmartCatalog = ({
           </div>
 
           {/* ALTERAÇÃO: max-h-[380px] para 5 linhas visíveis */}
-          <div className="flex flex-col overflow-y-auto max-h-[310px] scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-slate-900">
+          <div className="flex flex-col overflow-y-auto max-h-[300px] scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-slate-900">
             {filteredTracks.map((track: any) => {
               const isCurrent = currentTrack?.id === track.id;
               
