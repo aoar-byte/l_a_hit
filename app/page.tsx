@@ -584,7 +584,7 @@ const LeadModal = ({
 };
 
 // ============================================================
-// RODAPÉ COM SUA LOGO
+// RODAPÉ COM LOGO ESTILIZADA
 // ============================================================
 const Footer = () => {
   const scrollToSection = (id: string) =>
@@ -596,26 +596,33 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row justify-between items-start gap-12 mb-20">
           <div className="max-w-xs">
             {/* LOGO NO FOOTER */}
-            <img 
-              src="/image_2ee558fe-removebg-preview.png"
-              alt="L'A HIT"
-              className="h-14 w-auto mb-6 opacity-80 hover:opacity-100 transition-opacity"
-            />
-            <p className="leading-relaxed text-slate-400">
+            <div className="mb-6">
+              <div className="flex items-baseline">
+                <span className="text-3xl font-black tracking-tighter text-white">
+                  L<span className="text-blue-500">'</span>A
+                </span>
+                <div className="mx-2 h-8 w-px bg-blue-500/30" />
+                <span className="text-2xl font-black text-blue-500">
+                  HIT
+                </span>
+              </div>
+              <div className="w-12 h-px bg-gradient-to-r from-blue-500 to-transparent mt-2" />
+            </div>
+            <p className="leading-relaxed text-slate-400 mt-4">
               Otimizando a indústria musical através da lógica, design e
               estratégia. Brasil • Global
             </p>
           </div>
           <div className="flex gap-12 md:gap-24">
             <div>
-              <h5 className="text-white font-bold uppercase tracking-widest mb-6">
+              <h5 className="text-white font-bold uppercase tracking-widest mb-6 text-xs">
                 Plataforma
               </h5>
               <ul className="space-y-3">
                 <li>
                   <button
                     onClick={() => scrollToSection("catalog")}
-                    className="hover:text-blue-500 transition-colors"
+                    className="hover:text-blue-500 transition-colors text-xs"
                   >
                     Catálogo
                   </button>
@@ -623,7 +630,7 @@ const Footer = () => {
                 <li>
                   <button
                     onClick={() => scrollToSection("services")}
-                    className="hover:text-blue-500 transition-colors"
+                    className="hover:text-blue-500 transition-colors text-xs"
                   >
                     Serviços
                   </button>
@@ -631,7 +638,7 @@ const Footer = () => {
                 <li>
                   <button
                     onClick={() => scrollToSection("cases")}
-                    className="hover:text-blue-500 transition-colors"
+                    className="hover:text-blue-500 transition-colors text-xs"
                   >
                     Cases
                   </button>
@@ -656,7 +663,7 @@ const Footer = () => {
 };
 
 // ============================================================
-// NAVBAR COM SUA LOGO
+// NAVBAR COM LOGO ESTILIZADA
 // ============================================================
 const Navbar = ({ links }: { links: any }) => {
   const [scrolled, setScrolled] = useState(false);
@@ -681,45 +688,47 @@ const Navbar = ({ links }: { links: any }) => {
     >
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         <div
-          className="flex items-center gap-3 cursor-pointer group"
+          className="flex items-center gap-2 cursor-pointer group"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         >
-          {/* LOGO COM SUA IMAGEM */}
-          <img 
-            src="/image_2ee558fe-removebg-preview.png"
-            alt="L'A HIT"
-            className="h-10 w-auto transition-transform duration-300 group-hover:scale-105"
-          />
-          
-          {/* Se quiser manter o texto ao lado */}
-          {/* <div className="flex flex-col leading-none">
-            <span className="text-lg font-black tracking-tighter text-white">
-              L'A
-            </span>
-            <span className="text-[10px] font-bold tracking-[0.4em] text-blue-500 uppercase">
-              HIT
-            </span>
-          </div> */}
+          {/* LOGO PRINCIPAL */}
+          <div className="relative">
+            <div className="flex items-baseline">
+              <span className="text-2xl md:text-3xl font-black tracking-tighter text-white">
+                L<span className="text-blue-500">'</span>A
+              </span>
+              <div className="mx-1 h-6 w-px bg-blue-500/30" />
+              <span className="text-xl md:text-2xl font-black text-blue-500">
+                HIT
+              </span>
+            </div>
+            
+            {/* Linha decorativa */}
+            <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-transparent group-hover:w-full transition-all duration-500" />
+          </div>
         </div>
         
         <div className="hidden md:flex items-center gap-8 text-xs font-bold tracking-widest text-slate-400 uppercase">
           <button
             onClick={() => scrollToSection("catalog")}
-            className="hover:text-white transition-colors"
+            className="hover:text-white transition-colors relative group"
           >
             Catálogo
+            <span className="absolute -bottom-1 left-0 w-0 h-px bg-blue-500 group-hover:w-full transition-all duration-300" />
           </button>
           <button
             onClick={() => scrollToSection("services")}
-            className="hover:text-white transition-colors"
+            className="hover:text-white transition-colors relative group"
           >
             Serviços
+            <span className="absolute -bottom-1 left-0 w-0 h-px bg-blue-500 group-hover:w-full transition-all duration-300" />
           </button>
           <button
             onClick={() => scrollToSection("cases")}
-            className="hover:text-white transition-colors"
+            className="hover:text-white transition-colors relative group"
           >
             Cases
+            <span className="absolute -bottom-1 left-0 w-0 h-px bg-blue-500 group-hover:w-full transition-all duration-300" />
           </button>
         </div>
         
