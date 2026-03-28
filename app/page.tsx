@@ -584,72 +584,74 @@ const LeadModal = ({
 };
 
 // ============================================================
-// NAVBAR
+// RODAPÉ
 // ============================================================
-const Navbar = ({ links }: { links: any }) => {
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const scrollToSection = (id: string) => {
+const Footer = () => {
+  const scrollToSection = (id: string) =>
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-  };
 
   return (
-    <nav
-      className={`fixed top-0 w-full z-50 transition-all duration-500 border-b ${
-        scrolled
-          ? "bg-slate-950/80 backdrop-blur-md border-white/5 py-4"
-          : "bg-transparent border-transparent py-6"
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-        <div
-          className="flex items-center gap-3 cursor-pointer group"
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        >
-          <div className="w-10 h-10 relative bg-gradient-to-br from-slate-700 to-slate-900 border border-white/10 shadow-[4px_4px_0px_0px_rgba(30,41,59,1)] flex items-center justify-center">
-            <div className="absolute top-0 right-0 w-3 h-3 bg-blue-600" />
-            <span className="font-black text-white text-lg tracking-tighter relative z-10 leading-none mt-1 ml-1">
-              LA
-            </span>
+    <footer className="bg-slate-950 py-20 border-t border-white/5 text-slate-500 text-xs font-mono relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        <div className="flex flex-col md:flex-row justify-between items-start gap-12 mb-20">
+          <div className="max-w-xs">
+            {/* LOGO DO RODAPÉ COMO IMAGEM */}
+            <img 
+              src="/logo.png" 
+              alt="L'A HIT" 
+              className="w-12 h-12 object-contain mb-6"
+            />
+            <p className="leading-relaxed text-slate-400">
+              Otimizando a indústria musical através da lógica, design e
+              estratégia. Brasil • Global
+            </p>
           </div>
-          <div className="flex flex-col leading-none">
-            <span className="text-lg font-black tracking-tighter text-white">
-              L'A
-            </span>
-            <span className="text-[10px] font-bold tracking-[0.4em] text-blue-500 uppercase">
-              HIT
-            </span>
+          <div className="flex gap-12 md:gap-24">
+            <div>
+              <h5 className="text-white font-bold uppercase tracking-widest mb-6">
+                Plataforma
+              </h5>
+              <ul className="space-y-3">
+                <li>
+                  <button
+                    onClick={() => scrollToSection("catalog")}
+                    className="hover:text-blue-500"
+                  >
+                    Catálogo
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => scrollToSection("services")}
+                    className="hover:text-blue-500"
+                  >
+                    Serviços
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => scrollToSection("cases")}
+                    className="hover:text-blue-500"
+                  >
+                    Cases
+                  </button>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
-        <div className="hidden md:flex items-center gap-8 text-xs font-bold tracking-widest text-slate-400 uppercase">
-          <button
-            onClick={() => scrollToSection("catalog")}
-            className="hover:text-white"
-          >
-            Catálogo
-          </button>
-          <button
-            onClick={() => scrollToSection("services")}
-            className="hover:text-white"
-          >
-            Serviços
-          </button>
-          <button
-            onClick={() => scrollToSection("cases")}
-            className="hover:text-white"
-          >
-            Cases
-          </button>
+        <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between gap-4">
+          <p>© 2026 L'A HIT HOLDINGS. TODOS OS DIREITOS RESERVADOS.</p>
+          <p className="flex items-center gap-2">
+            <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />{" "}
+            SYSTEM STATUS: OPTIMAL
+          </p>
         </div>
-        <div className="w-24" />
       </div>
-    </nav>
+      <div className="absolute bottom-0 left-0 text-[15vw] font-black text-white/[0.02] leading-none pointer-events-none select-none tracking-tighter">
+        L'A HIT
+      </div>
+    </footer>
   );
 };
 
