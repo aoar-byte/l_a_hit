@@ -695,7 +695,7 @@ const Navbar = ({ links }: { links: any }) => {
           <img 
             src="/image_2ee558fe-removebg-preview.png"
             alt="L'A HIT"
-            className="h-10 w-auto md:h-14 transition-all duration-300 hover:opacity-80"
+            className="h-14 w-auto md:h-20 transition-all duration-300 hover:opacity-80"
           />
         </div>
         
