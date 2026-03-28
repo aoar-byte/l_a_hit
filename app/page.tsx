@@ -586,7 +586,7 @@ const LeadModal = ({
 // ============================================================
 // RODAPÉ
 // ============================================================
-const Footer = () => {
+ const Footer = () => {
   const scrollToSection = (id: string) =>
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
@@ -595,12 +595,21 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-start gap-12 mb-20">
           <div className="max-w-xs">
-            {/* LOGO DO RODAPÉ COMO IMAGEM */}
-            <img 
-              src="/logo.png" 
-              alt="L'A HIT" 
-              className="w-12 h-12 object-contain mb-6"
-            />
+            {/* LOGO SVG COM ARCO - VERSÃO CORRIGIDA */}
+            <div className="mb-6">
+              <svg width="56" height="56" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                {/* Linhas do arco */}
+                <path d="M20 50 L80 50" stroke="#3B82F6" strokeWidth="4.5" strokeLinecap="round"/>
+                <path d="M50 20 L50 80" stroke="#3B82F6" strokeWidth="4.5" strokeLinecap="round"/>
+                <path d="M30 30 L70 70" stroke="#3B82F6" strokeWidth="4.5" strokeLinecap="round"/>
+                <path d="M70 30 L30 70" stroke="#3B82F6" strokeWidth="4.5" strokeLinecap="round"/>
+                {/* Círculo */}
+                <circle cx="50" cy="50" r="32" stroke="#3B82F6" strokeWidth="3.5" fill="none"/>
+                {/* Texto L+A HIT */}
+                <text x="50" y="60" textAnchor="middle" fill="#3B82F6" fontSize="22" fontWeight="bold" fontFamily="monospace">L+A</text>
+                <text x="50" y="82" textAnchor="middle" fill="#3B82F6" fontSize="12" fontWeight="bold" fontFamily="monospace">HIT</text>
+              </svg>
+            </div>
             <p className="leading-relaxed text-slate-400">
               Otimizando a indústria musical através da lógica, design e
               estratégia. Brasil • Global
@@ -658,7 +667,7 @@ const Footer = () => {
 // ============================================================
 // NAVBAR
 // ============================================================
- const Navbar = ({ links }: { links: any }) => {
+  const Navbar = ({ links }: { links: any }) => {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -684,19 +693,21 @@ const Footer = () => {
           className="flex items-center gap-3 cursor-pointer group"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         >
-          {/* LOGO SVG COM ARCO - VISÍVEL */}
-          <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            {/* Linhas do arco */}
-            <path d="M20 50 L80 50" stroke="#3B82F6" strokeWidth="3" strokeLinecap="round"/>
-            <path d="M50 20 L50 80" stroke="#3B82F6" strokeWidth="3" strokeLinecap="round"/>
-            <path d="M30 30 L70 70" stroke="#3B82F6" strokeWidth="3" strokeLinecap="round"/>
-            <path d="M70 30 L30 70" stroke="#3B82F6" strokeWidth="3" strokeLinecap="round"/>
-            {/* Círculo */}
-            <circle cx="50" cy="50" r="28" stroke="#3B82F6" strokeWidth="2.5" fill="none"/>
-            {/* Texto L+A HIT */}
-            <text x="50" y="65" textAnchor="middle" fill="#3B82F6" fontSize="16" fontWeight="bold" fontFamily="monospace">L+A</text>
-            <text x="50" y="82" textAnchor="middle" fill="#3B82F6" fontSize="7" fontWeight="bold" fontFamily="monospace">HIT</text>
-          </svg>
+          {/* LOGO SVG COM ARCO - VERSÃO CORRIGIDA */}
+          <div className="relative w-10 h-10">
+            <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              {/* Linhas do arco - mais grossas */}
+              <path d="M20 50 L80 50" stroke="#3B82F6" strokeWidth="4" strokeLinecap="round"/>
+              <path d="M50 20 L50 80" stroke="#3B82F6" strokeWidth="4" strokeLinecap="round"/>
+              <path d="M30 30 L70 70" stroke="#3B82F6" strokeWidth="4" strokeLinecap="round"/>
+              <path d="M70 30 L30 70" stroke="#3B82F6" strokeWidth="4" strokeLinecap="round"/>
+              {/* Círculo */}
+              <circle cx="50" cy="50" r="32" stroke="#3B82F6" strokeWidth="3" fill="none"/>
+              {/* Texto L+A HIT - maior e mais visível */}
+              <text x="50" y="60" textAnchor="middle" fill="#3B82F6" fontSize="20" fontWeight="bold" fontFamily="monospace">L+A</text>
+              <text x="50" y="80" textAnchor="middle" fill="#3B82F6" fontSize="11" fontWeight="bold" fontFamily="monospace">HIT</text>
+            </svg>
+          </div>
           <div className="flex flex-col leading-none">
             <span className="text-lg font-black tracking-tighter text-white">
               L'A
