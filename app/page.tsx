@@ -684,12 +684,25 @@ const Navbar = ({ links }: { links: any }) => {
           className="flex items-center gap-3 cursor-pointer group"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         >
-          {/* LOGO COMO IMAGEM */}
-          <img 
-            src="/logo.png" 
-            alt="L'A HIT" 
-            className="w-10 h-10 object-contain"
-          />
+          {/* LOGO SVG COM ARCO - SEM FUNDO */}
+          <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            {/* Linhas do arco */}
+            <path d="M20 50 L80 50" stroke="url(#gradientNav)" strokeWidth="3" strokeLinecap="round"/>
+            <path d="M50 20 L50 80" stroke="url(#gradientNav)" strokeWidth="3" strokeLinecap="round"/>
+            <path d="M30 30 L70 70" stroke="url(#gradientNav)" strokeWidth="3" strokeLinecap="round"/>
+            <path d="M70 30 L30 70" stroke="url(#gradientNav)" strokeWidth="3" strokeLinecap="round"/>
+            {/* Círculo */}
+            <circle cx="50" cy="50" r="28" stroke="url(#gradientNav)" strokeWidth="2.5" fill="none"/>
+            {/* Texto L+A HIT */}
+            <text x="50" y="65" textAnchor="middle" fill="white" fontSize="18" fontWeight="bold" fontFamily="monospace">L+A</text>
+            <text x="50" y="82" textAnchor="middle" fill="white" fontSize="8" fontWeight="bold" fontFamily="monospace">HIT</text>
+            <defs>
+              <linearGradient id="gradientNav" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#3B82F6"/>
+                <stop offset="100%" stopColor="#6366F1"/>
+              </linearGradient>
+            </defs>
+          </svg>
           <div className="flex flex-col leading-none">
             <span className="text-lg font-black tracking-tighter text-white">
               L'A
@@ -1777,9 +1790,25 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-start gap-12 mb-20">
           <div className="max-w-xs">
-            <div className="w-12 h-12 bg-slate-900 border border-white/10 mb-6 flex items-center justify-center">
-              <span className="font-black text-white text-xl">LA</span>
-            </div>
+            {/* LOGO SVG COM ARCO - SEM FUNDO */}
+            <svg width="56" height="56" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="mb-6">
+              {/* Linhas do arco */}
+              <path d="M20 50 L80 50" stroke="url(#gradientFooter)" strokeWidth="3.5" strokeLinecap="round"/>
+              <path d="M50 20 L50 80" stroke="url(#gradientFooter)" strokeWidth="3.5" strokeLinecap="round"/>
+              <path d="M30 30 L70 70" stroke="url(#gradientFooter)" strokeWidth="3.5" strokeLinecap="round"/>
+              <path d="M70 30 L30 70" stroke="url(#gradientFooter)" strokeWidth="3.5" strokeLinecap="round"/>
+              {/* Círculo */}
+              <circle cx="50" cy="50" r="28" stroke="url(#gradientFooter)" strokeWidth="2.5" fill="none"/>
+              {/* Texto L+A HIT */}
+              <text x="50" y="65" textAnchor="middle" fill="white" fontSize="18" fontWeight="bold" fontFamily="monospace">L+A</text>
+              <text x="50" y="82" textAnchor="middle" fill="white" fontSize="8" fontWeight="bold" fontFamily="monospace">HIT</text>
+              <defs>
+                <linearGradient id="gradientFooter" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#3B82F6"/>
+                  <stop offset="100%" stopColor="#6366F1"/>
+                </linearGradient>
+              </defs>
+            </svg>
             <p className="leading-relaxed text-slate-400">
               Otimizando a indústria musical através da lógica, design e
               estratégia. Brasil • Global
