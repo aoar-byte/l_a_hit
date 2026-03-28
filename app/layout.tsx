@@ -15,10 +15,29 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "L'A HIT - Catálogo de Músicas",
   description: "Plataforma de licenciamento musical e descoberta de hits.",
-  // REMOVA OU COMENTE ESTA LINHA:
-  // icons: {
-  //   icon: "/icon.png",
-  // },
+  icons: {
+    icon: [
+      {
+        url: "/web-app-manifest-512x512.png",
+        sizes: "512x512",
+        type: "image/png",
+      },
+      {
+        url: "/image_2ee558fe-removebg-preview.png",
+        sizes: "any",
+        type: "image/png",
+      },
+    ],
+    apple: [
+      {
+        url: "/web-app-manifest-512x512.png",
+        sizes: "180x180",
+        type: "image/png",
+      },
+    ],
+  },
+  // Opcional: Configuração para PWA
+  manifest: "/manifest.json",
 };
 
 export default function RootLayout({
@@ -28,6 +47,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR" suppressHydrationWarning>
+      <head>
+        {/* Meta tags adicionais para PWA */}
+        <link rel="apple-touch-icon" href="/web-app-manifest-512x512.png" />
+        <meta name="theme-color" content="#020617" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
