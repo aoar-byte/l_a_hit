@@ -1,0 +1,17 @@
+{
+  "name": "L'A HIT",
+  "short_name": "L'A HIT",
+  "description": "Plataforma de licenciamento musical e descoberta de hits",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#020617",
+  "theme_color": "#3b82f6",
+  "icons": [
+    {
+      "src": "/web-app-manifest-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
