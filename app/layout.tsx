@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   title: "L'A HIT - Catálogo de Músicas",
   description: "Plataforma de licenciamento musical e descoberta de hits.",
   icons: {
-    icon: "/icon.png",  // ← ADICIONE ESTA LINHA
+    icon: "/icon.png",
   },
 };
 
