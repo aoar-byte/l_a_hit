@@ -595,18 +595,14 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-start gap-12 mb-20">
           <div className="max-w-xs">
-            {/* LOGO NO FOOTER */}
+            {/* LOGO IMAGEM NO RODAPÉ */}
             <div className="mb-6">
-              <div className="flex items-baseline">
-                <span className="text-3xl font-black tracking-tighter text-white">
-                  L<span className="text-blue-500">'</span>A
-                </span>
-                <div className="mx-2 h-8 w-px bg-blue-500/30" />
-                <span className="text-2xl font-black text-blue-500">
-                  HIT
-                </span>
-              </div>
-              <div className="w-12 h-px bg-gradient-to-r from-blue-500 to-transparent mt-2" />
+              <img 
+                src="/image_2ee558fe-removebg-preview.png"
+                alt="L'A HIT"
+                className="h-12 w-auto md:h-16 transition-all duration-300 hover:opacity-80"
+              />
+              <div className="w-12 h-px bg-gradient-to-r from-blue-500 to-transparent mt-3" />
             </div>
             <p className="leading-relaxed text-slate-400 mt-4">
               Otimizando a indústria musical através da lógica, design e
