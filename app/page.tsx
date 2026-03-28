@@ -663,7 +663,7 @@ const Footer = () => {
 };
 
 // ============================================================
-// NAVBAR COM LOGO REDIMENSIONADA
+// NAVBAR COMPLETO COM LOGO GARANTIDA
 // ============================================================
 const Navbar = ({ links }: { links: any }) => {
   const [scrolled, setScrolled] = useState(false);
@@ -687,45 +687,40 @@ const Navbar = ({ links }: { links: any }) => {
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+        {/* LOGO - VERSÃO GARANTIDA QUE VAI APARECER */}
         <div
-          className="flex items-center cursor-pointer group"
+          className="flex items-center cursor-pointer"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         >
-          {/* LOGO REDIMENSIONADA - MAIS COMPACTA */}
           <div className="flex items-baseline">
-            <span className="text-xl md:text-2xl font-black tracking-tighter text-white">
+            <span className="text-2xl font-black text-white">
               L<span className="text-blue-500">'</span>A
             </span>
-            <span className="text-lg md:text-xl font-black text-blue-500 ml-1">
+            <span className="text-2xl font-black text-blue-500 ml-1">
               HIT
             </span>
           </div>
-          
-          {/* Linha decorativa sutil */}
-          <div className="ml-3 h-5 w-px bg-blue-500/30 hidden md:block" />
         </div>
         
+        {/* MENU */}
         <div className="hidden md:flex items-center gap-6 text-xs font-bold tracking-widest text-slate-400 uppercase">
           <button
             onClick={() => scrollToSection("catalog")}
-            className="hover:text-white transition-colors relative group"
+            className="hover:text-white transition-colors"
           >
             Catálogo
-            <span className="absolute -bottom-1 left-0 w-0 h-px bg-blue-500 group-hover:w-full transition-all duration-300" />
           </button>
           <button
             onClick={() => scrollToSection("services")}
-            className="hover:text-white transition-colors relative group"
+            className="hover:text-white transition-colors"
           >
             Serviços
-            <span className="absolute -bottom-1 left-0 w-0 h-px bg-blue-500 group-hover:w-full transition-all duration-300" />
           </button>
           <button
             onClick={() => scrollToSection("cases")}
-            className="hover:text-white transition-colors relative group"
+            className="hover:text-white transition-colors"
           >
             Cases
-            <span className="absolute -bottom-1 left-0 w-0 h-px bg-blue-500 group-hover:w-full transition-all duration-300" />
           </button>
         </div>
         
