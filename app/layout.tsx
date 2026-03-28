@@ -35,3 +35,14 @@ export default function RootLayout({
     </html>
   );
 }
+
+
+
+
+export const metadata: Metadata = {
+  title: "L'A HIT - Catálogo de Músicas", // força deploy
+  description: "Plataforma de licenciamento musical e descoberta de hits.",
+  icons: {
+    icon: "/icon.png",
+  },
+};
