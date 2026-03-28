@@ -584,9 +584,9 @@ const LeadModal = ({
 };
 
 // ============================================================
-// RODAPÉ
+// RODAPÉ COM SUA LOGO
 // ============================================================
- const Footer = () => {
+const Footer = () => {
   const scrollToSection = (id: string) =>
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
@@ -595,21 +595,12 @@ const LeadModal = ({
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-start gap-12 mb-20">
           <div className="max-w-xs">
-            {/* LOGO SVG COM ARCO - VERSÃO CORRIGIDA */}
-            <div className="mb-6">
-              <svg width="56" height="56" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                {/* Linhas do arco */}
-                <path d="M20 50 L80 50" stroke="#3B82F6" strokeWidth="4.5" strokeLinecap="round"/>
-                <path d="M50 20 L50 80" stroke="#3B82F6" strokeWidth="4.5" strokeLinecap="round"/>
-                <path d="M30 30 L70 70" stroke="#3B82F6" strokeWidth="4.5" strokeLinecap="round"/>
-                <path d="M70 30 L30 70" stroke="#3B82F6" strokeWidth="4.5" strokeLinecap="round"/>
-                {/* Círculo */}
-                <circle cx="50" cy="50" r="32" stroke="#3B82F6" strokeWidth="3.5" fill="none"/>
-                {/* Texto L+A HIT */}
-                <text x="50" y="60" textAnchor="middle" fill="#3B82F6" fontSize="22" fontWeight="bold" fontFamily="monospace">L+A</text>
-                <text x="50" y="82" textAnchor="middle" fill="#3B82F6" fontSize="12" fontWeight="bold" fontFamily="monospace">HIT</text>
-              </svg>
-            </div>
+            {/* LOGO NO FOOTER */}
+            <img 
+              src="/image_2ee558fe-removebg-preview.png"
+              alt="L'A HIT"
+              className="h-14 w-auto mb-6 opacity-80 hover:opacity-100 transition-opacity"
+            />
             <p className="leading-relaxed text-slate-400">
               Otimizando a indústria musical através da lógica, design e
               estratégia. Brasil • Global
@@ -624,7 +615,7 @@ const LeadModal = ({
                 <li>
                   <button
                     onClick={() => scrollToSection("catalog")}
-                    className="hover:text-blue-500"
+                    className="hover:text-blue-500 transition-colors"
                   >
                     Catálogo
                   </button>
@@ -632,7 +623,7 @@ const LeadModal = ({
                 <li>
                   <button
                     onClick={() => scrollToSection("services")}
-                    className="hover:text-blue-500"
+                    className="hover:text-blue-500 transition-colors"
                   >
                     Serviços
                   </button>
@@ -640,7 +631,7 @@ const LeadModal = ({
                 <li>
                   <button
                     onClick={() => scrollToSection("cases")}
-                    className="hover:text-blue-500"
+                    className="hover:text-blue-500 transition-colors"
                   >
                     Cases
                   </button>
@@ -665,7 +656,7 @@ const LeadModal = ({
 };
 
 // ============================================================
-// NAVBAR
+// NAVBAR COM SUA LOGO
 // ============================================================
 const Navbar = ({ links }: { links: any }) => {
   const [scrolled, setScrolled] = useState(false);
@@ -693,50 +684,45 @@ const Navbar = ({ links }: { links: any }) => {
           className="flex items-center gap-3 cursor-pointer group"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         >
-          {/* LOGO COM ARCO EM CSS */}
-          <div className="relative w-10 h-10">
-            {/* Círculo */}
-            <div className="absolute inset-0 rounded-full border-2 border-blue-500"></div>
-            {/* Linhas do arco */}
-            <div className="absolute top-1/2 left-0 right-0 h-[2px] bg-blue-500 -translate-y-1/2"></div>
-            <div className="absolute top-0 bottom-0 left-1/2 w-[2px] bg-blue-500 -translate-x-1/2"></div>
-            <div className="absolute top-[15%] left-[15%] w-[70%] h-[2px] bg-blue-500 rotate-45 origin-top-left"></div>
-            <div className="absolute top-[15%] right-[15%] w-[70%] h-[2px] bg-blue-500 -rotate-45 origin-top-right"></div>
-            {/* Texto central */}
-            <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <span className="text-blue-500 font-bold text-[11px] leading-tight">L+A</span>
-              <span className="text-blue-500 font-bold text-[6px]">HIT</span>
-            </div>
-          </div>
-          <div className="flex flex-col leading-none">
+          {/* LOGO COM SUA IMAGEM */}
+          <img 
+            src="/image_2ee558fe-removebg-preview.png"
+            alt="L'A HIT"
+            className="h-10 w-auto transition-transform duration-300 group-hover:scale-105"
+          />
+          
+          {/* Se quiser manter o texto ao lado */}
+          {/* <div className="flex flex-col leading-none">
             <span className="text-lg font-black tracking-tighter text-white">
               L'A
             </span>
             <span className="text-[10px] font-bold tracking-[0.4em] text-blue-500 uppercase">
               HIT
             </span>
-          </div>
+          </div> */}
         </div>
+        
         <div className="hidden md:flex items-center gap-8 text-xs font-bold tracking-widest text-slate-400 uppercase">
           <button
             onClick={() => scrollToSection("catalog")}
-            className="hover:text-white"
+            className="hover:text-white transition-colors"
           >
             Catálogo
           </button>
           <button
             onClick={() => scrollToSection("services")}
-            className="hover:text-white"
+            className="hover:text-white transition-colors"
           >
             Serviços
           </button>
           <button
             onClick={() => scrollToSection("cases")}
-            className="hover:text-white"
+            className="hover:text-white transition-colors"
           >
             Cases
           </button>
         </div>
+        
         <div className="w-24" />
       </div>
     </nav>
