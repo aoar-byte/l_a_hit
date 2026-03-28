@@ -693,20 +693,20 @@ const Navbar = ({ links }: { links: any }) => {
           className="flex items-center gap-3 cursor-pointer group"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         >
-          {/* LOGO SVG COM ARCO - VERSÃO CORRIGIDA */}
+          {/* LOGO COM ARCO EM CSS */}
           <div className="relative w-10 h-10">
-            <svg width="40" height="40" viewBox="0 0 100 100" fill="none">
-              {/* Linhas do arco */}
-              <path d="M20 50 L80 50" stroke="#3B82F6" strokeWidth="4" strokeLinecap="round"/>
-              <path d="M50 20 L50 80" stroke="#3B82F6" strokeWidth="4" strokeLinecap="round"/>
-              <path d="M30 30 L70 70" stroke="#3B82F6" strokeWidth="4" strokeLinecap="round"/>
-              <path d="M70 30 L30 70" stroke="#3B82F6" strokeWidth="4" strokeLinecap="round"/>
-              {/* Círculo */}
-              <circle cx="50" cy="50" r="32" stroke="#3B82F6" strokeWidth="3" fill="none"/>
-              {/* Texto L+A HIT */}
-              <text x="50" y="58" textAnchor="middle" fill="#3B82F6" fontSize="22" fontWeight="bold">L+A</text>
-              <text x="50" y="80" textAnchor="middle" fill="#3B82F6" fontSize="12" fontWeight="bold">HIT</text>
-            </svg>
+            {/* Círculo */}
+            <div className="absolute inset-0 rounded-full border-2 border-blue-500"></div>
+            {/* Linhas do arco */}
+            <div className="absolute top-1/2 left-0 right-0 h-[2px] bg-blue-500 -translate-y-1/2"></div>
+            <div className="absolute top-0 bottom-0 left-1/2 w-[2px] bg-blue-500 -translate-x-1/2"></div>
+            <div className="absolute top-[15%] left-[15%] w-[70%] h-[2px] bg-blue-500 rotate-45 origin-top-left"></div>
+            <div className="absolute top-[15%] right-[15%] w-[70%] h-[2px] bg-blue-500 -rotate-45 origin-top-right"></div>
+            {/* Texto central */}
+            <div className="absolute inset-0 flex flex-col items-center justify-center">
+              <span className="text-blue-500 font-bold text-[11px] leading-tight">L+A</span>
+              <span className="text-blue-500 font-bold text-[6px]">HIT</span>
+            </div>
           </div>
           <div className="flex flex-col leading-none">
             <span className="text-lg font-black tracking-tighter text-white">
@@ -1795,19 +1795,21 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-start gap-12 mb-20">
           <div className="max-w-xs">
-            {/* LOGO SVG COM ARCO - VERSÃO CORRIGIDA */}
-            <svg width="56" height="56" viewBox="0 0 100 100" fill="none" className="mb-6">
-              {/* Linhas do arco */}
-              <path d="M20 50 L80 50" stroke="#3B82F6" strokeWidth="4.5" strokeLinecap="round"/>
-              <path d="M50 20 L50 80" stroke="#3B82F6" strokeWidth="4.5" strokeLinecap="round"/>
-              <path d="M30 30 L70 70" stroke="#3B82F6" strokeWidth="4.5" strokeLinecap="round"/>
-              <path d="M70 30 L30 70" stroke="#3B82F6" strokeWidth="4.5" strokeLinecap="round"/>
+            {/* LOGO COM ARCO EM CSS */}
+            <div className="relative w-14 h-14 mb-6">
               {/* Círculo */}
-              <circle cx="50" cy="50" r="32" stroke="#3B82F6" strokeWidth="3.5" fill="none"/>
-              {/* Texto L+A HIT */}
-              <text x="50" y="58" textAnchor="middle" fill="#3B82F6" fontSize="24" fontWeight="bold">L+A</text>
-              <text x="50" y="82" textAnchor="middle" fill="#3B82F6" fontSize="13" fontWeight="bold">HIT</text>
-            </svg>
+              <div className="absolute inset-0 rounded-full border-2 border-blue-500"></div>
+              {/* Linhas do arco */}
+              <div className="absolute top-1/2 left-0 right-0 h-[2px] bg-blue-500 -translate-y-1/2"></div>
+              <div className="absolute top-0 bottom-0 left-1/2 w-[2px] bg-blue-500 -translate-x-1/2"></div>
+              <div className="absolute top-[15%] left-[15%] w-[70%] h-[2px] bg-blue-500 rotate-45 origin-top-left"></div>
+              <div className="absolute top-[15%] right-[15%] w-[70%] h-[2px] bg-blue-500 -rotate-45 origin-top-right"></div>
+              {/* Texto central */}
+              <div className="absolute inset-0 flex flex-col items-center justify-center">
+                <span className="text-blue-500 font-bold text-base leading-tight">L+A</span>
+                <span className="text-blue-500 font-bold text-[8px]">HIT</span>
+              </div>
+            </div>
             <p className="leading-relaxed text-slate-400">
               Otimizando a indústria musical através da lógica, design e
               estratégia. Brasil • Global
