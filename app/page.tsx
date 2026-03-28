@@ -663,7 +663,7 @@ const Footer = () => {
 };
 
 // ============================================================
-// NAVBAR COM LOGO ESTILIZADA
+// NAVBAR COM LOGO REDIMENSIONADA
 // ============================================================
 const Navbar = ({ links }: { links: any }) => {
   const [scrolled, setScrolled] = useState(false);
@@ -682,33 +682,30 @@ const Navbar = ({ links }: { links: any }) => {
     <nav
       className={`fixed top-0 w-full z-50 transition-all duration-500 border-b ${
         scrolled
-          ? "bg-slate-950/80 backdrop-blur-md border-white/5 py-4"
-          : "bg-transparent border-transparent py-6"
+          ? "bg-slate-950/80 backdrop-blur-md border-white/5 py-3"
+          : "bg-transparent border-transparent py-4"
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         <div
-          className="flex items-center gap-2 cursor-pointer group"
+          className="flex items-center cursor-pointer group"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         >
-          {/* LOGO PRINCIPAL */}
-          <div className="relative">
-            <div className="flex items-baseline">
-              <span className="text-2xl md:text-3xl font-black tracking-tighter text-white">
-                L<span className="text-blue-500">'</span>A
-              </span>
-              <div className="mx-1 h-6 w-px bg-blue-500/30" />
-              <span className="text-xl md:text-2xl font-black text-blue-500">
-                HIT
-              </span>
-            </div>
-            
-            {/* Linha decorativa */}
-            <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-transparent group-hover:w-full transition-all duration-500" />
+          {/* LOGO REDIMENSIONADA - MAIS COMPACTA */}
+          <div className="flex items-baseline">
+            <span className="text-xl md:text-2xl font-black tracking-tighter text-white">
+              L<span className="text-blue-500">'</span>A
+            </span>
+            <span className="text-lg md:text-xl font-black text-blue-500 ml-1">
+              HIT
+            </span>
           </div>
+          
+          {/* Linha decorativa sutil */}
+          <div className="ml-3 h-5 w-px bg-blue-500/30 hidden md:block" />
         </div>
         
-        <div className="hidden md:flex items-center gap-8 text-xs font-bold tracking-widest text-slate-400 uppercase">
+        <div className="hidden md:flex items-center gap-6 text-xs font-bold tracking-widest text-slate-400 uppercase">
           <button
             onClick={() => scrollToSection("catalog")}
             className="hover:text-white transition-colors relative group"
@@ -732,7 +729,7 @@ const Navbar = ({ links }: { links: any }) => {
           </button>
         </div>
         
-        <div className="w-24" />
+        <div className="w-20" />
       </div>
     </nav>
   );
