@@ -584,18 +584,18 @@ const LeadModal = ({
 };
 
 // ============================================================
-// RODAPÉ COM LOGO ESTILIZADA (CORRIGIDO)
+// RODAPÉ (CONTATOS E ESPAÇAMENTO CORRIGIDOS)
 // ============================================================
 const Footer = () => {
   const scrollToSection = (id: string) =>
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
   return (
-    <footer className="bg-slate-950 py-20 border-t border-white/5 text-slate-500 text-xs font-mono relative overflow-hidden">
+    // Reduzido py-20 para py-12 e removido mb-20 do container interno
+    <footer className="bg-slate-950 py-12 border-t border-[#00F0FF]/10 text-slate-500 text-xs font-mono relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="flex flex-col md:flex-row justify-between items-start gap-12 mb-20">
+        <div className="flex flex-col md:flex-row justify-between items-start gap-12 mb-10">
           <div className="max-w-xs">
-            {/* LOGO IMAGEM NO RODAPÉ */}
             <div className="mb-6">
               <img 
                 src="/image_2ee558fe-removebg-preview.png"
@@ -606,7 +606,7 @@ const Footer = () => {
                   e.currentTarget.src = "/fallback-logo.png";
                 }}
               />
-              <div className="w-12 h-px bg-gradient-to-r from-blue-500 to-transparent mt-3" />
+              <div className="w-12 h-px bg-gradient-to-r from-[#00F0FF] to-transparent mt-3" />
             </div>
             <p className="leading-relaxed text-slate-400 mt-4">
               Otimizando a indústria musical através da lógica, design e
@@ -622,7 +622,7 @@ const Footer = () => {
                 <li>
                   <button
                     onClick={() => scrollToSection("catalog")}
-                    className="hover:text-blue-500 transition-colors text-xs"
+                    className="hover:text-[#DFFF00] transition-colors text-xs"
                   >
                     Catálogo
                   </button>
@@ -630,7 +630,7 @@ const Footer = () => {
                 <li>
                   <button
                     onClick={() => scrollToSection("services")}
-                    className="hover:text-blue-500 transition-colors text-xs"
+                    className="hover:text-[#DFFF00] transition-colors text-xs"
                   >
                     Serviços
                   </button>
@@ -638,7 +638,7 @@ const Footer = () => {
                 <li>
                   <button
                     onClick={() => scrollToSection("cases")}
-                    className="hover:text-blue-500 transition-colors text-xs"
+                    className="hover:text-[#DFFF00] transition-colors text-xs"
                   >
                     Cases
                   </button>
@@ -647,25 +647,27 @@ const Footer = () => {
             </div>
             <div>
               <h5 className="text-white font-bold uppercase tracking-widest mb-6 text-xs">
-                Contato
+                Contato Direto
               </h5>
               <ul className="space-y-3">
                 <li>
+                  {/* ALTERE O EMAIL AQUI */}
                   <a 
-                    href="mailto:contato@lahit.com" 
-                    className="hover:text-blue-500 transition-colors text-xs"
+                    href="mailto:SEU_EMAIL_AQUI@GMAIL.COM" 
+                    className="hover:text-[#00F0FF] transition-colors text-xs"
                   >
-                    contato@lahit.com
+                    SEU_EMAIL_AQUI@GMAIL.COM
                   </a>
                 </li>
                 <li>
+                  {/* ALTERE O NÚMERO DO WHATSAPP AQUI (coloque 55 depois o DDD e o número, sem espaços) */}
                   <a 
                     href="https://wa.me/5511999999999" 
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="hover:text-blue-500 transition-colors text-xs"
+                    className="hover:text-[#00F0FF] transition-colors text-xs"
                   >
-                    WhatsApp
+                    WhatsApp Corporativo
                   </a>
                 </li>
               </ul>
@@ -674,14 +676,11 @@ const Footer = () => {
         </div>
         <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between gap-4">
           <p>© 2026 L'A HIT HOLDINGS. TODOS OS DIREITOS RESERVADOS.</p>
-          <p className="flex items-center gap-2">
-            <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />{" "}
+          <p className="flex items-center gap-2 text-[#00F0FF]">
+            <span className="w-1.5 h-1.5 bg-[#00F0FF] rounded-full animate-pulse shadow-[0_0_5px_#00F0FF]" />{" "}
             SYSTEM STATUS: OPTIMAL
           </p>
         </div>
-      </div>
-      <div className="absolute bottom-0 left-0 text-[15vw] font-black text-white/[0.02] leading-none pointer-events-none select-none tracking-tighter">
-        L'A HIT
       </div>
     </footer>
   );
@@ -843,7 +842,7 @@ const DynamicTerrainCanvas = () => {
 };
 
 // ============================================================
-// HERO - VERSÃO REPARADA (ESPAÇAMENTO E LIMPEZA)
+// HERO - VERSÃO REPARADA (ESPAÇAMENTO E NEON)
 // ============================================================
 const Hero = () => {
   const scrollToCatalog = () =>
@@ -854,8 +853,8 @@ const Hero = () => {
       <DynamicTerrainCanvas />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#020617_90%)]" />
 
-      {/* Aumento do Padding Top (pt-44) para "abaixar" o conteúdo e limpar o cabeçalho */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full pt-44 pb-20">
+      {/* Reduzido o padding top de pt-44 para pt-32 para cortar o espaço inútil */}
+      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full pt-32 pb-16">
         <div className="max-w-5xl text-left">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -887,16 +886,16 @@ const Hero = () => {
             transition={{ delay: 0.6 }}
             className="flex flex-wrap gap-4 justify-start"
           >
-            {/* Botão Explorar Catálogo em Azul (Ciano) */}
+            {/* Botão Explorar Catálogo com Glow Ciano */}
             <MagneticButton
               onClick={scrollToCatalog}
-              className="px-10 py-5 bg-[#00F0FF] text-[#020617] font-black tracking-widest uppercase shadow-[0_10px_40px_-10px_rgba(0,240,255,0.4)]"
+              className="px-10 py-5 bg-[#00F0FF] text-[#020617] font-black tracking-widest uppercase shadow-[0_0_30px_rgba(0,240,255,0.4)] hover:shadow-[0_0_40px_rgba(0,240,255,0.6)] transition-shadow"
             >
               Explorar Catálogo
             </MagneticButton>
             
             <MagneticButton
-              className="px-10 py-5 border border-white/10 text-white font-bold uppercase tracking-widest flex items-center gap-3 backdrop-blur-sm"
+              className="px-10 py-5 border border-white/10 text-white font-bold uppercase tracking-widest flex items-center gap-3 backdrop-blur-sm hover:border-[#DFFF00] hover:text-[#DFFF00] transition-colors"
             >
               <Play size={14} fill="currentColor" /> Showreel
             </MagneticButton>
@@ -908,7 +907,7 @@ const Hero = () => {
 };
 
 // ============================================================
-// COMPONENTE: SMART CATALOG
+// COMPONENTE: SMART CATALOG (ESPAÇOS CORRIGIDOS E NEON)
 // ============================================================
 const SmartCatalog = ({
   catalogo,
@@ -947,13 +946,22 @@ const SmartCatalog = ({
   }, [searchTerm, activeFilter, catalogo, setFilteredTracks]);
 
   return (
-    <section id="catalog" className="py-24 bg-slate-950 border-t border-white/5 relative">
+    <section id="catalog" className="py-16 bg-slate-950 border-t border-white/5 relative">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <SectionHeader subtitle="Catálogo Oficial" title="A Biblioteca." />
+        {/* Usando Ciano para subtítulos de seção */}
+        <div className="mb-12">
+          <div className="flex items-center gap-2 text-[#00F0FF] font-mono text-xs tracking-widest uppercase mb-3">
+            <span className="w-1.5 h-1.5 bg-[#00F0FF] rounded-full animate-pulse" />
+            Catálogo Oficial
+          </div>
+          <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight">
+            A Biblioteca.
+          </h2>
+        </div>
 
         <div className="flex flex-col lg:flex-row justify-between items-end mb-8 gap-6">
           <div className="w-full lg:w-1/3">
-             <div className="relative flex items-center bg-slate-900 border border-white/10 rounded-lg px-4 py-3 focus-within:border-blue-500 transition-colors shadow-inner">
+             <div className="relative flex items-center bg-slate-900 border border-white/10 rounded-lg px-4 py-3 focus-within:border-[#00F0FF] transition-colors shadow-inner">
                 <Search size={18} className="text-slate-500 mr-3" />
                 <input
                   type="text"
@@ -972,7 +980,7 @@ const SmartCatalog = ({
                 onClick={() => setActiveFilter(filter)}
                 className={`px-4 py-2 text-[10px] font-bold uppercase tracking-widest rounded-md transition-all whitespace-nowrap ${
                   activeFilter === filter
-                    ? "bg-blue-600 text-white shadow-lg shadow-blue-600/20"
+                    ? "bg-[#DFFF00] text-[#020617] shadow-[0_0_15px_rgba(223,255,0,0.5)]"
                     : "bg-slate-900 text-slate-400 border border-white/5 hover:bg-slate-800 hover:text-white"
                 }`}
               >
@@ -992,83 +1000,65 @@ const SmartCatalog = ({
             <div className="col-span-5 md:col-span-3 text-right">Ação</div>
           </div>
 
-          {/* ALTERAÇÃO: max-h-[380px] para 5 linhas visíveis */}
           <div className="flex flex-col overflow-y-auto max-h-[300px] scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-slate-900">
           {filteredTracks.map((track: any) => {
-  const isCurrent = currentTrack?.id === track.id;
-  
-  return (
-    <div
-       key={track.id}
-  className={`grid grid-cols-12 gap-4 px-6 py-4 items-center border-b border-white/5 transition-colors group ${
-    isCurrent ? "bg-[#00F0FF]/5" : "hover:bg-white/[0.02]"
-  }`}
->
-  <div className="col-span-2 md:col-span-1 flex justify-center">
-    <button
-      onClick={() => isCurrent ? setIsPlaying(!isPlaying) : (setCurrentTrack(track), setIsPlaying(true))}
-      className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${
-        isCurrent && isPlaying
-          ? "bg-[#00F0FF] text-[#020617] shadow-[0_0_15px_#00F0FF]"
-          : "bg-slate-900 border border-[#00F0FF]/30 text-[#00F0FF] hover:border-[#00F0FF]"
-      }`}
-    >
-      {isCurrent && isPlaying ? <Pause size={16} fill="currentColor" /> : <Play size={16} fill="currentColor" className="ml-1" />}
-    </button>
-  </div>
+            const isCurrent = currentTrack?.id === track.id;
+            
+            return (
+              <div
+                key={track.id}
+                className={`grid grid-cols-12 gap-4 px-6 py-4 items-center border-b border-white/5 transition-colors group ${
+                  isCurrent ? "bg-[#00F0FF]/5" : "hover:bg-white/[0.02]"
+                }`}
+              >
+                <div className="col-span-2 md:col-span-1 flex justify-center">
+                  {/* BOTÃO PLAY NEON DA LISTA */}
+                  <button
+                    onClick={() => isCurrent ? setIsPlaying(!isPlaying) : (setCurrentTrack(track), setIsPlaying(true))}
+                    className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${
+                      isCurrent && isPlaying
+                        ? "bg-[#DFFF00] text-[#020617] shadow-[0_0_15px_#DFFF00]"
+                        : "bg-slate-900 border border-[#DFFF00]/30 text-[#DFFF00] hover:border-[#DFFF00] hover:shadow-[0_0_10px_rgba(223,255,0,0.3)]"
+                    }`}
+                  >
+                    {isCurrent && isPlaying ? <Pause size={16} fill="currentColor" /> : <Play size={16} fill="currentColor" className="ml-1" />}
+                  </button>
+                </div>
 
-  <div className="col-span-5 md:col-span-4">
-    <h4 className={`text-sm font-bold truncate ${isCurrent ? "text-[#00F0FF]" : "text-white"}`}>{track.title}</h4>
-    <p className="text-slate-500 text-[10px] uppercase font-black tracking-widest">{track.artist}</p>
-  </div>
+                <div className="col-span-5 md:col-span-4">
+                  <h4 className={`text-sm font-bold truncate ${isCurrent ? "text-[#00F0FF]" : "text-white"}`}>{track.title}</h4>
+                  <p className="text-slate-500 text-[10px] uppercase font-black tracking-widest">{track.artist}</p>
+                </div>
 
-  <div className="col-span-2 hidden md:block">
-    <span className="px-2 py-1 rounded-sm border border-white/10 text-[9px] font-bold text-slate-400 uppercase tracking-tighter group-hover:border-[#DFFF00]/50 group-hover:text-[#DFFF00] transition-colors">
-      {track.genre}
-    </span>
-  </div>
+                <div className="col-span-2 hidden md:block">
+                  <span className="px-2 py-1 rounded-sm border border-white/10 text-[9px] font-bold text-slate-400 uppercase tracking-tighter group-hover:border-[#DFFF00]/50 group-hover:text-[#DFFF00] transition-colors">
+                    {track.genre}
+                  </span>
+                </div>
+                
+                <div className="col-span-1 hidden md:block text-center text-slate-400 text-xs font-mono">{track.bpm}</div>
+                <div className="col-span-1 hidden md:block text-center text-slate-400 text-xs">{track.mood}</div>
 
-  <div className="col-span-5 md:col-span-3 text-right">
-    <button
-      onClick={() => onLicenseClick(track)}
-      className="px-4 py-1.5 bg-transparent border border-[#00F0FF]/50 text-[#00F0FF] text-[10px] font-black uppercase tracking-widest hover:bg-[#00F0FF] hover:text-[#020617] transition-all"
-    >
-      Licenciar
-    </button>
-  </div>
-</div>
-Use o código com cuidado.
-
-2. PersistentPlayer (Barra de Baixo)
-Substitua os controles centrais e a barra de progresso por estes:
-jsx
-{/* CONTROLES CENTRAIS NEON */}
-<div className="flex flex-col items-center w-full md:w-2/4">
-  <div className="flex items-center gap-6 mb-2">
-    <button onClick={playPrevious} className="text-slate-500 hover:text-[#00F0FF]"><SkipBack size={18} fill="currentColor" /></button>
-    
-    <button 
-      onClick={() => setIsPlaying(!isPlaying)}
-      className="w-12 h-12 bg-[#00F0FF] rounded-full flex items-center justify-center text-slate-950 shadow-[0_0_20px_rgba(0,240,255,0.5)]"
-    >
-      {isPlaying ? <Pause size={24} fill="currentColor" /> : <Play size={24} fill="currentColor" className="ml-1" />}
-    </button>
-    
-    <button onClick={playNext} className="text-slate-500 hover:text-[#00F0FF]"><SkipForward size={18} fill="currentColor" /></button>
-  </div>
-  
-  {/* BARRA DE PROGRESSO CIANO */}
-  <div className="w-full flex items-center gap-3 px-4">
-    <span className="text-[10px] text-slate-500 font-mono">{currentTime}</span>
-    <div onClick={handleSeek} className="h-1 bg-slate-800 rounded-full flex-1 relative cursor-pointer">
-      <div className="h-full bg-[#00F0FF] absolute top-0 left-0 shadow-[0_0_8px_#00F0FF]" style={{ width: `${progress}%` }} />
-    </div>
-    <span className="text-[10px] text-slate-500 font-mono">{duration}</span>
-  </div>
-</div>
+                <div className="col-span-5 md:col-span-3 text-right">
+                  <button
+                    onClick={() => onLicenseClick(track)}
+                    className="px-4 py-1.5 bg-transparent border border-[#00F0FF]/50 text-[#00F0FF] text-[10px] font-black uppercase tracking-widest hover:bg-[#00F0FF] hover:text-[#020617] hover:shadow-[0_0_15px_rgba(0,240,255,0.4)] transition-all"
+                  >
+                    Licenciar
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
             
 // ============================================================
-// PLAYER DE MÚSICA FIXO (COM BOTÃO FECHAR CORRIGIDO)
+// PLAYER DE MÚSICA FIXO (O GLOW NEON DEFINITIVO)
 // ============================================================
 const PersistentPlayer = ({ 
   track, 
@@ -1093,46 +1083,36 @@ const PersistentPlayer = ({
     return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   };
 
-  // Função para tocar próxima música
   const playNext = () => {
     if (!filteredTracks || filteredTracks.length === 0) return;
-    
     const currentIndex = filteredTracks.findIndex((t: any) => t.id === currentTrack?.id);
     const nextIndex = (currentIndex + 1) % filteredTracks.length;
     const nextTrack = filteredTracks[nextIndex];
-    
     if (nextTrack) {
       setCurrentTrack(nextTrack);
       setIsPlaying(true);
     }
   };
 
-  // Função para tocar música anterior
   const playPrevious = () => {
     if (!filteredTracks || filteredTracks.length === 0) return;
-    
     const currentIndex = filteredTracks.findIndex((t: any) => t.id === currentTrack?.id);
     const prevIndex = (currentIndex - 1 + filteredTracks.length) % filteredTracks.length;
     const prevTrack = filteredTracks[prevIndex];
-    
     if (prevTrack) {
       setCurrentTrack(prevTrack);
       setIsPlaying(true);
     }
   };
 
-  // Função para fechar o player
   const closePlayer = () => {
-    if (audioRef.current) {
-      audioRef.current.pause();
-    }
+    if (audioRef.current) audioRef.current.pause();
     setCurrentTrack(null);
     setIsPlaying(false);
     setProgress(0);
     setCurrentTime("0:00");
   };
 
-  // Auto-play: quando a música termina, toca a próxima
   const handleEnded = () => {
     if (isPlayingAuto && filteredTracks && filteredTracks.length > 0) {
       playNext();
@@ -1143,7 +1123,6 @@ const PersistentPlayer = ({
     }
   };
 
-  // Reset quando a track muda
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.pause();
@@ -1152,7 +1131,6 @@ const PersistentPlayer = ({
       setCurrentTime("0:00");
       setDuration("0:00");
       setAudioLoaded(false);
-      
       if (isPlaying && track) {
         setTimeout(() => {
           audioRef.current?.play().catch(e => console.error("Erro ao reproduzir:", e));
@@ -1161,10 +1139,8 @@ const PersistentPlayer = ({
     }
   }, [track]);
 
-  // Controla play/pause
   useEffect(() => {
     if (!audioRef.current || !audioLoaded) return;
-    
     if (isPlaying) {
       audioRef.current.play().catch(e => console.error("Erro ao reproduzir:", e));
     } else {
@@ -1243,10 +1219,10 @@ const PersistentPlayer = ({
                 <SkipBack size={18} fill="currentColor" />
               </button>
               
-              {/* BOTÃO PLAY NEON */}
+              {/* BOTÃO PLAY GIGANTE NEON (VERDE LIMÃO) */}
               <button 
                 onClick={() => setIsPlaying(!isPlaying)}
-                className="w-12 h-12 bg-[#00F0FF] rounded-full flex items-center justify-center text-slate-950 hover:scale-110 transition-all shadow-[0_0_20px_rgba(0,240,255,0.5)] active:scale-95"
+                className="w-12 h-12 bg-[#DFFF00] rounded-full flex items-center justify-center text-slate-950 hover:scale-110 transition-all shadow-[0_0_25px_rgba(223,255,0,0.6)] active:scale-95"
                 disabled={!audioLoaded}
               >
                 {isPlaying ? <Pause size={24} fill="currentColor" /> : <Play size={24} fill="currentColor" className="ml-1" />}
@@ -1257,7 +1233,7 @@ const PersistentPlayer = ({
               </button>
             </div>
             
-            {/* BARRA DE PROGRESSO NEON */}
+            {/* BARRA DE PROGRESSO CIANO */}
             <div className="w-full flex items-center gap-3">
               <span className="text-[10px] text-slate-500 font-mono w-8 text-right">{currentTime}</span>
               <div 
@@ -1268,7 +1244,6 @@ const PersistentPlayer = ({
                   className="h-full bg-[#00F0FF] absolute top-0 left-0 shadow-[0_0_10px_#00F0FF]" 
                   style={{ width: `${progress}%` }} 
                 />
-                {/* Marcador de posição (Thumb) sutil */}
                 <div 
                   className="absolute top-1/2 -translate-y-1/2 w-2 h-2 bg-white rounded-full shadow-[0_0_10px_#00F0FF] opacity-0 group-hover:opacity-100 transition-opacity"
                   style={{ left: `${progress}%` }}
@@ -1282,12 +1257,12 @@ const PersistentPlayer = ({
           <div className="w-full md:w-1/4 flex items-center justify-end gap-4">
             <button
               onClick={() => onLicenseClick(track)}
-              className="px-6 py-2 bg-transparent text-[#00F0FF] border border-[#00F0FF]/50 text-[10px] font-black uppercase tracking-[0.2em] rounded-sm hover:bg-[#00F0FF] hover:text-[#020617] hover:shadow-[0_0_20px_rgba(0,240,255,0.4)] transition-all"
+              className="px-6 py-2 bg-transparent text-[#00F0FF] border border-[#00F0FF]/50 text-[10px] font-black uppercase tracking-[0.2em] rounded-sm hover:bg-[#DFFF00] hover:text-[#020617] hover:border-[#DFFF00] hover:shadow-[0_0_20px_rgba(223,255,0,0.4)] transition-all"
             >
               Licenciar Ativo
             </button>
             
-            <button onClick={closePlayer} className="text-slate-600 hover:text-white transition-colors">
+            <button onClick={closePlayer} className="text-slate-600 hover:text-[#DFFF00] transition-colors">
               <X size={20} />
             </button>
           </div>
@@ -1295,7 +1270,7 @@ const PersistentPlayer = ({
       </motion.div>
     </AnimatePresence>
   );
-
+};
 
 // ============================================================
 // SERVIÇOS (COM ALTURA CONSISTENTE E LAYOUT ALINHADO)
@@ -1633,7 +1608,7 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
 };
 
 // ============================================================
-// SEÇÃO DE PROVA SOCIAL (CASES)
+// SEÇÃO DE PROVA SOCIAL (ESPAÇO E BORDAS CORRIGIDOS)
 // ============================================================
 const SocialProof = ({ cases }: { cases: any[] }) => {
   const [imageErrors, setImageErrors] = useState<Record<string, boolean>>({});
@@ -1671,9 +1646,16 @@ const SocialProof = ({ cases }: { cases: any[] }) => {
 
   if (!cases || cases.length === 0) {
     return (
-      <section id="cases" className="py-32 bg-slate-950 border-t border-white/5">
+      <section id="cases" className="py-16 bg-slate-950 border-t border-white/5">
         <div className="max-w-7xl mx-auto px-6">
-          <SectionHeader subtitle="Resultados" title="Músicas em Ação." />
+          {/* Ciano no subtítulo */}
+          <div className="flex items-center gap-2 text-[#00F0FF] font-mono text-xs tracking-widest uppercase mb-3">
+            <span className="w-1.5 h-1.5 bg-[#00F0FF] rounded-full animate-pulse" />
+            Resultados
+          </div>
+          <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight mb-12">
+            Músicas em Ação.
+          </h2>
           <p className="text-center text-slate-400">Nenhum case encontrado.</p>
         </div>
       </section>
@@ -1681,9 +1663,15 @@ const SocialProof = ({ cases }: { cases: any[] }) => {
   }
 
   return (
-    <section id="cases" className="py-32 bg-slate-950 border-t border-white/5">
+    <section id="cases" className="py-16 bg-slate-950 border-t border-white/5">
       <div className="max-w-7xl mx-auto px-6">
-        <SectionHeader subtitle="Resultados" title="Músicas em Ação." />
+        <div className="flex items-center gap-2 text-[#00F0FF] font-mono text-xs tracking-widest uppercase mb-3">
+            <span className="w-1.5 h-1.5 bg-[#00F0FF] rounded-full animate-pulse" />
+            Resultados
+        </div>
+        <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight mb-12">
+            Músicas em Ação.
+        </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {cases.map((item) => {
@@ -1698,9 +1686,9 @@ const SocialProof = ({ cases }: { cases: any[] }) => {
                 href={item.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group block bg-slate-900/50 border border-white/5 hover:border-blue-500/30 transition-all overflow-hidden"
+                className="group block bg-transparent border border-white/5 hover:border-[#00F0FF]/50 transition-all overflow-hidden rounded-lg shadow-lg"
               >
-                <div className="relative w-full bg-slate-800 overflow-hidden" style={{ aspectRatio: "16/9" }}>
+                <div className="relative w-full bg-slate-900 overflow-hidden" style={{ aspectRatio: "16/9" }}>
                   {imageSrc && !hasError ? (
                     <img
                       src={imageSrc}
@@ -1710,58 +1698,36 @@ const SocialProof = ({ cases }: { cases: any[] }) => {
                       onError={() => handleImageError(item.id)}
                     />
                   ) : (
-                    <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-slate-800 to-slate-900">
-                      <div className="text-center">
-                        <div className="w-12 h-12 bg-slate-700/50 rounded-full flex items-center justify-center mx-auto mb-2">
-                          {item.platform === "YouTube" && <Youtube size={24} className="text-red-500" />}
-                          {item.platform === "Spotify" && <Music size={24} className="text-green-500" />}
-                          {item.platform === "Instagram Reels" && <Instagram size={24} className="text-pink-500" />}
-                          {!item.platform && <ImageIcon size={24} className="text-slate-500" />}
-                        </div>
-                        <span className="text-[10px] text-slate-500 uppercase tracking-wider">
-                          {item.platform || "Streaming"}
-                        </span>
-                      </div>
+                    <div className="absolute inset-0 flex items-center justify-center bg-slate-900">
+                      <ImageIcon size={24} className="text-slate-700" />
                     </div>
                   )}
                   
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-60 pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-80 pointer-events-none" />
                   
-                  <div className="absolute bottom-2 left-2 flex items-center gap-1 text-[10px] text-white bg-black/60 backdrop-blur-sm px-2 py-1 rounded-full z-10">
-                    {item.platform === "YouTube" && <Youtube size={10} className="text-red-500" />}
-                    {item.platform === "Spotify" && <Music size={10} className="text-green-500" />}
-                    {item.platform === "Instagram Reels" && <Instagram size={10} className="text-pink-500" />}
-                    <span className="font-medium">{item.platform || "Streaming"}</span>
-                    <ExternalLink size={10} />
-                  </div>
-                </div>
-                
-                <div className="p-4">
-                  <h4 className="text-white font-bold text-sm mb-1 line-clamp-1 group-hover:text-blue-400 transition-colors">
-                    {item.title}
-                  </h4>
-                  <p className="text-slate-400 text-xs mb-3 line-clamp-1">
-                    {item.artist}
-                  </p>
-                  
-                  <div className="flex items-center justify-between">
-                    {playsValue ? (
-                      <>
+                  {/* Informações direto sobre a imagem para não gastar espaço */}
+                  <div className="absolute bottom-3 left-3 right-3">
+                    <h4 className="text-white font-bold text-sm line-clamp-1 group-hover:text-[#DFFF00] transition-colors drop-shadow-md">
+                      {item.title}
+                    </h4>
+                    <p className="text-slate-300 text-xs line-clamp-1 mb-1 drop-shadow-md">
+                      {item.artist}
+                    </p>
+                    <div className="flex items-center justify-between">
+                      {playsValue && (
                         <div className="flex items-center gap-1">
-                          <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
-                          <span className="text-emerald-500 text-xs font-bold">
-                            {playsValue}
+                          <span className="text-[#00F0FF] text-[10px] font-black tracking-widest bg-black/50 px-1.5 py-0.5 rounded backdrop-blur-sm">
+                            {playsValue} PLAYS
                           </span>
                         </div>
-                        <span className="text-blue-500 text-xs group-hover:underline opacity-0 group-hover:opacity-100 transition-opacity">
-                          Ver mais
-                        </span>
-                      </>
-                    ) : (
-                      <span className="text-blue-500 text-xs group-hover:underline ml-auto opacity-0 group-hover:opacity-100 transition-opacity">
-                        Ver mais
-                      </span>
-                    )}
+                      )}
+                    </div>
+                  </div>
+                  
+                  <div className="absolute top-2 right-2 flex items-center gap-1 text-[10px] text-white bg-black/60 backdrop-blur-sm px-2 py-1 rounded-full z-10">
+                    {item.platform === "YouTube" && <Youtube size={10} className="text-white" />}
+                    {item.platform === "Spotify" && <Music size={10} className="text-white" />}
+                    {item.platform === "Instagram Reels" && <Instagram size={10} className="text-white" />}
                   </div>
                 </div>
               </a>
@@ -1769,8 +1735,8 @@ const SocialProof = ({ cases }: { cases: any[] }) => {
           })}
         </div>
 
-        <p className="text-center text-slate-500 text-xs mt-12">
-          + Peça seu catálogo personalizado
+        <p className="text-center text-[#00F0FF] text-xs mt-12 font-bold cursor-pointer hover:text-[#DFFF00] transition-colors">
+          + Peça seu portfólio de cases completo
         </p>
       </div>
     </section>
