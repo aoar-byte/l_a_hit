@@ -854,7 +854,7 @@ const Hero = () => {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#020617_90%)]" />
 
       {/* Reduzido o padding top de pt-44 para pt-32 para cortar o espaço inútil */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full pt-29 pb-10">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full pt-35 pb-10">
         <div className="max-w-5xl text-left">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
