@@ -1718,7 +1718,7 @@ const SocialProof = ({ cases }: { cases: any[] }) => {
           })}
         </div>
 
-        <p className="text-center text-[#00F0FF] text-xs mt-12 font-bold cursor-pointer hover:text-[#DFFF00] transition-colors">
+        <p className="text-center text-[#00F0FF] text-xs mt-12 font-bold">
           + Peça seu portfólio de cases completo
         </p>
       </div>
