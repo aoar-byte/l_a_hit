@@ -999,77 +999,73 @@ const SmartCatalog = ({
   
   return (
     <div
-      key={track.id}
-      className={`grid grid-cols-12 gap-4 px-6 py-4 items-center border-b border-white/5 transition-colors group ${
-        isCurrent ? "bg-[#00F0FF]/5" : "hover:bg-white/[0.02]"
+       key={track.id}
+  className={`grid grid-cols-12 gap-4 px-6 py-4 items-center border-b border-white/5 transition-colors group ${
+    isCurrent ? "bg-[#00F0FF]/5" : "hover:bg-white/[0.02]"
+  }`}
+>
+  <div className="col-span-2 md:col-span-1 flex justify-center">
+    <button
+      onClick={() => isCurrent ? setIsPlaying(!isPlaying) : (setCurrentTrack(track), setIsPlaying(true))}
+      className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${
+        isCurrent && isPlaying
+          ? "bg-[#00F0FF] text-[#020617] shadow-[0_0_15px_#00F0FF]"
+          : "bg-slate-900 border border-[#00F0FF]/30 text-[#00F0FF] hover:border-[#00F0FF]"
       }`}
     >
-      {/* COLUNA: PLAY NEON */}
-      <div className="col-span-2 md:col-span-1 flex justify-center">
-        <button
-          onClick={() => {
-            if (isCurrent) {
-              setIsPlaying(!isPlaying);
-            } else {
-              setCurrentTrack(track);
-              setIsPlaying(true);
-            }
-          }}
-          className={`relative w-10 h-10 rounded-full flex items-center justify-center transition-all ${
-            isCurrent && isPlaying
-              ? "bg-[#00F0FF] text-[#020617] shadow-[0_0_20px_rgba(0,240,255,0.6)]"
-              : "bg-slate-900 border border-white/10 text-[#00F0FF] hover:border-[#00F0FF] hover:shadow-[0_0_10px_rgba(0,240,255,0.3)]"
-          }`}
-        >
-          {isCurrent && isPlaying ? (
-            <Pause size={16} fill="currentColor" /> 
-          ) : (
-            <Play size={16} fill="currentColor" className="ml-1" />
-          )}
-        </button>
-      </div>
+      {isCurrent && isPlaying ? <Pause size={16} fill="currentColor" /> : <Play size={16} fill="currentColor" className="ml-1" />}
+    </button>
+  </div>
 
-      {/* COLUNA: TÍTULO */}
-      <div className="col-span-5 md:col-span-4">
-        <h4 className={`text-sm font-bold tracking-tight transition-colors ${isCurrent ? "text-[#00F0FF]" : "text-white group-hover:text-[#00F0FF]"}`}>
-          {track.title}
-        </h4>
-        <p className="text-slate-500 text-[10px] uppercase font-black tracking-[0.2em]">
-          {track.artist}
-        </p>
-      </div>
+  <div className="col-span-5 md:col-span-4">
+    <h4 className={`text-sm font-bold truncate ${isCurrent ? "text-[#00F0FF]" : "text-white"}`}>{track.title}</h4>
+    <p className="text-slate-500 text-[10px] uppercase font-black tracking-widest">{track.artist}</p>
+  </div>
 
-      {/* COLUNA: GÊNERO NEON SUAVE */}
-      <div className="col-span-2 hidden md:block">
-        <span className="px-3 py-1 rounded-sm bg-slate-950 border border-white/5 text-[9px] font-black text-slate-500 uppercase tracking-widest group-hover:border-[#DFFF00]/40 group-hover:text-[#DFFF00] transition-all">
-          {track.genre}
-        </span>
-      </div>
+  <div className="col-span-2 hidden md:block">
+    <span className="px-2 py-1 rounded-sm border border-white/10 text-[9px] font-bold text-slate-400 uppercase tracking-tighter group-hover:border-[#DFFF00]/50 group-hover:text-[#DFFF00] transition-colors">
+      {track.genre}
+    </span>
+  </div>
 
-      <div className="col-span-1 hidden md:block text-center text-[10px] font-mono text-slate-500">
-        {track.bpm}
-      </div>
+  <div className="col-span-5 md:col-span-3 text-right">
+    <button
+      onClick={() => onLicenseClick(track)}
+      className="px-4 py-1.5 bg-transparent border border-[#00F0FF]/50 text-[#00F0FF] text-[10px] font-black uppercase tracking-widest hover:bg-[#00F0FF] hover:text-[#020617] transition-all"
+    >
+      Licenciar
+    </button>
+  </div>
+</div>
+Use o código com cuidado.
 
-      <div className="col-span-1 hidden md:block text-center text-[9px] font-bold text-slate-600 uppercase tracking-tighter">
-        {track.mood}
-      </div>
-
-      {/* COLUNA: AÇÃO LICENCIAR NEON */}
-      <div className="col-span-5 md:col-span-3 text-right">
-        <button
-          onClick={() => onLicenseClick(track)}
-          className={`px-4 py-2 text-[10px] font-black uppercase tracking-widest rounded-sm transition-all border ${
-            isCurrent 
-              ? "bg-[#DFFF00] text-[#020617] border-[#DFFF00]" 
-              : "border-[#00F0FF]/40 text-[#00F0FF] hover:bg-[#00F0FF] hover:text-[#020617] hover:shadow-[0_0_15px_rgba(0,240,255,0.4)]"
-          }`}
-        >
-          Licenciar
-        </button>
-      </div>
+2. PersistentPlayer (Barra de Baixo)
+Substitua os controles centrais e a barra de progresso por estes:
+jsx
+{/* CONTROLES CENTRAIS NEON */}
+<div className="flex flex-col items-center w-full md:w-2/4">
+  <div className="flex items-center gap-6 mb-2">
+    <button onClick={playPrevious} className="text-slate-500 hover:text-[#00F0FF]"><SkipBack size={18} fill="currentColor" /></button>
+    
+    <button 
+      onClick={() => setIsPlaying(!isPlaying)}
+      className="w-12 h-12 bg-[#00F0FF] rounded-full flex items-center justify-center text-slate-950 shadow-[0_0_20px_rgba(0,240,255,0.5)]"
+    >
+      {isPlaying ? <Pause size={24} fill="currentColor" /> : <Play size={24} fill="currentColor" className="ml-1" />}
+    </button>
+    
+    <button onClick={playNext} className="text-slate-500 hover:text-[#00F0FF]"><SkipForward size={18} fill="currentColor" /></button>
+  </div>
+  
+  {/* BARRA DE PROGRESSO CIANO */}
+  <div className="w-full flex items-center gap-3 px-4">
+    <span className="text-[10px] text-slate-500 font-mono">{currentTime}</span>
+    <div onClick={handleSeek} className="h-1 bg-slate-800 rounded-full flex-1 relative cursor-pointer">
+      <div className="h-full bg-[#00F0FF] absolute top-0 left-0 shadow-[0_0_8px_#00F0FF]" style={{ width: `${progress}%` }} />
     </div>
-  );
-})}
+    <span className="text-[10px] text-slate-500 font-mono">{duration}</span>
+  </div>
+</div>
             
 // ============================================================
 // PLAYER DE MÚSICA FIXO (COM BOTÃO FECHAR CORRIGIDO)
