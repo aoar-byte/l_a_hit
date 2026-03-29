@@ -843,60 +843,61 @@ const DynamicTerrainCanvas = () => {
 };
 
 // ============================================================
-// HERO - VERSÃO REPARADA (LIMPA E SEM SOBREPOSIÇÃO)
+// HERO - VERSÃO ORIGINAL RESTAURADA (CORES CORRIGIDAS)
 // ============================================================
 const Hero = () => {
   const scrollToCatalog = () =>
     document.getElementById("catalog")?.scrollIntoView({ behavior: "smooth" });
 
   return (
-    <section className="relative h-screen flex items-center justify-start overflow-hidden bg-[#020617]">
-      {/* Fundo com as ondas originais */}
+    <section className="relative h-screen flex items-center justify-center overflow-hidden bg-slate-950">
       <DynamicTerrainCanvas />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#020617_90%)]" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
-        
-        {/* LOGO SIMPLIFICADO NO CANTO (ESTÁTICO) */}
-        <div className="absolute top-[-140px] left-0 select-none flex flex-col items-start">
-          <div className="text-2xl font-black text-white italic tracking-tighter">
-            L<span className="text-[#DFFF00]">✦</span>A
-          </div>
-          <div className="w-full h-[1px] bg-[#00F0FF] my-1 shadow-[0_0_8px_#00F0FF]" />
-          <div className="text-[10px] font-black text-[#DFFF00] tracking-[0.5em]">HIT</div>
-        </div>
+      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full pt-28 md:pt-25">
+        <div className="max-w-4xl mx-auto text-center md:text-left md:mx-0">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <h1 className="text-5xl md:text-8xl font-black tracking-tighter text-white leading-[0.9] mb-8 uppercase">
+              TRANSFORMANDO <br />
+              <span className="text-white/20">IDEIAS</span> EM <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00F0FF] to-[#DFFF00]">
+                ATIVOS.
+              </span>
+            </h1>
+          </motion.div>
 
-        <div className="max-w-4xl">
-          {/* TÍTULO COM O DEGRADÊ CORRETO */}
-          <h1 className="text-6xl md:text-[110px] font-black tracking-tighter text-white leading-[0.85] mb-8 uppercase">
-            TRANSFORMANDO <br />
-            <span className="text-white/20">IDEIAS</span> EM <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00F0FF] to-[#DFFF00]">
-              ATIVOS.
-            </span>
-          </h1>
-
-          {/* DESCRIÇÃO LIMPA */}
-          <p className="text-xl text-slate-400 max-w-lg leading-relaxed mb-12 border-l-2 border-[#00F0FF] pl-6 font-medium italic">
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4, duration: 1 }}
+            className="text-xl text-slate-400 max-w-lg leading-relaxed mb-10 border-l-2 border-[#00F0FF] pl-6 mx-auto md:md:mx-0 font-medium italic"
+          >
             Engenharia de Hits baseada em dados. Transformamos ondas sonoras em
             propriedades intelectuais de alto rendimento.
-          </p>
+          </motion.p>
 
-          {/* BOTÕES: EXPLORAR EM AZUL (CYAN) */}
-          <div className="flex flex-wrap gap-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6 }}
+            className="flex flex-wrap gap-4 justify-center md:justify-start"
+          >
             <MagneticButton
               onClick={scrollToCatalog}
-              className="px-10 py-5 bg-[#00F0FF] text-[#020617] font-black uppercase tracking-widest shadow-[0_10px_40px_-10px_rgba(0,240,255,0.4)]"
+              className="px-10 py-5 bg-[#00F0FF] text-[#020617] font-bold tracking-widest uppercase shadow-[0_10px_40px_-10px_rgba(0,240,255,0.4)]"
             >
               Explorar Catálogo
             </MagneticButton>
-            
             <MagneticButton
-              className="px-10 py-5 border border-white/10 text-white font-bold uppercase tracking-widest flex items-center gap-3 backdrop-blur-md"
+              className="px-10 py-5 border border-white/10 text-slate-300 font-bold uppercase tracking-widest flex items-center gap-3 backdrop-blur-sm"
             >
               <Play size={14} fill="currentColor" /> Showreel
             </MagneticButton>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
