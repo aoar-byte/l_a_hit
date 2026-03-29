@@ -843,25 +843,26 @@ const DynamicTerrainCanvas = () => {
 };
 
 // ============================================================
-// HERO - VERSÃO ORIGINAL RESTAURADA (CORES CORRIGIDAS)
+// HERO - VERSÃO REPARADA (ESPAÇAMENTO E LIMPEZA)
 // ============================================================
 const Hero = () => {
   const scrollToCatalog = () =>
     document.getElementById("catalog")?.scrollIntoView({ behavior: "smooth" });
 
   return (
-    <section className="relative h-screen flex items-center justify-center overflow-hidden bg-slate-950">
+    <section className="relative min-h-screen flex items-center justify-start overflow-hidden bg-slate-950">
       <DynamicTerrainCanvas />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#020617_90%)]" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full pt-28 md:pt-25">
-        <div className="max-w-4xl mx-auto text-center md:text-left md:mx-0">
+      {/* Aumento do Padding Top (pt-44) para "abaixar" o conteúdo e limpar o cabeçalho */}
+      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full pt-44 pb-20">
+        <div className="max-w-5xl text-left">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           >
-            <h1 className="text-5xl md:text-8xl font-black tracking-tighter text-white leading-[0.9] mb-8 uppercase">
+            <h1 className="text-6xl md:text-[110px] font-black tracking-tighter text-white leading-[0.85] mb-8 uppercase">
               TRANSFORMANDO <br />
               <span className="text-white/20">IDEIAS</span> EM <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00F0FF] to-[#DFFF00]">
@@ -874,7 +875,7 @@ const Hero = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 1 }}
-            className="text-xl text-slate-400 max-w-lg leading-relaxed mb-10 border-l-2 border-[#00F0FF] pl-6 mx-auto md:md:mx-0 font-medium italic"
+            className="text-xl text-slate-400 max-w-lg leading-relaxed mb-12 border-l-2 border-[#00F0FF] pl-6 font-medium italic"
           >
             Engenharia de Hits baseada em dados. Transformamos ondas sonoras em
             propriedades intelectuais de alto rendimento.
@@ -884,16 +885,18 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6 }}
-            className="flex flex-wrap gap-4 justify-center md:justify-start"
+            className="flex flex-wrap gap-4 justify-start"
           >
+            {/* Botão Explorar Catálogo em Azul (Ciano) */}
             <MagneticButton
               onClick={scrollToCatalog}
-              className="px-10 py-5 bg-[#00F0FF] text-[#020617] font-bold tracking-widest uppercase shadow-[0_10px_40px_-10px_rgba(0,240,255,0.4)]"
+              className="px-10 py-5 bg-[#00F0FF] text-[#020617] font-black tracking-widest uppercase shadow-[0_10px_40px_-10px_rgba(0,240,255,0.4)]"
             >
               Explorar Catálogo
             </MagneticButton>
+            
             <MagneticButton
-              className="px-10 py-5 border border-white/10 text-slate-300 font-bold uppercase tracking-widest flex items-center gap-3 backdrop-blur-sm"
+              className="px-10 py-5 border border-white/10 text-white font-bold uppercase tracking-widest flex items-center gap-3 backdrop-blur-sm"
             >
               <Play size={14} fill="currentColor" /> Showreel
             </MagneticButton>
