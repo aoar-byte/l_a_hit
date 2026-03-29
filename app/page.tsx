@@ -843,68 +843,50 @@ const DynamicTerrainCanvas = () => {
 };
 
 // ============================================================
-// HERO - VERSÃO LIMPA, CLASSIC TECH (BOTÃO AZUL)
+// HERO - VERSÃO REPARADA (LIMPA E SEM SOBREPOSIÇÃO)
 // ============================================================
 const Hero = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
   const scrollToCatalog = () =>
     document.getElementById("catalog")?.scrollIntoView({ behavior: "smooth" });
 
   return (
-    <section className="relative h-screen flex items-center justify-center overflow-hidden bg-[#020617]">
-      {/* Fundo Original (Ondas) */}
+    <section className="relative h-screen flex items-center justify-start overflow-hidden bg-[#020617]">
+      {/* Fundo com as ondas originais */}
       <DynamicTerrainCanvas />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#020617_95%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#020617_90%)]" />
 
-      {/* CABEÇALHO LIMPO */}
-      <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${isScrolled ? "py-4 backdrop-blur-md border-b border-[#00F0FF]/10" : "py-8"}`}>
-        <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-          {/* Logo Estático - Sem duplicação */}
-          <div className="flex flex-col items-start select-none group">
-            <div className="flex items-center gap-1 text-2xl font-black text-white italic tracking-tighter">
-              L<span className="text-[#DFFF00]">✦</span>A
-            </div>
-            {/* Linha Laser - Só aparece ao rolar */}
-            <div className={`h-[1px] bg-[#00F0FF] shadow-[0_0_10px_#00F0FF] transition-all duration-500 ${isScrolled ? "w-full opacity-100" : "w-0 opacity-0"}`} />
-            <div className="text-[10px] font-black text-[#DFFF00] tracking-[0.4em] mt-0.5">HIT</div>
+      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
+        
+        {/* LOGO SIMPLIFICADO NO CANTO (ESTÁTICO) */}
+        <div className="absolute top-[-140px] left-0 select-none flex flex-col items-start">
+          <div className="text-2xl font-black text-white italic tracking-tighter">
+            L<span className="text-[#DFFF00]">✦</span>A
           </div>
-          
-          <nav className="hidden md:flex gap-8 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">
-            <button onClick={scrollToCatalog} className="hover:text-[#00F0FF] transition-colors">Catálogo</button>
-            <a href="#services" className="hover:text-white transition-colors">Serviços</a>
-            <a href="#cases" className="hover:text-white transition-colors">Cases</a>
-          </nav>
+          <div className="w-full h-[1px] bg-[#00F0FF] my-1 shadow-[0_0_8px_#00F0FF]" />
+          <div className="text-[10px] font-black text-[#DFFF00] tracking-[0.5em]">HIT</div>
         </div>
-      </header>
 
-      {/* CONTEÚDO PRINCIPAL */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full pt-10">
-        <div className="max-w-5xl text-left">
+        <div className="max-w-4xl">
+          {/* TÍTULO COM O DEGRADÊ CORRETO */}
           <h1 className="text-6xl md:text-[110px] font-black tracking-tighter text-white leading-[0.85] mb-8 uppercase">
             TRANSFORMANDO <br />
             <span className="text-white/20">IDEIAS</span> EM <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00F0FF] to-[#DFFF00] drop-shadow-[0_0_30px_rgba(0,240,255,0.2)]">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00F0FF] to-[#DFFF00]">
               ATIVOS.
             </span>
           </h1>
 
+          {/* DESCRIÇÃO LIMPA */}
           <p className="text-xl text-slate-400 max-w-lg leading-relaxed mb-12 border-l-2 border-[#00F0FF] pl-6 font-medium italic">
             Engenharia de Hits baseada em dados. Transformamos ondas sonoras em
             propriedades intelectuais de alto rendimento.
           </p>
 
+          {/* BOTÕES: EXPLORAR EM AZUL (CYAN) */}
           <div className="flex flex-wrap gap-4">
-            {/* Botão Explorar em Azul (Cyan) conforme pedido */}
             <MagneticButton
               onClick={scrollToCatalog}
-              className="px-10 py-5 bg-[#00F0FF] text-[#020617] font-black uppercase tracking-widest shadow-[0_10px_40px_-10px_rgba(0,240,255,0.3)] hover:brightness-110 transition-all"
+              className="px-10 py-5 bg-[#00F0FF] text-[#020617] font-black uppercase tracking-widest shadow-[0_10px_40px_-10px_rgba(0,240,255,0.4)]"
             >
               Explorar Catálogo
             </MagneticButton>
