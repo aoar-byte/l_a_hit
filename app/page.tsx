@@ -994,79 +994,83 @@ const SmartCatalog = ({
 
           {/* ALTERAÇÃO: max-h-[380px] para 5 linhas visíveis */}
           <div className="flex flex-col overflow-y-auto max-h-[300px] scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-slate-900">
-            {filteredTracks.map((track: any) => {
-              const isCurrent = currentTrack?.id === track.id;
-              
-              return (
-                <div
-                  key={track.id}
-                  className={`grid grid-cols-12 gap-4 px-6 py-4 items-center border-b border-white/5 transition-colors group ${
-                    isCurrent ? "bg-blue-900/10" : "hover:bg-slate-800/50"
-                  }`}
-                >
-                  <div className="col-span-2 md:col-span-1 flex justify-center">
-                    <button
-                      onClick={() => {
-                        if (isCurrent) {
-                          setIsPlaying(!isPlaying);
-                        } else {
-                          setCurrentTrack(track);
-                          setIsPlaying(true);
-                        }
-                      }}
-                      className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${
-                        isCurrent && isPlaying
-                          ? "bg-blue-500 text-white shadow-[0_0_15px_-3px_rgba(59,130,246,0.6)]"
-                          : "bg-slate-800 text-slate-400 group-hover:bg-white group-hover:text-slate-900"
-                      }`}
-                    >
-                      {isCurrent && isPlaying ? <Pause size={16} fill="currentColor" /> : <Play size={16} fill="currentColor" className="ml-1" />}
-                    </button>
-                  </div>
-
-                  <div className="col-span-5 md:col-span-4 flex flex-col justify-center">
-                    <h3 className={`text-sm font-bold truncate transition-colors ${isCurrent ? "text-blue-400" : "text-white group-hover:text-blue-300"}`}>
-                      {track.title}
-                    </h3>
-                    <p className="text-[10px] text-slate-500 uppercase tracking-widest truncate">{track.artist}</p>
-                  </div>
-
-                  <div className="col-span-2 hidden md:flex items-center">
-                    <span className="text-xs text-slate-300 bg-slate-800 px-2 py-1 rounded border border-white/5 truncate">
-                      {track.genre}
-                    </span>
-                  </div>
-                  <div className="col-span-1 hidden md:flex justify-center items-center">
-                    <span className="text-xs font-mono text-slate-400">{track.bpm}</span>
-                  </div>
-                  <div className="col-span-1 hidden md:flex justify-center items-center">
-                    <span className="text-[10px] text-slate-400 uppercase tracking-wider">{track.mood}</span>
-                  </div>
-
-                  <div className="col-span-5 md:col-span-3 flex items-center justify-end">
-                    <button
-                      onClick={() => onLicenseClick(track)}
-                      className="text-[10px] font-bold uppercase tracking-widest bg-blue-600/10 border border-blue-500/30 text-blue-400 hover:bg-blue-600 hover:text-white px-4 py-2 rounded transition-all whitespace-nowrap"
-                    >
-                      Licenciar
-                    </button>
-                  </div>
-                </div>
-              );
-            })}
-
-            {filteredTracks.length === 0 && (
-              <div className="text-center py-16">
-                <p className="text-slate-500 font-mono text-sm">ERRO 404: NENHUMA FAIXA ENCONTRADA</p>
-              </div>
-            )}
-          </div>
-        </div>
+          {filteredTracks.map((track: any) => {
+  const isCurrent = currentTrack?.id === track.id;
+  
+  return (
+    <div
+      key={track.id}
+      className={`grid grid-cols-12 gap-4 px-6 py-4 items-center border-b border-white/5 transition-colors group ${
+        isCurrent ? "bg-[#00F0FF]/5" : "hover:bg-white/[0.02]"
+      }`}
+    >
+      {/* COLUNA: PLAY NEON */}
+      <div className="col-span-2 md:col-span-1 flex justify-center">
+        <button
+          onClick={() => {
+            if (isCurrent) {
+              setIsPlaying(!isPlaying);
+            } else {
+              setCurrentTrack(track);
+              setIsPlaying(true);
+            }
+          }}
+          className={`relative w-10 h-10 rounded-full flex items-center justify-center transition-all ${
+            isCurrent && isPlaying
+              ? "bg-[#00F0FF] text-[#020617] shadow-[0_0_20px_rgba(0,240,255,0.6)]"
+              : "bg-slate-900 border border-white/10 text-[#00F0FF] hover:border-[#00F0FF] hover:shadow-[0_0_10px_rgba(0,240,255,0.3)]"
+          }`}
+        >
+          {isCurrent && isPlaying ? (
+            <Pause size={16} fill="currentColor" /> 
+          ) : (
+            <Play size={16} fill="currentColor" className="ml-1" />
+          )}
+        </button>
       </div>
-    </section>
-  );
-};
 
+      {/* COLUNA: TÍTULO */}
+      <div className="col-span-5 md:col-span-4">
+        <h4 className={`text-sm font-bold tracking-tight transition-colors ${isCurrent ? "text-[#00F0FF]" : "text-white group-hover:text-[#00F0FF]"}`}>
+          {track.title}
+        </h4>
+        <p className="text-slate-500 text-[10px] uppercase font-black tracking-[0.2em]">
+          {track.artist}
+        </p>
+      </div>
+
+      {/* COLUNA: GÊNERO NEON SUAVE */}
+      <div className="col-span-2 hidden md:block">
+        <span className="px-3 py-1 rounded-sm bg-slate-950 border border-white/5 text-[9px] font-black text-slate-500 uppercase tracking-widest group-hover:border-[#DFFF00]/40 group-hover:text-[#DFFF00] transition-all">
+          {track.genre}
+        </span>
+      </div>
+
+      <div className="col-span-1 hidden md:block text-center text-[10px] font-mono text-slate-500">
+        {track.bpm}
+      </div>
+
+      <div className="col-span-1 hidden md:block text-center text-[9px] font-bold text-slate-600 uppercase tracking-tighter">
+        {track.mood}
+      </div>
+
+      {/* COLUNA: AÇÃO LICENCIAR NEON */}
+      <div className="col-span-5 md:col-span-3 text-right">
+        <button
+          onClick={() => onLicenseClick(track)}
+          className={`px-4 py-2 text-[10px] font-black uppercase tracking-widest rounded-sm transition-all border ${
+            isCurrent 
+              ? "bg-[#DFFF00] text-[#020617] border-[#DFFF00]" 
+              : "border-[#00F0FF]/40 text-[#00F0FF] hover:bg-[#00F0FF] hover:text-[#020617] hover:shadow-[0_0_15px_rgba(0,240,255,0.4)]"
+          }`}
+        >
+          Licenciar
+        </button>
+      </div>
+    </div>
+  );
+})}
+            
 // ============================================================
 // PLAYER DE MÚSICA FIXO (COM BOTÃO FECHAR CORRIGIDO)
 // ============================================================
