@@ -1717,13 +1717,6 @@ const SocialProof = ({ cases }: { cases: any[] }) => {
             );
           })}
         </div>
-
-        <p className="text-center text-[#00F0FF] text-xs mt-12 font-bold">
-          + Peça seu portfólio de cases completo
-        </p>
-      </div>
-    </section>
-  );
 };
 
 // ============================================================
