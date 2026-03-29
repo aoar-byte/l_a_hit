@@ -645,8 +645,33 @@ const Footer = () => {
                 </li>
               </ul>
             </div>
-
-            
+            <div>
+              <h5 className="text-white font-bold uppercase tracking-widest mb-6 text-xs">
+                Contato Direto
+              </h5>
+              <ul className="space-y-3">
+                <li>
+                  {/* ALTERE O EMAIL AQUI */}
+                  <a 
+                    href="mailto:aoliabele@gmail.com" 
+                    className="hover:text-[#00F0FF] transition-colors text-xs"
+                  >
+                    EMAIL
+                  </a>
+                </li>
+                <li>
+                  {/* ALTERE O NÚMERO DO WHATSAPP AQUI (coloque 55 depois o DDD e o número, sem espaços) */}
+                  <a 
+                    href="https://wa.me/5532998078161" 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-[#00F0FF] transition-colors text-xs"
+                  >
+                    WhatsApp Corporativo
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
         <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between gap-4">
