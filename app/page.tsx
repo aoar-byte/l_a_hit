@@ -843,46 +843,136 @@ const DynamicTerrainCanvas = () => {
 };
 
 // ============================================================
-// SEÇÃO PRINCIPAL (HERO SECTION)
+// HERO - VERSÃO FINAL COM LOGO ANIMADO E NEON INTEGRADO
 // ============================================================
-const HeroSection = () => {
-  return (
-    <section className="relative w-full pt-32 pb-20 px-6 flex flex-col items-start max-w-7xl mx-auto z-10">
-      {/* Título com Hierarquia de Cores */}
-      <motion.h1 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        className="text-6xl md:text-8xl font-black text-white leading-[0.95] tracking-tighter uppercase"
-      >
-        Transformando<br />
-        Ideias em <br />
-        <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00F0FF] to-[#DFFF00] drop-shadow-[0_0_20px_rgba(0,240,255,0.4)]">
-          Ativos.
-        </span>
-      </motion.h1>
+const Hero = () => {
+  const scrollToCatalog = () =>
+    document.getElementById("catalog")?.scrollIntoView({ behavior: "smooth" });
 
-      {/* Descritivo com Borda de Destaque Ciano */}
+  // Componente do Logo interno para garantir a animação do pingo
+  const LogoLHIT = () => (
+    <div className="flex flex-col items-center justify-center select-none mb-12 md:mb-16 scale-125 md:scale-[1.5] origin-left">
+      <div className="relative flex items-center justify-center gap-1 mb-[-4px]">
+        <span className="text-3xl font-black text-white italic tracking-tighter">L</span>
+        <motion.span
+          animate={{ 
+            scale: [1, 1.2, 1], 
+            opacity: [0.7, 1, 0.7], 
+            filter: ["drop-shadow(0 0 2px #DFFF00)", "drop-shadow(0 0 10px #DFFF00)"] 
+          }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+          className="text-[#DFFF00] text-2xl mx-0.5"
+        >✦</motion.span>
+        <span className="text-3xl font-black text-white italic tracking-tighter">A</span>
+      </div>
       <motion.div 
-        initial={{ opacity: 0, x: -20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 0.4, duration: 0.8 }}
-        className="mt-10 max-w-xl border-l-2 border-[#00F0FF] pl-8"
-      >
-        <p className="text-blue-100/70 text-lg md:text-xl font-medium leading-relaxed italic">
-          Engenharia de Hits baseada em dados. Transformamos ondas sonoras em 
-          propriedades intelectuais de alto rendimento para o mercado global.
-        </p>
-      </motion.div>
+        initial={{ width: 0 }} 
+        animate={{ width: "110%" }} 
+        transition={{ duration: 1, delay: 0.5 }}
+        className="h-[1.5px] bg-[#00F0FF] shadow-[0_0_12px_#00F0FF] relative z-10" 
+      />
+      <div className="flex items-center justify-center text-[10px] font-black text-[#DFFF00] tracking-[0.5em] mt-1 relative">
+        <span>H</span>
+        <div className="relative inline-flex justify-center">
+          <span>I</span>
+          {/* Pingo do I subindo como foguete até a Estrela */}
+          <motion.div
+            initial={{ y: 0, opacity: 1 }}
+            animate={{ 
+              y: -40, 
+              opacity: [1, 1, 0], 
+              scale: [1, 1.5, 0.5] 
+            }}
+            transition={{ 
+              duration: 1.2, 
+              repeat: Infinity, 
+              repeatDelay: 2, 
+              ease: "circIn" 
+            }}
+            className="absolute -top-1 w-[3px] h-[3px] bg-[#DFFF00] rounded-full shadow-[0_0_8px_#DFFF00]"
+          />
+        </div>
+        <span className="ml-1">T</span>
+      </div>
+    </div>
+  );
 
-      {/* Botão de Chamada com Efeito Glow */}
-      <motion.button
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        className="mt-12 px-8 py-4 bg-[#DFFF00] text-navy-950 font-black rounded-sm flex items-center gap-3 shadow-[0_0_20px_rgba(223,255,0,0.3)] hover:shadow-[0_0_35px_rgba(223,255,0,0.5)] transition-all"
+  return (
+    <section className="relative h-screen flex items-center justify-center overflow-hidden bg-[#020617]">
+      {/* TerrainCanvas e Overlay de gradiente */}
+      <DynamicTerrainCanvas />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#020617_90%)]" />
+
+      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full pt-28 md:pt-25">
+        <div className="max-w-4xl mx-auto text-center md:text-left md:mx-0">
+          
+          {/* Inserção do Logo Animado no lugar da imagem antiga */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <LogoLHIT />
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <h1 className="text-5xl md:text-8xl font-black tracking-tighter text-white leading-[0.9] mb-8 uppercase">
+              TRANSFORMANDO <br />
+              <span className="text-white/20 uppercase">Ideias</span> EM <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00F0FF] to-[#DFFF00] drop-shadow-[0_0_20px_rgba(0,240,255,0.4)]">
+                ATIVOS.
+              </span>
+            </h1>
+          </motion.div>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4, duration: 1 }}
+            className="text-xl text-slate-400 max-w-lg leading-relaxed mb-10 border-l-2 border-[#00F0FF] pl-6 mx-auto md:mx-0 italic font-medium"
+          >
+            Engenharia de Hits baseada em dados. Transformamos ondas sonoras em
+            propriedades intelectuais de alto rendimento.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6 }}
+            className="flex flex-wrap gap-4 justify-center md:justify-start"
+          >
+            <button
+              onClick={scrollToCatalog}
+              className="px-10 py-5 bg-[#DFFF00] text-[#020617] font-black tracking-widest uppercase hover:bg-white transition-all shadow-[0_0_30px_rgba(223,255,0,0.3)] active:scale-95"
+            >
+              Explorar Catálogo
+            </button>
+            <button
+              className="px-10 py-5 border border-[#00F0FF]/30 text-[#00F0FF] font-bold uppercase tracking-widest flex items-center gap-3 backdrop-blur-sm hover:bg-[#00F0FF]/10 transition-all"
+            >
+              <Play size={14} fill="currentColor" /> Showreel
+            </button>
+          </motion.div>
+        </div>
+      </div>
+
+      {/* Interface de Status IA no canto inferior */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.6 }}
+        transition={{ delay: 1.2 }}
+        className="absolute bottom-10 right-10 text-[#00F0FF] font-mono text-[10px] flex flex-col items-end gap-1 tracking-widest"
       >
-        CONHECER O CATÁLOGO <ArrowRight size={20} />
-      </motion.button>
+        <div className="flex items-center gap-2">
+          <div className="w-1.5 h-1.5 bg-[#DFFF00] rounded-full animate-pulse" />
+          <span>NEURAL_ENGINE: ACTIVE</span>
+        </div>
+        <span>HIT_RATE: 98.4%</span>
+      </motion.div>
     </section>
   );
 };
