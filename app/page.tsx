@@ -889,7 +889,7 @@ const Hero = () => {
             {/* Botão Explorar Catálogo com Glow Ciano */}
             <MagneticButton
               onClick={scrollToCatalog}
-              className="px-10 py-5 bg-[#00F0FF] text-[#020617] font-black tracking-widest uppercase shadow-[0_0_30px_rgba(0,240,255,0.4)] hover:shadow-[0_0_40px_rgba(0,240,255,0.6)] transition-shadow"
+              className="px-10 py-2 bg-[#00F0FF] text-[#020617] font-black tracking-widest uppercase shadow-[0_0_30px_rgba(0,240,255,0.4)] hover:shadow-[0_0_40px_rgba(0,240,255,0.6)] transition-shadow"
             >
               Explorar Catálogo
             </MagneticButton>
