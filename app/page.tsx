@@ -843,77 +843,46 @@ const DynamicTerrainCanvas = () => {
 };
 
 // ============================================================
-// HERO
+// SEÇÃO PRINCIPAL (HERO SECTION)
 // ============================================================
-const Hero = () => {
-  const scrollToCatalog = () =>
-    document.getElementById("catalog")?.scrollIntoView({ behavior: "smooth" });
-
+const HeroSection = () => {
   return (
-    <section className="relative h-screen flex items-center justify-center overflow-hidden bg-slate-950">
-      <DynamicTerrainCanvas />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#020617_90%)]" />
-
-      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full pt-28 md:pt-25">
-        <div className="max-w-4xl mx-auto text-center md:text-left md:mx-0">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <h1 className="text-5xl md:text-8xl font-black tracking-tighter text-white leading-[0.9] mb-8">
-              TRANSFORMANDO <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-400">
-                IDEIAS
-              </span>{" "}
-              EM <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-400">
-                ATIVOS.
-              </span>
-            </h1>
-          </motion.div>
-
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4, duration: 1 }}
-            className="text-xl text-slate-400 max-w-lg leading-relaxed mb-10 border-l-2 border-blue-600 pl-6 mx-auto md:mx-0"
-          >
-            Engenharia de Hits baseada em dados. Transformamos ondas sonoras em
-            propriedades intelectuais de alto rendimento.
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6 }}
-            className="flex flex-wrap gap-4 justify-center md:justify-start"
-          >
-            <MagneticButton
-              onClick={scrollToCatalog}
-              className="px-10 py-5 bg-blue-600 text-white font-bold tracking-widest uppercase hover:bg-blue-700 shadow-[0_10px_40px_-10px_rgba(37,99,235,0.5)]"
-            >
-              Explorar Catálogo
-            </MagneticButton>
-            <MagneticButton
-              disabled
-              className="px-10 py-5 border border-white/10 text-slate-300 font-bold uppercase tracking-widest flex items-center gap-3 backdrop-blur-sm"
-            >
-              <Play size={14} /> Showreel
-            </MagneticButton>
-          </motion.div>
-        </div>
-      </div>
-
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.2 }}
-        className="absolute bottom-10 right-10 text-slate-700 font-mono text-xs flex flex-col items-end gap-1"
+    <section className="relative w-full pt-32 pb-20 px-6 flex flex-col items-start max-w-7xl mx-auto z-10">
+      {/* Título com Hierarquia de Cores */}
+      <motion.h1 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="text-6xl md:text-8xl font-black text-white leading-[0.95] tracking-tighter uppercase"
       >
-        <span>SCROLL_Y: DETECTED</span>
-        <span>LATENCY: 4ms</span>
+        Transformando<br />
+        Ideias em <br />
+        <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00F0FF] to-[#DFFF00] drop-shadow-[0_0_20px_rgba(0,240,255,0.4)]">
+          Ativos.
+        </span>
+      </motion.h1>
+
+      {/* Descritivo com Borda de Destaque Ciano */}
+      <motion.div 
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 0.4, duration: 0.8 }}
+        className="mt-10 max-w-xl border-l-2 border-[#00F0FF] pl-8"
+      >
+        <p className="text-blue-100/70 text-lg md:text-xl font-medium leading-relaxed italic">
+          Engenharia de Hits baseada em dados. Transformamos ondas sonoras em 
+          propriedades intelectuais de alto rendimento para o mercado global.
+        </p>
       </motion.div>
+
+      {/* Botão de Chamada com Efeito Glow */}
+      <motion.button
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        className="mt-12 px-8 py-4 bg-[#DFFF00] text-navy-950 font-black rounded-sm flex items-center gap-3 shadow-[0_0_20px_rgba(223,255,0,0.3)] hover:shadow-[0_0_35px_rgba(223,255,0,0.5)] transition-all"
+      >
+        CONHECER O CATÁLOGO <ArrowRight size={20} />
+      </motion.button>
     </section>
   );
 };
@@ -1792,6 +1761,68 @@ const SocialProof = ({ cases }: { cases: any[] }) => {
         </p>
       </div>
     </section>
+  );
+};
+
+// ============================================================
+// COMPONENTE DO LOGO ANIMADO (L✦A HIT)
+// ============================================================
+const LogoAnimado = () => {
+  return (
+    <div className="flex flex-col items-center justify-center select-none group cursor-pointer">
+      {/* Parte Superior: L ✦ A */}
+      <div className="relative flex items-center justify-center gap-1 mb-[-4px]">
+        <span className="text-3xl font-black text-white italic tracking-tighter">L</span>
+        
+        {/* Estrela de 4 pontas com Pulso Neon */}
+        <motion.span
+          animate={{ 
+            scale: [1, 1.2, 1],
+            opacity: [0.7, 1, 0.7],
+            filter: ["drop-shadow(0 0 2px #DFFF00)", "drop-shadow(0 0 8px #DFFF00)", "drop-shadow(0 0 2px #DFFF00)"]
+          }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+          className="text-[#DFFF00] text-2xl mx-0.5"
+        >
+          ✦
+        </motion.span>
+        
+        <span className="text-3xl font-black text-white italic tracking-tighter">A</span>
+      </div>
+
+      {/* Linha de Horizonte Laser Ciano */}
+      <motion.div 
+        initial={{ width: 0, opacity: 0 }}
+        animate={{ width: "110%", opacity: 0.7 }}
+        transition={{ duration: 1, delay: 0.5 }}
+        className="h-[1.5px] bg-[#00F0FF] shadow-[0_0_10px_#00F0FF] relative z-10"
+      />
+
+      {/* Palavra HIT com o Pingo Foguete */}
+      <div className="flex items-center justify-center text-[10px] font-black text-[#DFFF00] tracking-[0.5em] mt-1 relative">
+        <span>H</span>
+        <div className="relative inline-flex justify-center">
+          <span className="opacity-100">I</span>
+          {/* O Pingo Foguete: sai do 'I' e vai até a estrela ✦ */}
+          <motion.div
+            initial={{ y: 0, opacity: 1 }}
+            animate={{ 
+              y: -36, // Ajuste de altura para chegar na estrela
+              opacity: [1, 1, 0],
+              scale: [1, 1.4, 0.6]
+            }}
+            transition={{ 
+              duration: 1.4, 
+              repeat: Infinity, 
+              repeatDelay: 2.5,
+              ease: "circIn" 
+            }}
+            className="absolute -top-1 w-[3px] h-[3px] bg-[#DFFF00] rounded-full shadow-[0_0_8px_#DFFF00]"
+          />
+        </div>
+        <span className="ml-1">T</span>
+      </div>
+    </div>
   );
 };
 
