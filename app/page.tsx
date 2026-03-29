@@ -854,7 +854,7 @@ const Hero = () => {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#020617_90%)]" />
 
       {/* Reduzido o padding top de pt-44 para pt-32 para cortar o espaço inútil */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full pt-32 pb-10">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full pt-30 pb-10">
         <div className="max-w-5xl text-left">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -1570,7 +1570,7 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
                     rel="noopener noreferrer"
                     className="text-white text-xs font-medium hover:text-[#DFFF00] transition flex items-center gap-1"
                   >
-                    HitUp Brasil <ExternalLink size={10} />
+                    Parceiro <ExternalLink size={10} />
                   </a>
                 </div>
               )}
