@@ -1198,13 +1198,13 @@ const PersistentPlayer = ({
 
   if (!track) return null;
 
-  return (
+   return (
     <AnimatePresence>
       <motion.div
         initial={{ y: 100 }}
         animate={{ y: 0 }}
         exit={{ y: 100 }}
-        className="fixed bottom-0 left-0 w-full bg-slate-900/95 backdrop-blur-xl border-t border-white/10 p-4 z-50 shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.5)]"
+        className="fixed bottom-0 left-0 w-full bg-slate-950/95 backdrop-blur-2xl border-t border-[#00F0FF]/20 p-4 z-50 shadow-[0_-10px_50px_-15px_rgba(0,240,255,0.15)]"
       >
         <audio
           ref={audioRef}
@@ -1217,92 +1217,85 @@ const PersistentPlayer = ({
 
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4 flex-wrap md:flex-nowrap">
           
-          {/* INFO DA MÚSICA COM BOTÃO FECHAR */}
+          {/* INFO DA MÚSICA */}
           <div className="flex items-center gap-4 w-full md:w-1/3">
-            {/* Thumbnail/Ícone */}
-            <div className="w-12 h-12 bg-slate-800 rounded-md relative flex items-center justify-center shrink-0 border border-white/5">
-              <Music size={20} className="text-blue-500" />
-              {isPlaying && <div className="absolute inset-0 bg-blue-500/20 rounded-md animate-pulse" />}
+            <div className="w-12 h-12 bg-slate-900 rounded-md relative flex items-center justify-center shrink-0 border border-[#00F0FF]/20 overflow-hidden">
+              <Music size={20} className="text-[#00F0FF] drop-shadow-[0_0_5px_#00F0FF]" />
+              {isPlaying && (
+                <motion.div 
+                  animate={{ opacity: [0.1, 0.3, 0.1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  className="absolute inset-0 bg-[#00F0FF]/20 rounded-md" 
+                />
+              )}
             </div>
             
-            {/* Info da música */}
             <div className="overflow-hidden flex-1">
-              <h4 className="text-white font-bold text-sm truncate">{track.title}</h4>
-              <p className="text-slate-500 text-xs truncate">{track.artist}</p>
+              <h4 className="text-white font-bold text-sm truncate tracking-tight">{track.title}</h4>
+              <p className="text-slate-500 text-[10px] uppercase tracking-widest font-black">{track.artist}</p>
             </div>
           </div>
 
-          {/* CONTROLES CENTRAIS */}
+          {/* CONTROLES CENTRAIS NEON */}
           <div className="flex flex-col items-center w-full md:w-2/4">
-            <div className="flex items-center gap-4 mb-2">
-              {/* BOTÃO ANTERIOR */}
-              <button 
-                onClick={playPrevious}
-                className="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-white flex items-center justify-center transition-all"
-                title="Música anterior"
-              >
-                <SkipBack size={16} fill="currentColor" />
+            <div className="flex items-center gap-6 mb-2">
+              <button onClick={playPrevious} className="text-slate-500 hover:text-[#00F0FF] transition-colors">
+                <SkipBack size={18} fill="currentColor" />
               </button>
               
-              {/* BOTÃO PLAY/PAUSE */}
+              {/* BOTÃO PLAY NEON */}
               <button 
                 onClick={() => setIsPlaying(!isPlaying)}
-                className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-slate-900 hover:scale-105 transition-transform shadow-lg"
+                className="w-12 h-12 bg-[#00F0FF] rounded-full flex items-center justify-center text-slate-950 hover:scale-110 transition-all shadow-[0_0_20px_rgba(0,240,255,0.5)] active:scale-95"
                 disabled={!audioLoaded}
               >
-                {isPlaying ? <Pause size={20} fill="currentColor" /> : <Play size={20} fill="currentColor" className="ml-1" />}
+                {isPlaying ? <Pause size={24} fill="currentColor" /> : <Play size={24} fill="currentColor" className="ml-1" />}
               </button>
               
-              {/* BOTÃO PRÓXIMO */}
-              <button 
-                onClick={playNext}
-                className="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-white flex items-center justify-center transition-all"
-                title="Próxima música"
-              >
-                <SkipForward size={16} fill="currentColor" />
+              <button onClick={playNext} className="text-slate-500 hover:text-[#00F0FF] transition-colors">
+                <SkipForward size={18} fill="currentColor" />
               </button>
             </div>
             
-            {/* BARRA DE PROGRESSO */}
+            {/* BARRA DE PROGRESSO NEON */}
             <div className="w-full flex items-center gap-3">
               <span className="text-[10px] text-slate-500 font-mono w-8 text-right">{currentTime}</span>
               <div 
                 onClick={handleSeek}
-                className={`h-1 bg-slate-800 rounded-full flex-1 overflow-hidden relative ${audioLoaded ? 'cursor-pointer' : 'cursor-default'}`}
+                className="h-1 bg-slate-800 rounded-full flex-1 relative cursor-pointer group"
               >
-                <div 
-                  className="h-full bg-blue-500 absolute top-0 left-0 transition-all duration-100 ease-linear" 
+                <motion.div 
+                  className="h-full bg-[#00F0FF] absolute top-0 left-0 shadow-[0_0_10px_#00F0FF]" 
                   style={{ width: `${progress}%` }} 
+                />
+                {/* Marcador de posição (Thumb) sutil */}
+                <div 
+                  className="absolute top-1/2 -translate-y-1/2 w-2 h-2 bg-white rounded-full shadow-[0_0_10px_#00F0FF] opacity-0 group-hover:opacity-100 transition-opacity"
+                  style={{ left: `${progress}%` }}
                 />
               </div>
               <span className="text-[10px] text-slate-500 font-mono w-8">{duration}</span>
             </div>
           </div>
 
-          {/* AÇÃO - LICENCIAR + BOTÃO FECHAR */}
-          <div className="w-full md:w-1/4 flex items-center justify-end gap-3">
-            {/* BOTÃO LICENCIAR */}
+          {/* AÇÃO - LICENCIAR */}
+          <div className="w-full md:w-1/4 flex items-center justify-end gap-4">
             <button
               onClick={() => onLicenseClick(track)}
-              className="px-5 py-2 bg-blue-600/10 text-blue-400 border border-blue-500/20 text-xs font-bold rounded hover:bg-blue-600 hover:text-white transition-all shadow-sm whitespace-nowrap"
+              className="px-6 py-2 bg-transparent text-[#00F0FF] border border-[#00F0FF]/50 text-[10px] font-black uppercase tracking-[0.2em] rounded-sm hover:bg-[#00F0FF] hover:text-[#020617] hover:shadow-[0_0_20px_rgba(0,240,255,0.4)] transition-all"
             >
-              LICENCIAR FAIXA
+              Licenciar Ativo
             </button>
             
-            {/* BOTÃO FECHAR - AGORA NA EXTREMA DIREITA */}
-            <button
-              onClick={closePlayer}
-              className="text-slate-500 hover:text-white hover:bg-slate-800/50 transition-colors p-2 rounded-full"
-              title="Fechar player"
-            >
-              <X size={18} />
+            <button onClick={closePlayer} className="text-slate-600 hover:text-white transition-colors">
+              <X size={20} />
             </button>
           </div>
         </div>
       </motion.div>
     </AnimatePresence>
   );
-};
+
 
 // ============================================================
 // SERVIÇOS (COM ALTURA CONSISTENTE E LAYOUT ALINHADO)
