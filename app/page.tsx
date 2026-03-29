@@ -1273,7 +1273,7 @@ const PersistentPlayer = ({
 };
 
 // ============================================================
-// SERVIÇOS (COM ALTURA CONSISTENTE E LAYOUT ALINHADO)
+// SERVIÇOS (CORES CORRIGIDAS PARA A PALETA LA HIT)
 // ============================================================
 const Services = ({ servicos, links, onLeadOpen }: any) => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -1289,7 +1289,6 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
     return desc.split("|").map(part => part.trim()).filter(part => part);
   };
 
-  // Define o resumo para cada card baseado nos dados da planilha
   const getResumo = (service: any) => {
     if (service.desc) {
       const primeiraLinha = service.desc.split("|")[0];
@@ -1301,7 +1300,6 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
     return "Sob consulta";
   };
 
-  // Trunca título longo para 2 linhas no máximo
   const getTituloAbreviado = (titulo: string) => {
     if (titulo.length > 30) {
       return titulo.substring(0, 30) + "...";
@@ -1315,16 +1313,16 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
   return (
     <section
       id="services"
-      className="py-24 bg-slate-900 border-t border-white/5"
+      className="py-16 bg-slate-950 border-t border-white/5"
     >
       <div className="max-w-7xl mx-auto px-6">
         
-        {/* TÍTULO PRINCIPAL */}
+        {/* TÍTULO PRINCIPAL (CIANO) */}
         <div className="mb-12 text-center">
-          <div className="flex items-center justify-center gap-2 text-blue-500 font-mono text-[10px] tracking-widest uppercase mb-2">
-            <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse" />
+          <div className="flex items-center justify-center gap-2 text-[#00F0FF] font-mono text-[10px] tracking-widest uppercase mb-2">
+            <span className="w-1.5 h-1.5 bg-[#00F0FF] rounded-full animate-pulse shadow-[0_0_5px_#00F0FF]" />
             SOLUTIONS
-            <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse" />
+            <span className="w-1.5 h-1.5 bg-[#00F0FF] rounded-full animate-pulse shadow-[0_0_5px_#00F0FF]" />
           </div>
           <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight">
             Soluções Integradas
@@ -1334,14 +1332,15 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
           </p>
         </div>
 
-        {/* DUAS COLUNAS LADO A LADO COM ALTURA IGUAL */}
+        {/* DUAS COLUNAS LADO A LADO */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
           
-          {/* COLUNA ESQUERDA - EMPRESAS */}
-          <div className="bg-gradient-to-br from-blue-950/40 to-slate-950 rounded-2xl border border-blue-500/20 overflow-hidden flex flex-col h-full">
-            <div className="p-6 pb-3 border-b border-blue-500/20">
-              <div className="flex items-center gap-2 text-blue-500 font-mono text-[11px] tracking-widest uppercase mb-1">
-                <span className="w-1.5 h-1.5 bg-blue-500 rounded-full" />
+          {/* COLUNA ESQUERDA - EMPRESAS (TEMA CIANO) */}
+          {/* Removido o gradiente colorido, usando fundo escuro limpo */}
+          <div className="bg-slate-900 rounded-2xl border border-[#00F0FF]/10 overflow-hidden flex flex-col h-full shadow-[0_0_30px_-15px_rgba(0,240,255,0.1)]">
+            <div className="p-6 pb-3 border-b border-[#00F0FF]/10">
+              <div className="flex items-center gap-2 text-[#00F0FF] font-mono text-[11px] tracking-widest uppercase mb-1">
+                <span className="w-1.5 h-1.5 bg-[#00F0FF] rounded-full" />
                 B2B SOLUTIONS
               </div>
               <h3 className="text-2xl font-bold text-white">
@@ -1362,48 +1361,45 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
                   return (
                     <div
                       key={i}
-                      className="group bg-slate-950/80 border border-blue-500/20 hover:border-blue-500/40 rounded-xl transition-all duration-300 overflow-hidden flex flex-col h-full"
+                      className="group bg-slate-950/80 border border-white/5 hover:border-[#00F0FF]/40 rounded-xl transition-all duration-300 overflow-hidden flex flex-col h-full"
                     >
                       <div className="p-5 flex flex-col h-full">
-                        {/* Ícone */}
+                        {/* Ícone Ciano */}
                         <div className="flex justify-center mb-4">
-                          <div className="w-14 h-14 bg-blue-500/10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                            <Icon className="w-7 h-7 text-blue-500" />
+                          <div className="w-14 h-14 bg-[#00F0FF]/5 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <Icon className="w-7 h-7 text-[#00F0FF]" />
                           </div>
                         </div>
                         
-                        {/* Título - Altura fixa para 2 linhas */}
                         <div className="min-h-[56px] flex items-center justify-center mb-3">
-                          <h4 className="text-base font-bold text-white text-center leading-tight line-clamp-2">
+                          <h4 className="text-base font-bold text-white group-hover:text-[#00F0FF] transition-colors text-center leading-tight line-clamp-2">
                             {tituloAbreviado}
                           </h4>
                         </div>
                         
-                        {/* Resumo - Altura fixa para 2 linhas */}
                         <div className="min-h-[48px] flex items-center justify-center mb-4">
                           <p className="text-slate-400 text-xs text-center leading-relaxed line-clamp-2">
                             {resumo}
                           </p>
                         </div>
                         
-                        {/* Preço */}
                         <div className="text-center mb-4">
-                          <span className="text-[10px] text-emerald-500 font-mono bg-emerald-500/10 px-2 py-1 rounded">
+                          <span className="text-[10px] text-slate-400 font-mono bg-white/5 border border-white/10 px-2 py-1 rounded">
                             Sob consulta
                           </span>
                         </div>
                         
-                        {/* Botões - Fixos no final */}
                         <div className="flex gap-2 justify-center mt-auto pt-2">
                           <button
                             onClick={() => openDetails(s)}
-                            className="px-4 py-2 border border-blue-500/30 text-blue-400 text-[10px] font-bold uppercase tracking-widest hover:bg-blue-500/10 hover:text-blue-300 transition-colors rounded-lg"
+                            className="px-4 py-2 border border-white/10 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-[#00F0FF] hover:text-[#020617] hover:border-[#00F0FF] transition-all rounded-lg w-full"
                           >
                             {s.cta || "DETALHES"}
                           </button>
                           <button
                             onClick={() => window.open(links.whatsapp, "_blank")}
-                            className="p-2 bg-green-600 hover:bg-green-700 text-white transition-colors rounded-lg"
+                            className="p-2 border border-white/10 bg-transparent hover:bg-[#25D366] hover:border-[#25D366] text-white transition-all rounded-lg"
+                            title="Chamar no WhatsApp"
                           >
                             <MessageCircle size={14} />
                           </button>
@@ -1416,11 +1412,11 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
             </div>
           </div>
 
-          {/* COLUNA DIREITA - ARTISTAS */}
-          <div className="bg-gradient-to-br from-emerald-950/40 to-slate-950 rounded-2xl border border-emerald-500/20 overflow-hidden flex flex-col h-full">
-            <div className="p-6 pb-3 border-b border-emerald-500/20">
-              <div className="flex items-center gap-2 text-emerald-500 font-mono text-[11px] tracking-widest uppercase mb-1">
-                <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
+          {/* COLUNA DIREITA - ARTISTAS (TEMA NEON YELLOW) */}
+          <div className="bg-slate-900 rounded-2xl border border-[#DFFF00]/10 overflow-hidden flex flex-col h-full shadow-[0_0_30px_-15px_rgba(223,255,0,0.05)]">
+            <div className="p-6 pb-3 border-b border-[#DFFF00]/10">
+              <div className="flex items-center gap-2 text-[#DFFF00] font-mono text-[11px] tracking-widest uppercase mb-1">
+                <span className="w-1.5 h-1.5 bg-[#DFFF00] rounded-full" />
                 ARTIST SOLUTIONS
               </div>
               <h3 className="text-2xl font-bold text-white">
@@ -1444,80 +1440,74 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
                       key={i}
                       className={`group bg-slate-950/80 border rounded-xl transition-all duration-300 overflow-hidden flex flex-col h-full ${
                         isDestaque
-                          ? "border-emerald-500/30 hover:border-emerald-500/50"
-                          : "border-emerald-500/20 hover:border-emerald-500/40"
+                          ? "border-[#DFFF00]/30 hover:border-[#DFFF00]/60 shadow-[0_0_15px_-5px_rgba(223,255,0,0.1)]"
+                          : "border-white/5 hover:border-[#DFFF00]/40"
                       }`}
                     >
                       <div className="p-5 flex flex-col h-full">
-                        {/* Ícone */}
+                        {/* Ícone Neon */}
                         <div className="flex justify-center mb-4">
                           <div className={`w-14 h-14 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform ${
-                            isDestaque ? "bg-emerald-500/15" : "bg-emerald-500/10"
+                            isDestaque ? "bg-[#DFFF00]/10" : "bg-[#DFFF00]/5"
                           }`}>
-                            <Icon className={`w-7 h-7 ${
-                              isDestaque ? "text-emerald-400" : "text-emerald-500"
-                            }`} />
+                            <Icon className={`w-7 h-7 text-[#DFFF00] ${isDestaque ? "drop-shadow-[0_0_8px_rgba(223,255,0,0.6)]" : ""}`} />
                           </div>
                         </div>
                         
-                        {/* Título - Altura fixa para 2 linhas */}
                         <div className="min-h-[56px] flex items-center justify-center mb-2">
                           <h4 className={`text-base font-bold text-center leading-tight line-clamp-2 ${
-                            isDestaque ? "text-emerald-400" : "text-white"
-                          }`}>
+                            isDestaque ? "text-[#DFFF00]" : "text-white group-hover:text-[#DFFF00]"
+                          } transition-colors`}>
                             {tituloAbreviado}
                           </h4>
                         </div>
                         
-                        {/* Badge DESTAQUE */}
                         {isDestaque && (
                           <div className="flex justify-center mb-3">
-                            <span className="text-[8px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full font-bold">
+                            <span className="text-[8px] bg-[#DFFF00] text-[#020617] px-2 py-0.5 rounded-full font-black tracking-widest">
                               DESTAQUE
                             </span>
                           </div>
                         )}
                         
-                        {/* Resumo - Altura fixa para 2 linhas */}
                         <div className="min-h-[48px] flex items-center justify-center mb-4">
                           <p className="text-slate-400 text-xs text-center leading-relaxed line-clamp-2">
                             {resumo}
                           </p>
                         </div>
                         
-                        {/* Logo Parceiro - altura consistente */}
+                        {/* Logo Parceiro (Ocupa espaço constante para não quebrar layout) */}
                         <div className="min-h-[32px] flex justify-center items-center mb-4">
                           {s.external && s.external !== "" ? (
-                            <div className="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center">
-                              <span className="text-[8px] text-emerald-400 font-mono">PARCEIRO</span>
+                            <div className="w-12 h-12 bg-slate-900 border border-[#DFFF00]/20 rounded-full flex items-center justify-center">
+                              <span className="text-[7px] text-[#DFFF00] font-mono font-bold">HIT UP</span>
                             </div>
                           ) : (
-                            <div className="h-12" /> // espaço vazio para manter altura consistente
+                            <div className="h-12" />
                           )}
                         </div>
                         
-                        {/* Preço */}
                         <div className="text-center mb-4">
-                          <span className="text-[10px] text-emerald-500 font-mono bg-emerald-500/10 px-2 py-1 rounded">
+                           <span className="text-[10px] text-slate-400 font-mono bg-white/5 border border-white/10 px-2 py-1 rounded">
                             Sob consulta
                           </span>
                         </div>
                         
-                        {/* Botões - Fixos no final */}
                         <div className="flex gap-2 justify-center mt-auto pt-2">
                           <button
                             onClick={() => openDetails(s)}
-                            className={`px-4 py-2 text-[10px] font-bold uppercase tracking-widest transition-colors rounded-lg ${
+                            className={`px-4 py-2 text-[10px] font-bold uppercase tracking-widest transition-all rounded-lg w-full ${
                               isDestaque
-                                ? "border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10"
-                                : "border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10"
+                                ? "bg-[#DFFF00] text-[#020617] hover:shadow-[0_0_15px_rgba(223,255,0,0.5)]"
+                                : "border border-white/10 text-white hover:bg-[#DFFF00] hover:text-[#020617] hover:border-[#DFFF00]"
                             }`}
                           >
                             {s.cta || "DETALHES"}
                           </button>
                           <button
                             onClick={() => window.open(links.whatsapp, "_blank")}
-                            className="p-2 bg-green-600 hover:bg-green-700 text-white transition-colors rounded-lg"
+                            className="p-2 border border-white/10 bg-transparent hover:bg-[#25D366] hover:border-[#25D366] text-white transition-all rounded-lg"
+                            title="Chamar no WhatsApp"
                           >
                             <MessageCircle size={14} />
                           </button>
@@ -1532,7 +1522,7 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
         </div>
       </div>
 
-      {/* MODAL DE DETALHES */}
+      {/* MODAL DE DETALHES DO SERVIÇO (MANTIDO NEUTRO/CIANO) */}
       <AnimatePresence>
         {modalOpen && selectedService && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
@@ -1540,7 +1530,7 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
-              className="bg-slate-900 border border-white/10 w-full max-w-md p-6 relative max-h-[80vh] overflow-y-auto rounded-xl"
+              className="bg-slate-900 border border-white/10 w-full max-w-md p-6 relative max-h-[80vh] overflow-y-auto rounded-xl shadow-2xl shadow-[#00F0FF]/10"
             >
               <button
                 onClick={() => setModalOpen(false)}
@@ -1550,8 +1540,8 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
               </button>
               
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-blue-600/20 flex items-center justify-center rounded-full">
-                  <selectedService.icon className="w-5 h-5 text-blue-500" />
+                <div className="w-10 h-10 bg-white/5 border border-white/10 flex items-center justify-center rounded-full">
+                  <selectedService.icon className="w-5 h-5 text-white" />
                 </div>
                 <h3 className="text-lg font-bold text-white">
                   {selectedService.title}
@@ -1559,7 +1549,7 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
               </div>
               
               <div className="mb-4">
-                <h4 className="text-[10px] font-bold text-white mb-2 uppercase tracking-wider border-l-2 border-blue-500 pl-2">
+                <h4 className="text-[10px] font-bold text-[#00F0FF] mb-2 uppercase tracking-wider border-l-2 border-[#00F0FF] pl-2">
                   Sobre o serviço
                 </h4>
                 <div className="space-y-2">
@@ -1572,31 +1562,24 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
               </div>
 
               {selectedService.external && selectedService.external !== "" && (
-                <div className="mb-4 p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-lg">
-                  <p className="text-emerald-400 text-[8px] font-mono mb-1">🚀 EM PARCERIA COM</p>
+                <div className="mb-4 p-3 bg-white/5 border border-[#DFFF00]/30 rounded-lg">
+                  <p className="text-[#DFFF00] text-[8px] font-mono mb-1 font-bold">🚀 EM PARCERIA COM</p>
                   <a 
                     href={selectedService.external}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-white text-xs font-medium hover:text-emerald-400 transition flex items-center gap-1"
+                    className="text-white text-xs font-medium hover:text-[#DFFF00] transition flex items-center gap-1"
                   >
                     HitUp Brasil <ExternalLink size={10} />
                   </a>
                 </div>
               )}
 
-              <div className="mb-5 p-3 bg-slate-800/50 border border-white/5 rounded-lg">
-                <p className="text-emerald-500 text-[9px] font-mono mb-1">💰 Sob consulta</p>
-                <p className="text-slate-400 text-[10px]">
-                  Entre em contato para receber um orçamento personalizado para sua necessidade.
-                </p>
-              </div>
-
               <button
                 onClick={() => window.open(links.whatsapp, "_blank")}
-                className="w-full py-2.5 bg-green-600 text-white text-[11px] font-bold uppercase tracking-widest hover:bg-green-700 transition-colors flex items-center justify-center gap-2 rounded-lg"
+                className="w-full py-3 mt-4 bg-[#25D366] text-white text-[11px] font-black uppercase tracking-widest hover:bg-[#1DA851] transition-colors flex items-center justify-center gap-2 rounded-lg"
               >
-                <MessageCircle size={14} />
+                <MessageCircle size={16} />
                 FALAR NO WHATSAPP
               </button>
             </motion.div>
