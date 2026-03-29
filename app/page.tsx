@@ -651,18 +651,9 @@ const Footer = () => {
               </h5>
               <ul className="space-y-3">
                 <li>
-                  {/* ALTERE O EMAIL AQUI */}
-                  <a 
-                    href="mailto:SEU_EMAIL_AQUI@GMAIL.COM" 
-                    className="hover:text-[#00F0FF] transition-colors text-xs"
-                  >
-                    SEU_EMAIL_AQUI@GMAIL.COM
-                  </a>
-                </li>
-                <li>
                   {/* ALTERE O NÚMERO DO WHATSAPP AQUI (coloque 55 depois o DDD e o número, sem espaços) */}
                   <a 
-                    href="https://wa.me/5511999999999" 
+                    href="https://wa.me/5532998078161" 
                     target="_blank"
                     rel="noopener noreferrer"
                     className="hover:text-[#00F0FF] transition-colors text-xs"
