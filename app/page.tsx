@@ -895,7 +895,7 @@ const Hero = () => {
             </MagneticButton>
             
             <MagneticButton
-              className="px-10 py-5 border border-white/10 text-white font-bold uppercase tracking-widest flex items-center gap-3 backdrop-blur-sm hover:border-[#DFFF00] hover:text-[#DFFF00] transition-colors"
+              className="px-8 py-1 border border-white/10 text-white font-bold uppercase tracking-widest flex items-center gap-3 backdrop-blur-sm hover:border-[#DFFF00] hover:text-[#DFFF00] transition-colors"
             >
               <Play size={14} fill="currentColor" /> Showreel
             </MagneticButton>
