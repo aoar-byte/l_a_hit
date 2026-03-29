@@ -843,12 +843,11 @@ const DynamicTerrainCanvas = () => {
 };
 
 // ============================================================
-// HERO - VERSÃO REFINADA (ESTÁTICA E LIMPA)
+// HERO - VERSÃO LIMPA, SEM ANIMAÇÕES E COM BOTÃO AZUL
 // ============================================================
 const Hero = () => {
   const [isScrolled, setIsScrolled] = useState(false);
 
-  // Monitora a rolagem para ativar a linha azul no cabeçalho
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
@@ -860,39 +859,33 @@ const Hero = () => {
 
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden bg-[#020617]">
-      {/* Componentes de Fundo Originais */}
       <DynamicTerrainCanvas />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#020617_90%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#020617_95%)]" />
 
-      {/* CABEÇALHO DINÂMICO (A linha azul aparece aqui ao rolar) */}
-      <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${isScrolled ? "py-4 backdrop-blur-md border-b border-[#00F0FF]/30 shadow-[0_0_15px_rgba(0,240,255,0.1)]" : "py-8"}`}>
+      {/* CABEÇALHO COM LOGO ESTÁTICO */}
+      <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${isScrolled ? "py-4 backdrop-blur-md border-b border-[#00F0FF]/10" : "py-8"}`}>
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-          {/* Logo Estático e Elegante */}
           <div className="flex flex-col items-start select-none">
             <div className="flex items-center gap-1 text-2xl font-black text-white italic tracking-tighter">
               L<span className="text-[#DFFF00] text-xl">✦</span>A
             </div>
-            {/* A linha azul só renderiza/aparece se houver scroll ou conforme o design da imagem */}
+            {/* Linha azul laser que ativa no scroll */}
             <div className={`h-[1px] bg-[#00F0FF] shadow-[0_0_10px_#00F0FF] transition-all duration-700 ${isScrolled ? "w-full opacity-100" : "w-0 opacity-0"}`} />
             <div className="text-[10px] font-black text-[#DFFF00] tracking-[0.4em] mt-0.5">HIT</div>
           </div>
           
           <nav className="hidden md:flex gap-8 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">
-            <button onClick={scrollToCatalog} className="hover:text-[#DFFF00] transition-colors">Catálogo</button>
-            <a href="#services" className="hover:text-[#00F0FF] transition-colors">Serviços</a>
-            <a href="#cases" className="hover:text-[#DFFF00] transition-colors">Cases</a>
+            <button onClick={scrollToCatalog} className="hover:text-[#00F0FF] transition-colors">Catálogo</button>
+            <a href="#services" className="hover:text-[#DFFF00] transition-colors">Serviços</a>
+            <a href="#cases" className="hover:text-[#00F0FF] transition-colors">Cases</a>
           </nav>
         </div>
       </header>
 
-      {/* CONTEÚDO PRINCIPAL (HERO) */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full pt-20">
+      {/* CONTEÚDO HERO */}
+      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full pt-10">
         <div className="max-w-5xl text-left">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
+          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
             <h1 className="text-6xl md:text-[110px] font-black tracking-tighter text-white leading-[0.85] mb-8 uppercase">
               TRANSFORMANDO <br />
               <span className="text-white/20">IDEIAS</span> EM <br />
@@ -903,35 +896,28 @@ const Hero = () => {
           </motion.div>
 
           <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}
             className="text-xl text-slate-400 max-w-lg leading-relaxed mb-12 border-l-2 border-[#00F0FF] pl-6 font-medium italic"
           >
             Engenharia de Hits baseada em dados. Transformamos ondas sonoras em
             propriedades intelectuais de alto rendimento.
           </motion.p>
 
-          {/* BOTÕES RESTAURADOS */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6 }}
-            className="flex flex-wrap gap-4"
-          >
+          {/* BOTÕES COM EXPLORAR CATÁLOGO EM AZUL (CYAN) */}
+          <div className="flex flex-wrap gap-4">
             <MagneticButton
               onClick={scrollToCatalog}
-              className="px-10 py-5 bg-[#DFFF00] text-[#020617] font-black uppercase tracking-widest hover:brightness-110 shadow-[0_10px_40px_-10px_rgba(223,255,0,0.3)] transition-all"
+              className="px-10 py-5 bg-[#00F0FF] text-[#020617] font-black uppercase tracking-widest shadow-[0_10px_40px_-10px_rgba(0,240,255,0.4)] hover:brightness-110 transition-all"
             >
               Explorar Catálogo
             </MagneticButton>
             
             <MagneticButton
-              className="px-10 py-5 border border-white/10 text-white font-bold uppercase tracking-widest flex items-center gap-3 backdrop-blur-md hover:bg-white/5 transition-all"
+              className="px-10 py-5 border border-white/10 text-white font-bold uppercase tracking-widest flex items-center gap-3 backdrop-blur-sm"
             >
               <Play size={14} fill="currentColor" /> Showreel
             </MagneticButton>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
