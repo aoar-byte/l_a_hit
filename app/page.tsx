@@ -596,12 +596,11 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row justify-between items-start gap-12 mb-10">
           <div className="max-w-xs">
             <div className="mb-6">
-              <div className="flex items-center gap-1">
-                <span className="text-3xl font-black text-white italic tracking-tighter">L</span>
-                <span className="text-[#DFFF00] text-2xl font-bold">*</span>
-                <span className="text-3xl font-black text-white italic tracking-tighter">A</span>
-                <span className="text-white text-xl font-bold ml-2">HIT</span>
-              </div>
+              <img 
+                src="/image_2ee558fe-removebg-preview.png"
+                alt="L*A HIT"
+                className="h-12 w-auto md:h-16 transition-all duration-300 hover:opacity-80"
+              />
               <div className="w-12 h-px bg-gradient-to-r from-[#00F0FF] to-transparent mt-3" />
             </div>
             <p className="leading-relaxed text-slate-400 mt-4">
@@ -705,17 +704,17 @@ const Navbar = ({ links }: { links: any }) => {
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-        {/* LOGO COM NOME L*A HIT */}
+        {/* LOGO COM IMAGEM */}
         <div
           className="flex items-center cursor-pointer"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         >
-          <div className="flex items-center gap-1">
-            <span className="text-2xl md:text-3xl font-black text-white italic tracking-tighter">L</span>
-            <span className="text-[#DFFF00] text-xl md:text-2xl font-bold">*</span>
-            <span className="text-2xl md:text-3xl font-black text-white italic tracking-tighter">A</span>
-            <span className="text-white text-sm md:text-base font-bold ml-1 tracking-wider">HIT</span>
-          </div>
+          <img 
+            src="/image_2ee558fe-removebg-preview.png"
+            alt="L*A HIT"
+            className="h-14 w-auto md:h-20 transition-all duration-300 hover:opacity-80"
+            loading="eager"
+          />
         </div>
         
         {/* MENU */}
@@ -1897,7 +1896,7 @@ if (casesRaw.length > 0) {
     setShowLeadModal(true);
   };
 
-  if (loading) {
+   if (loading) {
     return (
       <div className="min-h-screen bg-slate-950 flex items-center justify-center">
         <Loader2 size={40} className="animate-spin text-blue-500" />
@@ -1914,48 +1913,54 @@ if (casesRaw.length > 0) {
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-50 font-sans selection:bg-blue-600 selection:text-white overflow-x-hidden">
-      <NoiseOverlay />
-      <Navbar links={config.links} />
-      <main className="relative z-10">
-        <Hero />
-        <SmartCatalog
-          catalogo={config.catalogo}
-          filteredTracks={filteredTracks}
-          setFilteredTracks={setFilteredTracks}
+    <>
+      <Head>
+        <title>L*A HIT | Catálogo Musical e Licenciamento</title>
+        <meta name="description" content="L*A HIT - Engenharia de Hits baseada em dados. Transformamos ondas sonoras em propriedades intelectuais de alto rendimento." />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
+      <div className="min-h-screen bg-slate-950 text-slate-50 font-sans selection:bg-blue-600 selection:text-white overflow-x-hidden">
+        <NoiseOverlay />
+        <Navbar links={config.links} />
+        <main className="relative z-10">
+          <Hero />
+          <SmartCatalog
+            catalogo={config.catalogo}
+            filteredTracks={filteredTracks}
+            setFilteredTracks={setFilteredTracks}
+            onLicenseClick={handleLicenseClick}
+            currentTrack={currentTrack}
+            setCurrentTrack={setCurrentTrack}
+            isPlaying={isPlaying}
+            setIsPlaying={setIsPlaying}
+          />
+          <Services servicos={config.servicos} links={config.links} onLeadOpen={handleLeadOpen} />
+          <SocialProof cases={config.cases} />
+        </main>
+        <Footer />
+        <PersistentPlayer
+          track={currentTrack}
+          isPlaying={isPlaying}
+          setIsPlaying={setIsPlaying}
           onLicenseClick={handleLicenseClick}
           currentTrack={currentTrack}
           setCurrentTrack={setCurrentTrack}
-          isPlaying={isPlaying}
-          setIsPlaying={setIsPlaying}
+          filteredTracks={filteredTracks}
+          isPlayingAuto={true}
         />
-        <Services servicos={config.servicos} links={config.links} onLeadOpen={handleLeadOpen} />
-        <SocialProof cases={config.cases} />
-      </main>
-      <Footer />
-      <PersistentPlayer
-  track={currentTrack}
-  isPlaying={isPlaying}
-  setIsPlaying={setIsPlaying}
-  onLicenseClick={handleLicenseClick}
-  currentTrack={currentTrack}
-  setCurrentTrack={setCurrentTrack}
-  filteredTracks={filteredTracks}
-  isPlayingAuto={true}  // ← ATIVA AUTO PLAY (true = toca próxima, false = para)
-/>
-      <AnimatePresence>
-        {showQuoteModal && currentTrack && (
-          <QuoteModal
-            track={currentTrack}
-            onClose={() => setShowQuoteModal(false)}
-            tiposLicenca={config.tiposLicenca}
-            links={config.links}
-          />
-        )}
-        {showLeadModal && (
-          <LeadModal service={leadService} onClose={() => setShowLeadModal(false)} />
-        )}
-      </AnimatePresence>
-    </div>
+        <AnimatePresence>
+          {showQuoteModal && currentTrack && (
+            <QuoteModal
+              track={currentTrack}
+              onClose={() => setShowQuoteModal(false)}
+              tiposLicenca={config.tiposLicenca}
+              links={config.links}
+            />
+          )}
+          {showLeadModal && (
+            <LeadModal service={leadService} onClose={() => setShowLeadModal(false)} />
+          )}
+        </AnimatePresence>
+      </div>
+    </>
   );
-}
