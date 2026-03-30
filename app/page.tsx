@@ -1942,7 +1942,7 @@ return (
       filteredTracks={filteredTracks}
       isPlayingAuto={true}
     />
-    <AnimatePresence>
+       <AnimatePresence>
       {showQuoteModal && currentTrack && (
         <QuoteModal
           track={currentTrack}
@@ -1957,3 +1957,4 @@ return (
     </AnimatePresence>
   </div>
 );
+}  // <-- ESTA É A CHAVE QUE FALTAVA (fecha o componente App)
