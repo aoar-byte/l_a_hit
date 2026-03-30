@@ -679,11 +679,9 @@ const Footer = () => {
   );
 };
 
-// ============================================================
-// NAVBAR COM SUA LOGO IMAGEM
-// ============================================================
 const Navbar = ({ links }: { links: any }) => {
   const [scrolled, setScrolled] = useState(false);
+  const [imgSrc, setImgSrc] = useState("/image_2ee558fe-removebg-preview.png");
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -695,6 +693,11 @@ const Navbar = ({ links }: { links: any }) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
 
+  // Força o recarregamento da imagem com timestamp
+  useEffect(() => {
+    setImgSrc(`/image_2ee558fe-removebg-preview.png?t=${Date.now()}`);
+  }, []);
+
   return (
     <nav
       className={`fixed top-0 w-full z-50 transition-all duration-500 border-b ${
@@ -704,19 +707,17 @@ const Navbar = ({ links }: { links: any }) => {
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-        {/* LOGO COM IMAGEM */}
         <div
           className="flex items-center cursor-pointer"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         >
           <img 
-            src="/image_2ee558fe-removebg-preview.png"
+            src={imgSrc}
             alt="L*A HIT"
             className="h-14 w-auto md:h-20 transition-all duration-300 hover:opacity-80"
           />
         </div>
         
-        {/* MENU */}
         <div className="hidden md:flex items-center gap-6 text-xs font-bold tracking-widest text-slate-400 uppercase">
           <button
             onClick={() => scrollToSection("catalog")}
