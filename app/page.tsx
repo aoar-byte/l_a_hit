@@ -1866,7 +1866,4 @@ return (
     </AnimatePresence>
   </div>
 );
-}  // <-- ESTA É A CHAVE QUE FALTAVA (fecha o componente App)
-
-
-
+}
