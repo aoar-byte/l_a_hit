@@ -1332,12 +1332,12 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
           
           {/* COLUNA ESQUERDA - EMPRESAS (TEMA CIANO) */}
-          {/* Removido o gradiente colorido, usando fundo escuro limpo */}
-          <div className="bg-slate-900 rounded-2xl border border-[#00F0FF]/10 overflow-hidden flex flex-col h-full shadow-[0_0_30px_-15px_rgba(0,240,255,0.1)]">
-            <div className="p-6 pb-3 border-b border-[#00F0FF]/10">
+          <div className="bg-slate-900 rounded-2xl border border-[#00F0FF]/20 overflow-hidden flex flex-col h-full shadow-[0_0_30px_-10px_rgba(0,240,255,0.2)]">
+            <div className="p-6 pb-3 border-b border-[#00F0FF]/20">
               <div className="flex items-center gap-2 text-[#00F0FF] font-mono text-[11px] tracking-widest uppercase mb-1">
-                <span className="w-1.5 h-1.5 bg-[#00F0FF] rounded-full" />
+                <span className="w-1.5 h-1.5 bg-[#00F0FF] rounded-full shadow-[0_0_5px_#00F0FF]" />
                 B2B SOLUTIONS
+                <span className="w-1.5 h-1.5 bg-[#00F0FF] rounded-full shadow-[0_0_5px_#00F0FF]" />
               </div>
               <h3 className="text-2xl font-bold text-white">
                 Para Empresas.
@@ -1357,13 +1357,13 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
                   return (
                     <div
                       key={i}
-                      className="group bg-slate-950/80 border border-white/5 hover:border-[#00F0FF]/40 rounded-xl transition-all duration-300 overflow-hidden flex flex-col h-full"
+                      className="group bg-slate-950/80 border border-white/10 hover:border-[#00F0FF]/40 rounded-xl transition-all duration-300 overflow-hidden flex flex-col h-full"
                     >
                       <div className="p-5 flex flex-col h-full">
-                        {/* Ícone Ciano */}
+                        {/* Ícone Ciano com glow */}
                         <div className="flex justify-center mb-4">
-                          <div className="w-14 h-14 bg-[#00F0FF]/5 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                            <Icon className="w-7 h-7 text-[#00F0FF]" />
+                          <div className="w-14 h-14 bg-[#00F0FF]/10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(0,240,255,0.3)]">
+                            <Icon className="w-7 h-7 text-[#00F0FF] drop-shadow-[0_0_5px_#00F0FF]" />
                           </div>
                         </div>
                         
@@ -1380,7 +1380,7 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
                         </div>
                         
                         <div className="text-center mb-4">
-                          <span className="text-[10px] text-slate-400 font-mono bg-white/5 border border-white/10 px-2 py-1 rounded">
+                          <span className="text-[10px] text-[#00F0FF] font-mono bg-[#00F0FF]/10 border border-[#00F0FF]/30 px-2 py-1 rounded shadow-[0_0_8px_rgba(0,240,255,0.2)]">
                             Sob consulta
                           </span>
                         </div>
@@ -1388,13 +1388,13 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
                         <div className="flex gap-2 justify-center mt-auto pt-2">
                           <button
                             onClick={() => openDetails(s)}
-                            className="px-4 py-2 border border-white/10 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-[#00F0FF] hover:text-[#020617] hover:border-[#00F0FF] transition-all rounded-lg w-full"
+                            className="px-4 py-2 bg-[#00F0FF]/10 border border-[#00F0FF] text-[#00F0FF] text-[10px] font-bold uppercase tracking-widest shadow-[0_0_12px_rgba(0,240,255,0.4)] hover:shadow-[0_0_20px_rgba(0,240,255,0.8)] hover:bg-[#00F0FF] hover:text-[#020617] transition-all rounded-lg w-full"
                           >
                             {s.cta || "DETALHES"}
                           </button>
                           <button
                             onClick={() => window.open(links.whatsapp, "_blank")}
-                            className="p-2 border border-white/10 bg-transparent hover:bg-[#25D366] hover:border-[#25D366] text-white transition-all rounded-lg"
+                            className="p-2 border border-[#00F0FF] text-[#00F0FF] bg-transparent shadow-[0_0_8px_rgba(0,240,255,0.3)] hover:shadow-[0_0_15px_rgba(37,211,102,0.5)] hover:bg-[#25D366] hover:border-[#25D366] hover:text-white transition-all rounded-lg"
                             title="Chamar no WhatsApp"
                           >
                             <MessageCircle size={14} />
@@ -1409,11 +1409,12 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
           </div>
 
           {/* COLUNA DIREITA - ARTISTAS (TEMA NEON YELLOW) */}
-          <div className="bg-slate-900 rounded-2xl border border-[#DFFF00]/10 overflow-hidden flex flex-col h-full shadow-[0_0_30px_-15px_rgba(223,255,0,0.05)]">
-            <div className="p-6 pb-3 border-b border-[#DFFF00]/10">
+          <div className="bg-slate-900 rounded-2xl border border-[#DFFF00]/20 overflow-hidden flex flex-col h-full shadow-[0_0_30px_-10px_rgba(223,255,0,0.2)]">
+            <div className="p-6 pb-3 border-b border-[#DFFF00]/20">
               <div className="flex items-center gap-2 text-[#DFFF00] font-mono text-[11px] tracking-widest uppercase mb-1">
-                <span className="w-1.5 h-1.5 bg-[#DFFF00] rounded-full" />
+                <span className="w-1.5 h-1.5 bg-[#DFFF00] rounded-full shadow-[0_0_5px_#DFFF00]" />
                 ARTIST SOLUTIONS
+                <span className="w-1.5 h-1.5 bg-[#DFFF00] rounded-full shadow-[0_0_5px_#DFFF00]" />
               </div>
               <h3 className="text-2xl font-bold text-white">
                 Para Artistas.
@@ -1436,23 +1437,23 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
                       key={i}
                       className={`group bg-slate-950/80 border rounded-xl transition-all duration-300 overflow-hidden flex flex-col h-full ${
                         isDestaque
-                          ? "border-[#DFFF00]/30 hover:border-[#DFFF00]/60 shadow-[0_0_15px_-5px_rgba(223,255,0,0.1)]"
-                          : "border-white/5 hover:border-[#DFFF00]/40"
+                          ? "border-[#DFFF00]/40 shadow-[0_0_20px_-5px_rgba(223,255,0,0.3)]"
+                          : "border-white/10 hover:border-[#DFFF00]/40"
                       }`}
                     >
                       <div className="p-5 flex flex-col h-full">
-                        {/* Ícone Neon */}
+                        {/* Ícone Neon com glow */}
                         <div className="flex justify-center mb-4">
                           <div className={`w-14 h-14 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform ${
-                            isDestaque ? "bg-[#DFFF00]/10" : "bg-[#DFFF00]/5"
+                            isDestaque ? "bg-[#DFFF00]/20 shadow-[0_0_20px_rgba(223,255,0,0.4)]" : "bg-[#DFFF00]/10 shadow-[0_0_10px_rgba(223,255,0,0.2)]"
                           }`}>
-                            <Icon className={`w-7 h-7 text-[#DFFF00] ${isDestaque ? "drop-shadow-[0_0_8px_rgba(223,255,0,0.6)]" : ""}`} />
+                            <Icon className={`w-7 h-7 text-[#DFFF00] drop-shadow-[0_0_8px_rgba(223,255,0,0.6)]`} />
                           </div>
                         </div>
                         
                         <div className="min-h-[56px] flex items-center justify-center mb-2">
                           <h4 className={`text-base font-bold text-center leading-tight line-clamp-2 ${
-                            isDestaque ? "text-[#DFFF00]" : "text-white group-hover:text-[#DFFF00]"
+                            isDestaque ? "text-[#DFFF00] drop-shadow-[0_0_5px_rgba(223,255,0,0.5)]" : "text-white group-hover:text-[#DFFF00]"
                           } transition-colors`}>
                             {tituloAbreviado}
                           </h4>
@@ -1460,7 +1461,7 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
                         
                         {isDestaque && (
                           <div className="flex justify-center mb-3">
-                            <span className="text-[8px] bg-[#DFFF00] text-[#020617] px-2 py-0.5 rounded-full font-black tracking-widest">
+                            <span className="text-[8px] bg-[#DFFF00] text-[#020617] px-2 py-0.5 rounded-full font-black tracking-widest shadow-[0_0_8px_#DFFF00]">
                               DESTAQUE
                             </span>
                           </div>
@@ -1472,11 +1473,11 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
                           </p>
                         </div>
                         
-                        {/* Logo Parceiro (Ocupa espaço constante para não quebrar layout) */}
+                        {/* Logo Parceiro */}
                         <div className="min-h-[32px] flex justify-center items-center mb-4">
                           {s.external && s.external !== "" ? (
-                            <div className="w-12 h-12 bg-slate-900 border border-[#DFFF00]/20 rounded-full flex items-center justify-center">
-                              <span className="text-[7px] text-[#DFFF00] font-mono font-bold">HIT UP</span>
+                            <div className="w-12 h-12 bg-slate-900 border border-[#DFFF00]/30 rounded-full flex items-center justify-center shadow-[0_0_10px_rgba(223,255,0,0.2)]">
+                              <span className="text-[7px] text-[#DFFF00] font-mono font-bold drop-shadow-[0_0_4px_#DFFF00]">HIT UP</span>
                             </div>
                           ) : (
                             <div className="h-12" />
@@ -1484,7 +1485,7 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
                         </div>
                         
                         <div className="text-center mb-4">
-                           <span className="text-[10px] text-slate-400 font-mono bg-white/5 border border-white/10 px-2 py-1 rounded">
+                           <span className="text-[10px] text-[#DFFF00] font-mono bg-[#DFFF00]/10 border border-[#DFFF00]/30 px-2 py-1 rounded shadow-[0_0_8px_rgba(223,255,0,0.2)]">
                             Sob consulta
                           </span>
                         </div>
@@ -1492,17 +1493,17 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
                         <div className="flex gap-2 justify-center mt-auto pt-2">
                           <button
                             onClick={() => openDetails(s)}
-                            className={`px-4 py-2 text-[10px] font-bold uppercase tracking-widest transition-all rounded-lg w-full ${
+                            className={`px-4 py-2 text-[10px] font-bold uppercase tracking-widest transition-all rounded-lg w-full shadow-[0_0_12px_rgba(223,255,0,0.4)] hover:shadow-[0_0_20px_rgba(223,255,0,0.8)] ${
                               isDestaque
-                                ? "bg-[#DFFF00] text-[#020617] hover:shadow-[0_0_15px_rgba(223,255,0,0.5)]"
-                                : "border border-white/10 text-white hover:bg-[#DFFF00] hover:text-[#020617] hover:border-[#DFFF00]"
+                                ? "bg-[#DFFF00] text-[#020617]"
+                                : "bg-[#DFFF00]/10 border border-[#DFFF00] text-[#DFFF00] hover:bg-[#DFFF00] hover:text-[#020617]"
                             }`}
                           >
                             {s.cta || "DETALHES"}
                           </button>
                           <button
                             onClick={() => window.open(links.whatsapp, "_blank")}
-                            className="p-2 border border-white/10 bg-transparent hover:bg-[#25D366] hover:border-[#25D366] text-white transition-all rounded-lg"
+                            className="p-2 border border-[#DFFF00] text-[#DFFF00] bg-transparent shadow-[0_0_8px_rgba(223,255,0,0.3)] hover:shadow-[0_0_15px_rgba(37,211,102,0.5)] hover:bg-[#25D366] hover:border-[#25D366] hover:text-white transition-all rounded-lg"
                             title="Chamar no WhatsApp"
                           >
                             <MessageCircle size={14} />
@@ -1518,7 +1519,7 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
         </div>
       </div>
 
-      {/* MODAL DE DETALHES DO SERVIÇO (MANTIDO NEUTRO/CIANO) */}
+      {/* MODAL DE DETALHES DO SERVIÇO */}
       <AnimatePresence>
         {modalOpen && selectedService && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
