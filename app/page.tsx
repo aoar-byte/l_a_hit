@@ -1911,55 +1911,48 @@ if (casesRaw.length > 0) {
     );
   }
 
-  return (
-    <>
-      <Head>
-        <title>L*A HIT | Catálogo Musical e Licenciamento</title>
-        <meta name="description" content="L*A HIT - Engenharia de Hits baseada em dados. Transformamos ondas sonoras em propriedades intelectuais de alto rendimento." />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
-      <div className="min-h-screen bg-slate-950 text-slate-50 font-sans selection:bg-blue-600 selection:text-white overflow-x-hidden">
-        <NoiseOverlay />
-        <Navbar links={config.links} />
-        <main className="relative z-10">
-          <Hero />
-          <SmartCatalog
-            catalogo={config.catalogo}
-            filteredTracks={filteredTracks}
-            setFilteredTracks={setFilteredTracks}
-            onLicenseClick={handleLicenseClick}
-            currentTrack={currentTrack}
-            setCurrentTrack={setCurrentTrack}
-            isPlaying={isPlaying}
-            setIsPlaying={setIsPlaying}
-          />
-          <Services servicos={config.servicos} links={config.links} onLeadOpen={handleLeadOpen} />
-          <SocialProof cases={config.cases} />
-        </main>
-        <Footer />
-        <PersistentPlayer
+return (
+  <div className="min-h-screen bg-slate-950 text-slate-50 font-sans selection:bg-blue-600 selection:text-white overflow-x-hidden">
+    <NoiseOverlay />
+    <Navbar links={config.links} />
+    <main className="relative z-10">
+      <Hero />
+      <SmartCatalog
+        catalogo={config.catalogo}
+        filteredTracks={filteredTracks}
+        setFilteredTracks={setFilteredTracks}
+        onLicenseClick={handleLicenseClick}
+        currentTrack={currentTrack}
+        setCurrentTrack={setCurrentTrack}
+        isPlaying={isPlaying}
+        setIsPlaying={setIsPlaying}
+      />
+      <Services servicos={config.servicos} links={config.links} onLeadOpen={handleLeadOpen} />
+      <SocialProof cases={config.cases} />
+    </main>
+    <Footer />
+    <PersistentPlayer
+      track={currentTrack}
+      isPlaying={isPlaying}
+      setIsPlaying={setIsPlaying}
+      onLicenseClick={handleLicenseClick}
+      currentTrack={currentTrack}
+      setCurrentTrack={setCurrentTrack}
+      filteredTracks={filteredTracks}
+      isPlayingAuto={true}
+    />
+    <AnimatePresence>
+      {showQuoteModal && currentTrack && (
+        <QuoteModal
           track={currentTrack}
-          isPlaying={isPlaying}
-          setIsPlaying={setIsPlaying}
-          onLicenseClick={handleLicenseClick}
-          currentTrack={currentTrack}
-          setCurrentTrack={setCurrentTrack}
-          filteredTracks={filteredTracks}
-          isPlayingAuto={true}
+          onClose={() => setShowQuoteModal(false)}
+          tiposLicenca={config.tiposLicenca}
+          links={config.links}
         />
-        <AnimatePresence>
-          {showQuoteModal && currentTrack && (
-            <QuoteModal
-              track={currentTrack}
-              onClose={() => setShowQuoteModal(false)}
-              tiposLicenca={config.tiposLicenca}
-              links={config.links}
-            />
-          )}
-          {showLeadModal && (
-            <LeadModal service={leadService} onClose={() => setShowLeadModal(false)} />
-          )}
-        </AnimatePresence>
-      </div>
-    </>
-  );
+      )}
+      {showLeadModal && (
+        <LeadModal service={leadService} onClose={() => setShowLeadModal(false)} />
+      )}
+    </AnimatePresence>
+  </div>
+);
