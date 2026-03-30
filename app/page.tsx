@@ -587,6 +587,8 @@ const LeadModal = ({
 // RODAPÉ (CONTATOS E ESPAÇAMENTO CORRIGIDOS)
 // ============================================================
 const Footer = () => {
+  const [imgError, setImgError] = useState(false);
+  
   const scrollToSection = (id: string) =>
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
@@ -596,11 +598,21 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row justify-between items-start gap-12 mb-10">
           <div className="max-w-xs">
             <div className="mb-6">
-              <img 
-                src="/image_2ee558fe-removebg-preview.png"
-                alt="L'A HIT"
-                className="h-12 w-auto md:h-16 transition-all duration-300 hover:opacity-80"
-              />
+              {!imgError ? (
+                <img 
+                  src="/image_2ee558fe-removebg-preview.png"
+                  alt="L*A HIT"
+                  className="h-12 w-auto md:h-16 transition-all duration-300 hover:opacity-80"
+                  onError={() => setImgError(true)}
+                />
+              ) : (
+                <div className="flex items-center gap-1">
+                  <span className="text-3xl font-black text-white italic tracking-tighter">L</span>
+                  <span className="text-[#DFFF00] text-2xl font-bold">*</span>
+                  <span className="text-3xl font-black text-white italic tracking-tighter">A</span>
+                  <span className="text-white text-xl font-bold ml-1">HIT</span>
+                </div>
+              )}
               <div className="w-12 h-px bg-gradient-to-r from-[#00F0FF] to-transparent mt-3" />
             </div>
             <p className="leading-relaxed text-slate-400 mt-4">
@@ -668,7 +680,7 @@ const Footer = () => {
           </div>
         </div>
         <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between gap-4">
-          <p>© 2026 L'A HIT HOLDINGS. TODOS OS DIREITOS RESERVADOS.</p>
+          <p>© 2026 L*A HIT HOLDINGS. TODOS OS DIREITOS RESERVADOS.</p>
           <p className="flex items-center gap-2 text-[#00F0FF]">
             <span className="w-1.5 h-1.5 bg-[#00F0FF] rounded-full animate-pulse shadow-[0_0_5px_#00F0FF]" />{" "}
             SYSTEM STATUS: OPTIMAL
