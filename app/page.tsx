@@ -584,7 +584,7 @@ const LeadModal = ({
 };
 
 // ============================================================
-// RODAPÉ (SEM CONTATO DIRETO)
+// RODAPÉ (CONTATOS E ESPAÇAMENTO CORRIGIDOS)
 // ============================================================
 const Footer = () => {
   const scrollToSection = (id: string) =>
@@ -608,36 +608,63 @@ const Footer = () => {
               estratégia. Brasil • Global
             </p>
           </div>
-          <div>
-            <h5 className="text-white font-bold uppercase tracking-widest mb-6 text-xs">
-              Plataforma
-            </h5>
-            <ul className="space-y-3">
-              <li>
-                <button
-                  onClick={() => scrollToSection("catalog")}
-                  className="hover:text-[#DFFF00] transition-colors text-xs"
-                >
-                  Catálogo
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => scrollToSection("services")}
-                  className="hover:text-[#DFFF00] transition-colors text-xs"
-                >
-                  Serviços
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => scrollToSection("cases")}
-                  className="hover:text-[#DFFF00] transition-colors text-xs"
-                >
-                  Cases
-                </button>
-              </li>
-            </ul>
+          <div className="flex gap-12 md:gap-24">
+            <div>
+              <h5 className="text-white font-bold uppercase tracking-widest mb-6 text-xs">
+                Plataforma
+              </h5>
+              <ul className="space-y-3">
+                <li>
+                  <button
+                    onClick={() => scrollToSection("catalog")}
+                    className="hover:text-[#DFFF00] transition-colors text-xs"
+                  >
+                    Catálogo
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => scrollToSection("services")}
+                    className="hover:text-[#DFFF00] transition-colors text-xs"
+                  >
+                    Serviços
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => scrollToSection("cases")}
+                    className="hover:text-[#DFFF00] transition-colors text-xs"
+                  >
+                    Cases
+                  </button>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h5 className="text-white font-bold uppercase tracking-widest mb-6 text-xs">
+                Contato Direto
+              </h5>
+              <ul className="space-y-3">
+                <li>
+                  <a 
+                    href="mailto:aoliabele@gmail.com" 
+                    className="hover:text-[#00F0FF] transition-colors text-xs"
+                  >
+                    EMAIL
+                  </a>
+                </li>
+                <li>
+                  <a 
+                    href="https://wa.me/5532998078161" 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-[#00F0FF] transition-colors text-xs"
+                  >
+                    WhatsApp Corporativo
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
         <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between gap-4">
@@ -649,6 +676,75 @@ const Footer = () => {
         </div>
       </div>
     </footer>
+  );
+};
+
+const Navbar = ({ links }: { links: any }) => {
+  const [scrolled, setScrolled] = useState(false);
+  const [imgSrc, setImgSrc] = useState("/image_2ee558fe-removebg-preview.png");
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollToSection = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  // Força o recarregamento da imagem com timestamp
+  useEffect(() => {
+    setImgSrc(`/image_2ee558fe-removebg-preview.png?t=${Date.now()}`);
+  }, []);
+
+  return (
+    <nav
+      className={`fixed top-0 w-full z-50 transition-all duration-500 border-b ${
+        scrolled
+          ? "bg-slate-950/80 backdrop-blur-md border-white/5 py-3"
+          : "bg-transparent border-transparent py-4"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+        <div
+          className="flex items-center cursor-pointer"
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        >
+          <img 
+            src={imgSrc}
+            alt="L*A HIT"
+            className="h-14 w-auto md:h-20 transition-all duration-300 hover:opacity-80"
+          />
+        </div>
+        
+        <div className="hidden md:flex items-center gap-6 text-xs font-bold tracking-widest text-slate-400 uppercase">
+          <button
+            onClick={() => scrollToSection("catalog")}
+            className="hover:text-white transition-colors relative group"
+          >
+            Catálogo
+            <span className="absolute -bottom-1 left-0 w-0 h-px bg-blue-500 group-hover:w-full transition-all duration-300" />
+          </button>
+          <button
+            onClick={() => scrollToSection("services")}
+            className="hover:text-white transition-colors relative group"
+          >
+            Serviços
+            <span className="absolute -bottom-1 left-0 w-0 h-px bg-blue-500 group-hover:w-full transition-all duration-300" />
+          </button>
+          <button
+            onClick={() => scrollToSection("cases")}
+            className="hover:text-white transition-colors relative group"
+          >
+            Cases
+            <span className="absolute -bottom-1 left-0 w-0 h-px bg-blue-500 group-hover:w-full transition-all duration-300" />
+          </button>
+        </div>
+        
+        <div className="w-20" />
+      </div>
+    </nav>
   );
 };
 
@@ -897,58 +993,55 @@ const SmartCatalog = ({
           </div>
 
           <div className="flex flex-col overflow-y-auto max-h-[300px] scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-slate-900">
-            {filteredTracks && filteredTracks.length > 0 ? (
-              filteredTracks.slice(0, 3).map((track: any) => {
-                const isCurrent = currentTrack?.id === track.id;
-                
-                return (
-                  <div
-                    key={track.id}
-                    className={`grid grid-cols-12 gap-4 px-6 py-4 items-center border-b border-white/5 transition-colors group ${
-                      isCurrent ? "bg-[#00F0FF]/5" : "hover:bg-white/[0.02]"
+          {filteredTracks.map((track: any) => {
+            const isCurrent = currentTrack?.id === track.id;
+            
+            return (
+              <div
+                key={track.id}
+                className={`grid grid-cols-12 gap-4 px-6 py-4 items-center border-b border-white/5 transition-colors group ${
+                  isCurrent ? "bg-[#00F0FF]/5" : "hover:bg-white/[0.02]"
+                }`}
+              >
+                <div className="col-span-2 md:col-span-1 flex justify-center">
+                  {/* BOTÃO PLAY NEON DA LISTA */}
+                  <button
+                    onClick={() => isCurrent ? setIsPlaying(!isPlaying) : (setCurrentTrack(track), setIsPlaying(true))}
+                    className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${
+                      isCurrent && isPlaying
+                        ? "bg-[#DFFF00] text-[#020617] shadow-[0_0_15px_#DFFF00]"
+                        : "bg-slate-900 border border-[#DFFF00]/30 text-[#DFFF00] hover:border-[#DFFF00] hover:shadow-[0_0_10px_rgba(223,255,0,0.3)]"
                     }`}
                   >
-                    <div className="col-span-2 md:col-span-1 flex justify-center">
-                      <button
-                        onClick={() => isCurrent ? setIsPlaying(!isPlaying) : (setCurrentTrack(track), setIsPlaying(true))}
-                        className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${
-                          isCurrent && isPlaying
-                            ? "bg-[#DFFF00] text-[#020617] shadow-[0_0_15px_#DFFF00]"
-                            : "bg-slate-900 border border-[#DFFF00]/30 text-[#DFFF00] hover:border-[#DFFF00] hover:shadow-[0_0_10px_rgba(223,255,0,0.3)]"
-                        }`}
-                      >
-                        {isCurrent && isPlaying ? <Pause size={16} fill="currentColor" /> : <Play size={16} fill="currentColor" className="ml-1" />}
-                      </button>
-                    </div>
+                    {isCurrent && isPlaying ? <Pause size={16} fill="currentColor" /> : <Play size={16} fill="currentColor" className="ml-1" />}
+                  </button>
+                </div>
 
-                    <div className="col-span-5 md:col-span-4">
-                      <h4 className={`text-sm font-bold truncate ${isCurrent ? "text-[#00F0FF]" : "text-white"}`}>{track.title}</h4>
-                      <p className="text-slate-500 text-[10px] uppercase font-black tracking-widest">{track.artist}</p>
-                    </div>
+                <div className="col-span-5 md:col-span-4">
+                  <h4 className={`text-sm font-bold truncate ${isCurrent ? "text-[#00F0FF]" : "text-white"}`}>{track.title}</h4>
+                  <p className="text-slate-500 text-[10px] uppercase font-black tracking-widest">{track.artist}</p>
+                </div>
 
-                    <div className="col-span-2 hidden md:block">
-                      <span className="px-2 py-1 rounded-sm border border-white/10 text-[9px] font-bold text-slate-400 uppercase tracking-tighter group-hover:border-[#DFFF00]/50 group-hover:text-[#DFFF00] transition-colors">
-                        {track.genre}
-                      </span>
-                    </div>
-                    
-                    <div className="col-span-1 hidden md:block text-center text-slate-400 text-xs font-mono">{track.bpm}</div>
-                    <div className="col-span-1 hidden md:block text-center text-slate-400 text-xs">{track.mood}</div>
+                <div className="col-span-2 hidden md:block">
+                  <span className="px-2 py-1 rounded-sm border border-white/10 text-[9px] font-bold text-slate-400 uppercase tracking-tighter group-hover:border-[#DFFF00]/50 group-hover:text-[#DFFF00] transition-colors">
+                    {track.genre}
+                  </span>
+                </div>
+                
+                <div className="col-span-1 hidden md:block text-center text-slate-400 text-xs font-mono">{track.bpm}</div>
+                <div className="col-span-1 hidden md:block text-center text-slate-400 text-xs">{track.mood}</div>
 
-                    <div className="col-span-5 md:col-span-3 text-right">
-                      <button
-                        onClick={() => onLicenseClick(track)}
-                        className="px-4 py-1.5 bg-transparent border border-[#00F0FF]/50 text-[#00F0FF] text-[10px] font-black uppercase tracking-widest hover:bg-[#00F0FF] hover:text-[#020617] hover:shadow-[0_0_15px_rgba(0,240,255,0.4)] transition-all"
-                      >
-                        Licenciar
-                      </button>
-                    </div>
-                  </div>
-                );
-              })
-            ) : (
-              <div className="text-center py-8 text-slate-400">Nenhuma música encontrada.</div>
-            )}
+                <div className="col-span-5 md:col-span-3 text-right">
+                  <button
+                    onClick={() => onLicenseClick(track)}
+                    className="px-4 py-1.5 bg-transparent border border-[#00F0FF]/50 text-[#00F0FF] text-[10px] font-black uppercase tracking-widest hover:bg-[#00F0FF] hover:text-[#020617] hover:shadow-[0_0_15px_rgba(0,240,255,0.4)] transition-all"
+                  >
+                    Licenciar
+                  </button>
+                </div>
+              </div>
+            );
+          })}
           </div>
         </div>
       </div>
