@@ -584,7 +584,7 @@ const LeadModal = ({
 };
 
 // ============================================================
-// RODAPÉ (SEM CONTATO DIRETO)
+// RODAPÉ (CONTATOS E ESPAÇAMENTO CORRIGIDOS)
 // ============================================================
 const Footer = () => {
   const scrollToSection = (id: string) =>
@@ -608,36 +608,63 @@ const Footer = () => {
               estratégia. Brasil • Global
             </p>
           </div>
-          <div>
-            <h5 className="text-white font-bold uppercase tracking-widest mb-6 text-xs">
-              Plataforma
-            </h5>
-            <ul className="space-y-3">
-              <li>
-                <button
-                  onClick={() => scrollToSection("catalog")}
-                  className="hover:text-[#DFFF00] transition-colors text-xs"
-                >
-                  Catálogo
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => scrollToSection("services")}
-                  className="hover:text-[#DFFF00] transition-colors text-xs"
-                >
-                  Serviços
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => scrollToSection("cases")}
-                  className="hover:text-[#DFFF00] transition-colors text-xs"
-                >
-                  Cases
-                </button>
-              </li>
-            </ul>
+          <div className="flex gap-12 md:gap-24">
+            <div>
+              <h5 className="text-white font-bold uppercase tracking-widest mb-6 text-xs">
+                Plataforma
+              </h5>
+              <ul className="space-y-3">
+                <li>
+                  <button
+                    onClick={() => scrollToSection("catalog")}
+                    className="hover:text-[#DFFF00] transition-colors text-xs"
+                  >
+                    Catálogo
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => scrollToSection("services")}
+                    className="hover:text-[#DFFF00] transition-colors text-xs"
+                  >
+                    Serviços
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => scrollToSection("cases")}
+                    className="hover:text-[#DFFF00] transition-colors text-xs"
+                  >
+                    Cases
+                  </button>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h5 className="text-white font-bold uppercase tracking-widest mb-6 text-xs">
+                Contato Direto
+              </h5>
+              <ul className="space-y-3">
+                <li>
+                  <a 
+                    href="mailto:aoliabele@gmail.com" 
+                    className="hover:text-[#00F0FF] transition-colors text-xs"
+                  >
+                    EMAIL
+                  </a>
+                </li>
+                <li>
+                  <a 
+                    href="https://wa.me/5532998078161" 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-[#00F0FF] transition-colors text-xs"
+                  >
+                    WhatsApp Corporativo
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
         <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between gap-4">
@@ -649,6 +676,75 @@ const Footer = () => {
         </div>
       </div>
     </footer>
+  );
+};
+
+const Navbar = ({ links }: { links: any }) => {
+  const [scrolled, setScrolled] = useState(false);
+  const [imgSrc, setImgSrc] = useState("/image_2ee558fe-removebg-preview.png");
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollToSection = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  // Força o recarregamento da imagem com timestamp
+  useEffect(() => {
+    setImgSrc(`/image_2ee558fe-removebg-preview.png?t=${Date.now()}`);
+  }, []);
+
+  return (
+    <nav
+      className={`fixed top-0 w-full z-50 transition-all duration-500 border-b ${
+        scrolled
+          ? "bg-slate-950/80 backdrop-blur-md border-white/5 py-3"
+          : "bg-transparent border-transparent py-4"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+        <div
+          className="flex items-center cursor-pointer"
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        >
+          <img 
+            src={imgSrc}
+            alt="L*A HIT"
+            className="h-14 w-auto md:h-20 transition-all duration-300 hover:opacity-80"
+          />
+        </div>
+        
+        <div className="hidden md:flex items-center gap-6 text-xs font-bold tracking-widest text-slate-400 uppercase">
+          <button
+            onClick={() => scrollToSection("catalog")}
+            className="hover:text-white transition-colors relative group"
+          >
+            Catálogo
+            <span className="absolute -bottom-1 left-0 w-0 h-px bg-blue-500 group-hover:w-full transition-all duration-300" />
+          </button>
+          <button
+            onClick={() => scrollToSection("services")}
+            className="hover:text-white transition-colors relative group"
+          >
+            Serviços
+            <span className="absolute -bottom-1 left-0 w-0 h-px bg-blue-500 group-hover:w-full transition-all duration-300" />
+          </button>
+          <button
+            onClick={() => scrollToSection("cases")}
+            className="hover:text-white transition-colors relative group"
+          >
+            Cases
+            <span className="absolute -bottom-1 left-0 w-0 h-px bg-blue-500 group-hover:w-full transition-all duration-300" />
+          </button>
+        </div>
+        
+        <div className="w-20" />
+      </div>
+    </nav>
   );
 };
 
@@ -740,7 +836,7 @@ const DynamicTerrainCanvas = () => {
 };
 
 // ============================================================
-// HERO - VERSÃO CORRIGIDA (POSICIONAMENTO E RESPONSIVIDADE)
+// HERO - VERSÃO REPARADA (ESPAÇAMENTO E NEON)
 // ============================================================
 const Hero = () => {
   const scrollToCatalog = () =>
@@ -751,55 +847,51 @@ const Hero = () => {
       <DynamicTerrainCanvas />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#020617_90%)]" />
 
-      <div className="relative z-10 w-full px-4 sm:px-6 md:px-8 pt-24 sm:pt-28 md:pt-32 pb-20">
-        <div className="max-w-7xl mx-auto">
-          <div className="max-w-4xl lg:max-w-5xl">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[80px] xl:text-[100px] font-black tracking-tighter text-white leading-[1.1] sm:leading-[1.05] md:leading-[0.9] mb-6 sm:mb-8 uppercase">
-                TRANSFORMANDO
-                <br />
-                <span className="text-white/20">IDEIAS</span> EM
-                <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00F0FF] to-[#DFFF00]">
-                  ATIVOS.
-                </span>
-              </h1>
-            </motion.div>
+      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full pt-28 md:pt-32">
+        <div className="max-w-5xl text-left">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <h1 className="text-6xl md:text-[110px] font-black tracking-tighter text-white leading-[0.85] mb-8 uppercase">
+              TRANSFORMANDO <br />
+              <span className="text-white/20">IDEIAS</span> EM <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00F0FF] to-[#DFFF00]">
+                ATIVOS.
+              </span>
+            </h1>
+          </motion.div>
 
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.4, duration: 1 }}
-              className="text-base sm:text-lg md:text-xl text-slate-400 max-w-lg md:max-w-xl leading-relaxed mb-8 sm:mb-12 border-l-2 border-[#00F0FF] pl-4 sm:pl-6 font-medium italic"
-            >
-              Engenharia de Hits baseada em dados. Transformamos ondas sonoras em
-              propriedades intelectuais de alto rendimento.
-            </motion.p>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4, duration: 1 }}
+            className="text-xl text-slate-400 max-w-lg leading-relaxed mb-12 border-l-2 border-[#00F0FF] pl-6 font-medium italic"
+          >
+            Engenharia de Hits baseada em dados. Transformamos ondas sonoras em
+            propriedades intelectuais de alto rendimento.
+          </motion.p>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
-              className="flex flex-wrap gap-4 justify-start"
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6 }}
+            className="flex flex-wrap gap-4 justify-start"
+          >
+            <MagneticButton
+              onClick={scrollToCatalog}
+              className="px-8 py-3 bg-[#00F0FF] text-[#020617] font-black tracking-widest uppercase shadow-[0_0_30px_rgba(0,240,255,0.4)] hover:shadow-[0_0_40px_rgba(0,240,255,0.6)] transition-shadow"
             >
-              <MagneticButton
-                onClick={scrollToCatalog}
-                className="px-6 sm:px-8 py-3 bg-[#00F0FF] text-[#020617] font-black tracking-widest uppercase text-sm sm:text-base shadow-[0_0_25px_rgba(0,240,255,0.5)] hover:shadow-[0_0_35px_rgba(0,240,255,0.7)] transition-all"
-              >
-                Explorar Catálogo
-              </MagneticButton>
-              
-              <MagneticButton
-                className="px-6 sm:px-8 py-3 border border-white/20 text-white font-bold uppercase tracking-widest text-sm sm:text-base flex items-center gap-2 sm:gap-3 backdrop-blur-sm hover:border-[#DFFF00] hover:text-[#DFFF00] hover:shadow-[0_0_20px_rgba(223,255,0,0.3)] transition-all"
-              >
-                <Play size={16} fill="currentColor" /> Showreel
-              </MagneticButton>
-            </motion.div>
-          </div>
+              Explorar Catálogo
+            </MagneticButton>
+            
+            <MagneticButton
+              className="px-8 py-3 border border-white/10 text-white font-bold uppercase tracking-widest flex items-center gap-3 backdrop-blur-sm hover:border-[#DFFF00] hover:text-[#DFFF00] transition-colors"
+            >
+              <Play size={14} fill="currentColor" /> Showreel
+            </MagneticButton>
+          </motion.div>
         </div>
       </div>
     </section>
@@ -1865,4 +1957,5 @@ return (
     </AnimatePresence>
   </div>
 );
-}
+}  // <-- ESTA É A CHAVE QUE FALTAVA (fecha o componente App)
+
