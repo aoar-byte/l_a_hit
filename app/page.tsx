@@ -1328,7 +1328,6 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
           
           {/* COLUNA ESQUERDA - EMPRESAS (TEMA CIANO) */}
-          {/* Removido o gradiente colorido, usando fundo escuro limpo */}
           <div className="bg-slate-900 rounded-2xl border border-[#00F0FF]/10 overflow-hidden flex flex-col h-full shadow-[0_0_30px_-15px_rgba(0,240,255,0.1)]">
             <div className="p-6 pb-3 border-b border-[#00F0FF]/10">
               <div className="flex items-center gap-2 text-[#00F0FF] font-mono text-[11px] tracking-widest uppercase mb-1">
@@ -1384,13 +1383,13 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
                         <div className="flex gap-2 justify-center mt-auto pt-2">
                           <button
                             onClick={() => openDetails(s)}
-                            className="px-4 py-2 border border-white/10 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-[#00F0FF] hover:text-[#020617] hover:border-[#00F0FF] transition-all rounded-lg w-full"
+                            className="px-4 py-2 border border-[#00F0FF]/50 text-[#00F0FF] text-[10px] font-bold uppercase tracking-widest hover:bg-[#00F0FF] hover:text-[#020617] hover:shadow-[0_0_15px_rgba(0,240,255,0.4)] transition-all rounded-lg w-full"
                           >
                             {s.cta || "DETALHES"}
                           </button>
                           <button
                             onClick={() => window.open(links.whatsapp, "_blank")}
-                            className="p-2 border border-white/10 bg-transparent hover:bg-[#25D366] hover:border-[#25D366] text-white transition-all rounded-lg"
+                            className="p-2 border border-[#00F0FF]/50 text-[#00F0FF] bg-transparent hover:bg-[#25D366] hover:border-[#25D366] hover:text-white transition-all rounded-lg"
                             title="Chamar no WhatsApp"
                           >
                             <MessageCircle size={14} />
@@ -1491,14 +1490,14 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
                             className={`px-4 py-2 text-[10px] font-bold uppercase tracking-widest transition-all rounded-lg w-full ${
                               isDestaque
                                 ? "bg-[#DFFF00] text-[#020617] hover:shadow-[0_0_15px_rgba(223,255,0,0.5)]"
-                                : "border border-white/10 text-white hover:bg-[#DFFF00] hover:text-[#020617] hover:border-[#DFFF00]"
+                                : "border border-[#DFFF00]/50 text-[#DFFF00] hover:bg-[#DFFF00] hover:text-[#020617] hover:shadow-[0_0_15px_rgba(223,255,0,0.4)]"
                             }`}
                           >
                             {s.cta || "DETALHES"}
                           </button>
                           <button
                             onClick={() => window.open(links.whatsapp, "_blank")}
-                            className="p-2 border border-white/10 bg-transparent hover:bg-[#25D366] hover:border-[#25D366] text-white transition-all rounded-lg"
+                            className="p-2 border border-[#DFFF00]/50 text-[#DFFF00] bg-transparent hover:bg-[#25D366] hover:border-[#25D366] hover:text-white transition-all rounded-lg"
                             title="Chamar no WhatsApp"
                           >
                             <MessageCircle size={14} />
@@ -1514,7 +1513,7 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
         </div>
       </div>
 
-      {/* MODAL DE DETALHES DO SERVIÇO (MANTIDO NEUTRO/CIANO) */}
+      {/* MODAL DE DETALHES DO SERVIÇO */}
       <AnimatePresence>
         {modalOpen && selectedService && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
