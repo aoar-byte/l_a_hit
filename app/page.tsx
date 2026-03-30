@@ -591,21 +591,17 @@ const Footer = () => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
   return (
-    // Reduzido py-20 para py-12 e removido mb-20 do container interno
     <footer className="bg-slate-950 py-12 border-t border-[#00F0FF]/10 text-slate-500 text-xs font-mono relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-start gap-12 mb-10">
           <div className="max-w-xs">
             <div className="mb-6">
-              <img 
-                src="/image_2ee558fe-removebg-preview.png"
-                alt="L'A HIT"
-                className="h-12 w-auto md:h-16 transition-all duration-300 hover:opacity-80"
-                onError={(e) => {
-                  e.currentTarget.onerror = null;
-                  e.currentTarget.src = "/fallback-logo.png";
-                }}
-              />
+              <div className="flex items-center gap-1">
+                <span className="text-3xl font-black text-white italic tracking-tighter">L</span>
+                <span className="text-[#DFFF00] text-2xl font-bold">*</span>
+                <span className="text-3xl font-black text-white italic tracking-tighter">A</span>
+                <span className="text-white text-xl font-bold ml-2">HIT</span>
+              </div>
               <div className="w-12 h-px bg-gradient-to-r from-[#00F0FF] to-transparent mt-3" />
             </div>
             <p className="leading-relaxed text-slate-400 mt-4">
@@ -651,7 +647,6 @@ const Footer = () => {
               </h5>
               <ul className="space-y-3">
                 <li>
-                  {/* ALTERE O EMAIL AQUI */}
                   <a 
                     href="mailto:aoliabele@gmail.com" 
                     className="hover:text-[#00F0FF] transition-colors text-xs"
@@ -660,7 +655,6 @@ const Footer = () => {
                   </a>
                 </li>
                 <li>
-                  {/* ALTERE O NÚMERO DO WHATSAPP AQUI (coloque 55 depois o DDD e o número, sem espaços) */}
                   <a 
                     href="https://wa.me/5532998078161" 
                     target="_blank"
@@ -675,7 +669,7 @@ const Footer = () => {
           </div>
         </div>
         <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between gap-4">
-          <p>© 2026 L'A HIT HOLDINGS. TODOS OS DIREITOS RESERVADOS.</p>
+          <p>© 2026 L*A HIT HOLDINGS. TODOS OS DIREITOS RESERVADOS.</p>
           <p className="flex items-center gap-2 text-[#00F0FF]">
             <span className="w-1.5 h-1.5 bg-[#00F0FF] rounded-full animate-pulse shadow-[0_0_5px_#00F0FF]" />{" "}
             SYSTEM STATUS: OPTIMAL
@@ -711,16 +705,17 @@ const Navbar = ({ links }: { links: any }) => {
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-        {/* LOGO COM IMAGEM */}
+        {/* LOGO COM NOME L*A HIT */}
         <div
           className="flex items-center cursor-pointer"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         >
-          <img 
-            src="/image_2ee558fe-removebg-preview.png"
-            alt="L'A HIT"
-            className="h-14 w-auto md:h-20 transition-all duration-300 hover:opacity-80"
-          />
+          <div className="flex items-center gap-1">
+            <span className="text-2xl md:text-3xl font-black text-white italic tracking-tighter">L</span>
+            <span className="text-[#DFFF00] text-xl md:text-2xl font-bold">*</span>
+            <span className="text-2xl md:text-3xl font-black text-white italic tracking-tighter">A</span>
+            <span className="text-white text-sm md:text-base font-bold ml-1 tracking-wider">HIT</span>
+          </div>
         </div>
         
         {/* MENU */}
@@ -730,21 +725,21 @@ const Navbar = ({ links }: { links: any }) => {
             className="hover:text-white transition-colors relative group"
           >
             Catálogo
-            <span className="absolute -bottom-1 left-0 w-0 h-px bg-blue-500 group-hover:w-full transition-all duration-300" />
+            <span className="absolute -bottom-1 left-0 w-0 h-px bg-[#00F0FF] group-hover:w-full transition-all duration-300" />
           </button>
           <button
             onClick={() => scrollToSection("services")}
             className="hover:text-white transition-colors relative group"
           >
             Serviços
-            <span className="absolute -bottom-1 left-0 w-0 h-px bg-blue-500 group-hover:w-full transition-all duration-300" />
+            <span className="absolute -bottom-1 left-0 w-0 h-px bg-[#00F0FF] group-hover:w-full transition-all duration-300" />
           </button>
           <button
             onClick={() => scrollToSection("cases")}
             className="hover:text-white transition-colors relative group"
           >
             Cases
-            <span className="absolute -bottom-1 left-0 w-0 h-px bg-blue-500 group-hover:w-full transition-all duration-300" />
+            <span className="absolute -bottom-1 left-0 w-0 h-px bg-[#00F0FF] group-hover:w-full transition-all duration-300" />
           </button>
         </div>
         
@@ -853,8 +848,7 @@ const Hero = () => {
       <DynamicTerrainCanvas />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#020617_90%)]" />
 
-      {/* Reduzido o padding top de pt-44 para pt-32 para cortar o espaço inútil */}
-            <div className="relative z-10 max-w-7xl mx-auto px-6 w-full pt-28 md:pt-25">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full pt-28 md:pt-32">
         <div className="max-w-5xl text-left">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -886,16 +880,15 @@ const Hero = () => {
             transition={{ delay: 0.6 }}
             className="flex flex-wrap gap-4 justify-start"
           >
-            {/* Botão Explorar Catálogo com Glow Ciano */}
             <MagneticButton
               onClick={scrollToCatalog}
-              className="px-8 py-1 bg-[#00F0FF] text-[#020617] font-black tracking-widest uppercase shadow-[0_0_30px_rgba(0,240,255,0.4)] hover:shadow-[0_0_40px_rgba(0,240,255,0.6)] transition-shadow"
+              className="px-8 py-3 bg-[#00F0FF] text-[#020617] font-black tracking-widest uppercase shadow-[0_0_30px_rgba(0,240,255,0.4)] hover:shadow-[0_0_40px_rgba(0,240,255,0.6)] transition-shadow"
             >
               Explorar Catálogo
             </MagneticButton>
             
             <MagneticButton
-              className="px-8 py-1 border border-white/10 text-white font-bold uppercase tracking-widest flex items-center gap-3 backdrop-blur-sm hover:border-[#DFFF00] hover:text-[#DFFF00] transition-colors"
+              className="px-8 py-3 border border-white/10 text-white font-bold uppercase tracking-widest flex items-center gap-3 backdrop-blur-sm hover:border-[#DFFF00] hover:text-[#DFFF00] transition-colors"
             >
               <Play size={14} fill="currentColor" /> Showreel
             </MagneticButton>
@@ -1631,7 +1624,6 @@ const SocialProof = ({ cases }: { cases: any[] }) => {
     return (
       <section id="cases" className="py-16 bg-slate-950 border-t border-white/5">
         <div className="max-w-7xl mx-auto px-6">
-          {/* Ciano no subtítulo */}
           <div className="flex items-center gap-2 text-[#00F0FF] font-mono text-xs tracking-widest uppercase mb-3">
             <span className="w-1.5 h-1.5 bg-[#00F0FF] rounded-full animate-pulse" />
             Resultados
@@ -1649,11 +1641,11 @@ const SocialProof = ({ cases }: { cases: any[] }) => {
     <section id="cases" className="py-16 bg-slate-950 border-t border-white/5">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex items-center gap-2 text-[#00F0FF] font-mono text-xs tracking-widest uppercase mb-3">
-            <span className="w-1.5 h-1.5 bg-[#00F0FF] rounded-full animate-pulse" />
-            Resultados
+          <span className="w-1.5 h-1.5 bg-[#00F0FF] rounded-full animate-pulse" />
+          Resultados
         </div>
         <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight mb-12">
-            Músicas em Ação.
+          Músicas em Ação.
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -1688,7 +1680,6 @@ const SocialProof = ({ cases }: { cases: any[] }) => {
                   
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-80 pointer-events-none" />
                   
-                  {/* Informações direto sobre a imagem para não gastar espaço */}
                   <div className="absolute bottom-3 left-3 right-3">
                     <h4 className="text-white font-bold text-sm line-clamp-1 group-hover:text-[#DFFF00] transition-colors drop-shadow-md">
                       {item.title}
@@ -1711,12 +1702,16 @@ const SocialProof = ({ cases }: { cases: any[] }) => {
                     {item.platform === "YouTube" && <Youtube size={10} className="text-white" />}
                     {item.platform === "Spotify" && <Music size={10} className="text-white" />}
                     {item.platform === "Instagram Reels" && <Instagram size={10} className="text-white" />}
+                    {item.platform === "TikTok" && <Music size={10} className="text-white" />}
                   </div>
                 </div>
               </a>
             );
           })}
         </div>
+      </div>
+    </section>
+  );
 };
 
 // ============================================================
