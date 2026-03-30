@@ -584,7 +584,7 @@ const LeadModal = ({
 };
 
 // ============================================================
-// RODAPÉ (SEM CONTATO DIRETO)
+// RODAPÉ (CONTATOS E ESPAÇAMENTO CORRIGIDOS)
 // ============================================================
 const Footer = () => {
   const scrollToSection = (id: string) =>
@@ -608,36 +608,63 @@ const Footer = () => {
               estratégia. Brasil • Global
             </p>
           </div>
-          <div>
-            <h5 className="text-white font-bold uppercase tracking-widest mb-6 text-xs">
-              Plataforma
-            </h5>
-            <ul className="space-y-3">
-              <li>
-                <button
-                  onClick={() => scrollToSection("catalog")}
-                  className="hover:text-[#DFFF00] transition-colors text-xs"
-                >
-                  Catálogo
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => scrollToSection("services")}
-                  className="hover:text-[#DFFF00] transition-colors text-xs"
-                >
-                  Serviços
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => scrollToSection("cases")}
-                  className="hover:text-[#DFFF00] transition-colors text-xs"
-                >
-                  Cases
-                </button>
-              </li>
-            </ul>
+          <div className="flex gap-12 md:gap-24">
+            <div>
+              <h5 className="text-white font-bold uppercase tracking-widest mb-6 text-xs">
+                Plataforma
+              </h5>
+              <ul className="space-y-3">
+                <li>
+                  <button
+                    onClick={() => scrollToSection("catalog")}
+                    className="hover:text-[#DFFF00] transition-colors text-xs"
+                  >
+                    Catálogo
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => scrollToSection("services")}
+                    className="hover:text-[#DFFF00] transition-colors text-xs"
+                  >
+                    Serviços
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => scrollToSection("cases")}
+                    className="hover:text-[#DFFF00] transition-colors text-xs"
+                  >
+                    Cases
+                  </button>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h5 className="text-white font-bold uppercase tracking-widest mb-6 text-xs">
+                Contato Direto
+              </h5>
+              <ul className="space-y-3">
+                <li>
+                  <a 
+                    href="mailto:aoliabele@gmail.com" 
+                    className="hover:text-[#00F0FF] transition-colors text-xs"
+                  >
+                    EMAIL
+                  </a>
+                </li>
+                <li>
+                  <a 
+                    href="https://wa.me/5532998078161" 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-[#00F0FF] transition-colors text-xs"
+                  >
+                    WhatsApp Corporativo
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
         <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between gap-4">
@@ -649,6 +676,75 @@ const Footer = () => {
         </div>
       </div>
     </footer>
+  );
+};
+
+const Navbar = ({ links }: { links: any }) => {
+  const [scrolled, setScrolled] = useState(false);
+  const [imgSrc, setImgSrc] = useState("/image_2ee558fe-removebg-preview.png");
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollToSection = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  // Força o recarregamento da imagem com timestamp
+  useEffect(() => {
+    setImgSrc(`/image_2ee558fe-removebg-preview.png?t=${Date.now()}`);
+  }, []);
+
+  return (
+    <nav
+      className={`fixed top-0 w-full z-50 transition-all duration-500 border-b ${
+        scrolled
+          ? "bg-slate-950/80 backdrop-blur-md border-white/5 py-3"
+          : "bg-transparent border-transparent py-4"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+        <div
+          className="flex items-center cursor-pointer"
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        >
+          <img 
+            src={imgSrc}
+            alt="L*A HIT"
+            className="h-14 w-auto md:h-20 transition-all duration-300 hover:opacity-80"
+          />
+        </div>
+        
+        <div className="hidden md:flex items-center gap-6 text-xs font-bold tracking-widest text-slate-400 uppercase">
+          <button
+            onClick={() => scrollToSection("catalog")}
+            className="hover:text-white transition-colors relative group"
+          >
+            Catálogo
+            <span className="absolute -bottom-1 left-0 w-0 h-px bg-blue-500 group-hover:w-full transition-all duration-300" />
+          </button>
+          <button
+            onClick={() => scrollToSection("services")}
+            className="hover:text-white transition-colors relative group"
+          >
+            Serviços
+            <span className="absolute -bottom-1 left-0 w-0 h-px bg-blue-500 group-hover:w-full transition-all duration-300" />
+          </button>
+          <button
+            onClick={() => scrollToSection("cases")}
+            className="hover:text-white transition-colors relative group"
+          >
+            Cases
+            <span className="absolute -bottom-1 left-0 w-0 h-px bg-blue-500 group-hover:w-full transition-all duration-300" />
+          </button>
+        </div>
+        
+        <div className="w-20" />
+      </div>
+    </nav>
   );
 };
 
@@ -742,9 +838,6 @@ const DynamicTerrainCanvas = () => {
 // ============================================================
 // HERO - VERSÃO REPARADA (ESPAÇAMENTO E NEON)
 // ============================================================
-// ============================================================
-// HERO - VERSÃO CORRIGIDA (POSICIONAMENTO E RESPONSIVIDADE)
-// ============================================================
 const Hero = () => {
   const scrollToCatalog = () =>
     document.getElementById("catalog")?.scrollIntoView({ behavior: "smooth" });
@@ -754,55 +847,51 @@ const Hero = () => {
       <DynamicTerrainCanvas />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#020617_90%)]" />
 
-      <div className="relative z-10 w-full px-4 sm:px-6 md:px-8 pt-24 sm:pt-28 md:pt-32 pb-20">
-        <div className="max-w-7xl mx-auto">
-          <div className="max-w-4xl lg:max-w-5xl">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[80px] xl:text-[100px] font-black tracking-tighter text-white leading-[1.1] sm:leading-[1.05] md:leading-[0.9] mb-6 sm:mb-8 uppercase">
-                TRANSFORMANDO
-                <br />
-                <span className="text-white/20">IDEIAS</span> EM
-                <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00F0FF] to-[#DFFF00]">
-                  ATIVOS.
-                </span>
-              </h1>
-            </motion.div>
+      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full pt-28 md:pt-32">
+        <div className="max-w-5xl text-left">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <h1 className="text-6xl md:text-[110px] font-black tracking-tighter text-white leading-[0.85] mb-8 uppercase">
+              TRANSFORMANDO <br />
+              <span className="text-white/20">IDEIAS</span> EM <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00F0FF] to-[#DFFF00]">
+                ATIVOS.
+              </span>
+            </h1>
+          </motion.div>
 
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.4, duration: 1 }}
-              className="text-base sm:text-lg md:text-xl text-slate-400 max-w-lg md:max-w-xl leading-relaxed mb-8 sm:mb-12 border-l-2 border-[#00F0FF] pl-4 sm:pl-6 font-medium italic"
-            >
-              Engenharia de Hits baseada em dados. Transformamos ondas sonoras em
-              propriedades intelectuais de alto rendimento.
-            </motion.p>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4, duration: 1 }}
+            className="text-xl text-slate-400 max-w-lg leading-relaxed mb-12 border-l-2 border-[#00F0FF] pl-6 font-medium italic"
+          >
+            Engenharia de Hits baseada em dados. Transformamos ondas sonoras em
+            propriedades intelectuais de alto rendimento.
+          </motion.p>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
-              className="flex flex-wrap gap-4 justify-start"
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6 }}
+            className="flex flex-wrap gap-4 justify-start"
+          >
+            <MagneticButton
+              onClick={scrollToCatalog}
+              className="px-8 py-3 bg-[#00F0FF] text-[#020617] font-black tracking-widest uppercase shadow-[0_0_30px_rgba(0,240,255,0.4)] hover:shadow-[0_0_40px_rgba(0,240,255,0.6)] transition-shadow"
             >
-              <MagneticButton
-                onClick={scrollToCatalog}
-                className="px-6 sm:px-8 py-3 bg-[#00F0FF] text-[#020617] font-black tracking-widest uppercase text-sm sm:text-base shadow-[0_0_25px_rgba(0,240,255,0.5)] hover:shadow-[0_0_35px_rgba(0,240,255,0.7)] transition-all"
-              >
-                Explorar Catálogo
-              </MagneticButton>
-              
-              <MagneticButton
-                className="px-6 sm:px-8 py-3 border border-white/20 text-white font-bold uppercase tracking-widest text-sm sm:text-base flex items-center gap-2 sm:gap-3 backdrop-blur-sm hover:border-[#DFFF00] hover:text-[#DFFF00] hover:shadow-[0_0_20px_rgba(223,255,0,0.3)] transition-all"
-              >
-                <Play size={16} fill="currentColor" /> Showreel
-              </MagneticButton>
-            </motion.div>
-          </div>
+              Explorar Catálogo
+            </MagneticButton>
+            
+            <MagneticButton
+              className="px-8 py-3 border border-white/10 text-white font-bold uppercase tracking-widest flex items-center gap-3 backdrop-blur-sm hover:border-[#DFFF00] hover:text-[#DFFF00] transition-colors"
+            >
+              <Play size={14} fill="currentColor" /> Showreel
+            </MagneticButton>
+          </motion.div>
         </div>
       </div>
     </section>
@@ -851,6 +940,7 @@ const SmartCatalog = ({
   return (
     <section id="catalog" className="py-16 bg-slate-950 border-t border-white/5 relative">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
+        {/* Usando Ciano para subtítulos de seção */}
         <div className="mb-12">
           <div className="flex items-center gap-2 text-[#00F0FF] font-mono text-xs tracking-widest uppercase mb-3">
             <span className="w-1.5 h-1.5 bg-[#00F0FF] rounded-full animate-pulse" />
@@ -903,54 +993,55 @@ const SmartCatalog = ({
           </div>
 
           <div className="flex flex-col overflow-y-auto max-h-[300px] scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-slate-900">
-            {filteredTracks && filteredTracks.map((track: any) => {
-              const isCurrent = currentTrack?.id === track.id;
-              
-              return (
-                <div
-                  key={track.id}
-                  className={`grid grid-cols-12 gap-4 px-6 py-4 items-center border-b border-white/5 transition-colors group ${
-                    isCurrent ? "bg-[#00F0FF]/5" : "hover:bg-white/[0.02]"
-                  }`}
-                >
-                  <div className="col-span-2 md:col-span-1 flex justify-center">
-                    <button
-                      onClick={() => isCurrent ? setIsPlaying(!isPlaying) : (setCurrentTrack(track), setIsPlaying(true))}
-                      className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${
-                        isCurrent && isPlaying
-                          ? "bg-[#DFFF00] text-[#020617] shadow-[0_0_15px_#DFFF00]"
-                          : "bg-slate-900 border border-[#DFFF00]/30 text-[#DFFF00] hover:border-[#DFFF00] hover:shadow-[0_0_10px_rgba(223,255,0,0.3)]"
-                      }`}
-                    >
-                      {isCurrent && isPlaying ? <Pause size={16} fill="currentColor" /> : <Play size={16} fill="currentColor" className="ml-1" />}
-                    </button>
-                  </div>
-
-                  <div className="col-span-5 md:col-span-4">
-                    <h4 className={`text-sm font-bold truncate ${isCurrent ? "text-[#00F0FF]" : "text-white"}`}>{track.title}</h4>
-                    <p className="text-slate-500 text-[10px] uppercase font-black tracking-widest">{track.artist}</p>
-                  </div>
-
-                  <div className="col-span-2 hidden md:block">
-                    <span className="px-2 py-1 rounded-sm border border-white/10 text-[9px] font-bold text-slate-400 uppercase tracking-tighter group-hover:border-[#DFFF00]/50 group-hover:text-[#DFFF00] transition-colors">
-                      {track.genre}
-                    </span>
-                  </div>
-                  
-                  <div className="col-span-1 hidden md:block text-center text-slate-400 text-xs font-mono">{track.bpm}</div>
-                  <div className="col-span-1 hidden md:block text-center text-slate-400 text-xs">{track.mood}</div>
-
-                  <div className="col-span-5 md:col-span-3 text-right">
-                    <button
-                      onClick={() => onLicenseClick(track)}
-                      className="px-4 py-1.5 bg-transparent border border-[#00F0FF]/50 text-[#00F0FF] text-[10px] font-black uppercase tracking-widest hover:bg-[#00F0FF] hover:text-[#020617] hover:shadow-[0_0_15px_rgba(0,240,255,0.4)] transition-all"
-                    >
-                      Licenciar
-                    </button>
-                  </div>
+          {filteredTracks.map((track: any) => {
+            const isCurrent = currentTrack?.id === track.id;
+            
+            return (
+              <div
+                key={track.id}
+                className={`grid grid-cols-12 gap-4 px-6 py-4 items-center border-b border-white/5 transition-colors group ${
+                  isCurrent ? "bg-[#00F0FF]/5" : "hover:bg-white/[0.02]"
+                }`}
+              >
+                <div className="col-span-2 md:col-span-1 flex justify-center">
+                  {/* BOTÃO PLAY NEON DA LISTA */}
+                  <button
+                    onClick={() => isCurrent ? setIsPlaying(!isPlaying) : (setCurrentTrack(track), setIsPlaying(true))}
+                    className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${
+                      isCurrent && isPlaying
+                        ? "bg-[#DFFF00] text-[#020617] shadow-[0_0_15px_#DFFF00]"
+                        : "bg-slate-900 border border-[#DFFF00]/30 text-[#DFFF00] hover:border-[#DFFF00] hover:shadow-[0_0_10px_rgba(223,255,0,0.3)]"
+                    }`}
+                  >
+                    {isCurrent && isPlaying ? <Pause size={16} fill="currentColor" /> : <Play size={16} fill="currentColor" className="ml-1" />}
+                  </button>
                 </div>
-              );
-            })}
+
+                <div className="col-span-5 md:col-span-4">
+                  <h4 className={`text-sm font-bold truncate ${isCurrent ? "text-[#00F0FF]" : "text-white"}`}>{track.title}</h4>
+                  <p className="text-slate-500 text-[10px] uppercase font-black tracking-widest">{track.artist}</p>
+                </div>
+
+                <div className="col-span-2 hidden md:block">
+                  <span className="px-2 py-1 rounded-sm border border-white/10 text-[9px] font-bold text-slate-400 uppercase tracking-tighter group-hover:border-[#DFFF00]/50 group-hover:text-[#DFFF00] transition-colors">
+                    {track.genre}
+                  </span>
+                </div>
+                
+                <div className="col-span-1 hidden md:block text-center text-slate-400 text-xs font-mono">{track.bpm}</div>
+                <div className="col-span-1 hidden md:block text-center text-slate-400 text-xs">{track.mood}</div>
+
+                <div className="col-span-5 md:col-span-3 text-right">
+                  <button
+                    onClick={() => onLicenseClick(track)}
+                    className="px-4 py-1.5 bg-transparent border border-[#00F0FF]/50 text-[#00F0FF] text-[10px] font-black uppercase tracking-widest hover:bg-[#00F0FF] hover:text-[#020617] hover:shadow-[0_0_15px_rgba(0,240,255,0.4)] transition-all"
+                  >
+                    Licenciar
+                  </button>
+                </div>
+              </div>
+            );
+          })}
           </div>
         </div>
       </div>
@@ -1237,12 +1328,12 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
           
           {/* COLUNA ESQUERDA - EMPRESAS (TEMA CIANO) */}
-          <div className="bg-slate-900 rounded-2xl border border-[#00F0FF]/20 overflow-hidden flex flex-col h-full shadow-[0_0_30px_-10px_rgba(0,240,255,0.2)]">
-            <div className="p-6 pb-3 border-b border-[#00F0FF]/20">
+          {/* Removido o gradiente colorido, usando fundo escuro limpo */}
+          <div className="bg-slate-900 rounded-2xl border border-[#00F0FF]/10 overflow-hidden flex flex-col h-full shadow-[0_0_30px_-15px_rgba(0,240,255,0.1)]">
+            <div className="p-6 pb-3 border-b border-[#00F0FF]/10">
               <div className="flex items-center gap-2 text-[#00F0FF] font-mono text-[11px] tracking-widest uppercase mb-1">
-                <span className="w-1.5 h-1.5 bg-[#00F0FF] rounded-full shadow-[0_0_5px_#00F0FF]" />
+                <span className="w-1.5 h-1.5 bg-[#00F0FF] rounded-full" />
                 B2B SOLUTIONS
-                <span className="w-1.5 h-1.5 bg-[#00F0FF] rounded-full shadow-[0_0_5px_#00F0FF]" />
               </div>
               <h3 className="text-2xl font-bold text-white">
                 Para Empresas.
@@ -1262,13 +1353,13 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
                   return (
                     <div
                       key={i}
-                      className="group bg-slate-950/80 border border-white/10 hover:border-[#00F0FF]/40 rounded-xl transition-all duration-300 overflow-hidden flex flex-col h-full"
+                      className="group bg-slate-950/80 border border-white/5 hover:border-[#00F0FF]/40 rounded-xl transition-all duration-300 overflow-hidden flex flex-col h-full"
                     >
                       <div className="p-5 flex flex-col h-full">
-                        {/* Ícone Ciano com glow */}
+                        {/* Ícone Ciano */}
                         <div className="flex justify-center mb-4">
-                          <div className="w-14 h-14 bg-[#00F0FF]/10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(0,240,255,0.3)]">
-                            <Icon className="w-7 h-7 text-[#00F0FF] drop-shadow-[0_0_5px_#00F0FF]" />
+                          <div className="w-14 h-14 bg-[#00F0FF]/5 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <Icon className="w-7 h-7 text-[#00F0FF]" />
                           </div>
                         </div>
                         
@@ -1285,7 +1376,7 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
                         </div>
                         
                         <div className="text-center mb-4">
-                          <span className="text-[10px] text-[#00F0FF] font-mono bg-[#00F0FF]/10 border border-[#00F0FF]/30 px-2 py-1 rounded shadow-[0_0_8px_rgba(0,240,255,0.2)]">
+                          <span className="text-[10px] text-slate-400 font-mono bg-white/5 border border-white/10 px-2 py-1 rounded">
                             Sob consulta
                           </span>
                         </div>
@@ -1293,13 +1384,13 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
                         <div className="flex gap-2 justify-center mt-auto pt-2">
                           <button
                             onClick={() => openDetails(s)}
-                            className="px-4 py-2 bg-[#00F0FF]/10 border border-[#00F0FF] text-[#00F0FF] text-[10px] font-bold uppercase tracking-widest shadow-[0_0_12px_rgba(0,240,255,0.4)] hover:shadow-[0_0_20px_rgba(0,240,255,0.8)] hover:bg-[#00F0FF] hover:text-[#020617] transition-all rounded-lg w-full"
+                            className="px-4 py-2 border border-white/10 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-[#00F0FF] hover:text-[#020617] hover:border-[#00F0FF] transition-all rounded-lg w-full"
                           >
                             {s.cta || "DETALHES"}
                           </button>
                           <button
                             onClick={() => window.open(links.whatsapp, "_blank")}
-                            className="p-2 border border-[#00F0FF] text-[#00F0FF] bg-transparent shadow-[0_0_8px_rgba(0,240,255,0.3)] hover:shadow-[0_0_15px_rgba(37,211,102,0.5)] hover:bg-[#25D366] hover:border-[#25D366] hover:text-white transition-all rounded-lg"
+                            className="p-2 border border-white/10 bg-transparent hover:bg-[#25D366] hover:border-[#25D366] text-white transition-all rounded-lg"
                             title="Chamar no WhatsApp"
                           >
                             <MessageCircle size={14} />
@@ -1314,12 +1405,11 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
           </div>
 
           {/* COLUNA DIREITA - ARTISTAS (TEMA NEON YELLOW) */}
-          <div className="bg-slate-900 rounded-2xl border border-[#DFFF00]/20 overflow-hidden flex flex-col h-full shadow-[0_0_30px_-10px_rgba(223,255,0,0.2)]">
-            <div className="p-6 pb-3 border-b border-[#DFFF00]/20">
+          <div className="bg-slate-900 rounded-2xl border border-[#DFFF00]/10 overflow-hidden flex flex-col h-full shadow-[0_0_30px_-15px_rgba(223,255,0,0.05)]">
+            <div className="p-6 pb-3 border-b border-[#DFFF00]/10">
               <div className="flex items-center gap-2 text-[#DFFF00] font-mono text-[11px] tracking-widest uppercase mb-1">
-                <span className="w-1.5 h-1.5 bg-[#DFFF00] rounded-full shadow-[0_0_5px_#DFFF00]" />
+                <span className="w-1.5 h-1.5 bg-[#DFFF00] rounded-full" />
                 ARTIST SOLUTIONS
-                <span className="w-1.5 h-1.5 bg-[#DFFF00] rounded-full shadow-[0_0_5px_#DFFF00]" />
               </div>
               <h3 className="text-2xl font-bold text-white">
                 Para Artistas.
@@ -1342,23 +1432,23 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
                       key={i}
                       className={`group bg-slate-950/80 border rounded-xl transition-all duration-300 overflow-hidden flex flex-col h-full ${
                         isDestaque
-                          ? "border-[#DFFF00]/40 shadow-[0_0_20px_-5px_rgba(223,255,0,0.3)]"
-                          : "border-white/10 hover:border-[#DFFF00]/40"
+                          ? "border-[#DFFF00]/30 hover:border-[#DFFF00]/60 shadow-[0_0_15px_-5px_rgba(223,255,0,0.1)]"
+                          : "border-white/5 hover:border-[#DFFF00]/40"
                       }`}
                     >
                       <div className="p-5 flex flex-col h-full">
-                        {/* Ícone Neon com glow */}
+                        {/* Ícone Neon */}
                         <div className="flex justify-center mb-4">
                           <div className={`w-14 h-14 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform ${
-                            isDestaque ? "bg-[#DFFF00]/20 shadow-[0_0_20px_rgba(223,255,0,0.4)]" : "bg-[#DFFF00]/10 shadow-[0_0_10px_rgba(223,255,0,0.2)]"
+                            isDestaque ? "bg-[#DFFF00]/10" : "bg-[#DFFF00]/5"
                           }`}>
-                            <Icon className={`w-7 h-7 text-[#DFFF00] drop-shadow-[0_0_8px_rgba(223,255,0,0.6)]`} />
+                            <Icon className={`w-7 h-7 text-[#DFFF00] ${isDestaque ? "drop-shadow-[0_0_8px_rgba(223,255,0,0.6)]" : ""}`} />
                           </div>
                         </div>
                         
                         <div className="min-h-[56px] flex items-center justify-center mb-2">
                           <h4 className={`text-base font-bold text-center leading-tight line-clamp-2 ${
-                            isDestaque ? "text-[#DFFF00] drop-shadow-[0_0_5px_rgba(223,255,0,0.5)]" : "text-white group-hover:text-[#DFFF00]"
+                            isDestaque ? "text-[#DFFF00]" : "text-white group-hover:text-[#DFFF00]"
                           } transition-colors`}>
                             {tituloAbreviado}
                           </h4>
@@ -1366,7 +1456,7 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
                         
                         {isDestaque && (
                           <div className="flex justify-center mb-3">
-                            <span className="text-[8px] bg-[#DFFF00] text-[#020617] px-2 py-0.5 rounded-full font-black tracking-widest shadow-[0_0_8px_#DFFF00]">
+                            <span className="text-[8px] bg-[#DFFF00] text-[#020617] px-2 py-0.5 rounded-full font-black tracking-widest">
                               DESTAQUE
                             </span>
                           </div>
@@ -1378,11 +1468,11 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
                           </p>
                         </div>
                         
-                        {/* Logo Parceiro */}
+                        {/* Logo Parceiro (Ocupa espaço constante para não quebrar layout) */}
                         <div className="min-h-[32px] flex justify-center items-center mb-4">
                           {s.external && s.external !== "" ? (
-                            <div className="w-12 h-12 bg-slate-900 border border-[#DFFF00]/30 rounded-full flex items-center justify-center shadow-[0_0_10px_rgba(223,255,0,0.2)]">
-                              <span className="text-[7px] text-[#DFFF00] font-mono font-bold drop-shadow-[0_0_4px_#DFFF00]">HIT UP</span>
+                            <div className="w-12 h-12 bg-slate-900 border border-[#DFFF00]/20 rounded-full flex items-center justify-center">
+                              <span className="text-[7px] text-[#DFFF00] font-mono font-bold">HIT UP</span>
                             </div>
                           ) : (
                             <div className="h-12" />
@@ -1390,7 +1480,7 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
                         </div>
                         
                         <div className="text-center mb-4">
-                           <span className="text-[10px] text-[#DFFF00] font-mono bg-[#DFFF00]/10 border border-[#DFFF00]/30 px-2 py-1 rounded shadow-[0_0_8px_rgba(223,255,0,0.2)]">
+                           <span className="text-[10px] text-slate-400 font-mono bg-white/5 border border-white/10 px-2 py-1 rounded">
                             Sob consulta
                           </span>
                         </div>
@@ -1398,17 +1488,17 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
                         <div className="flex gap-2 justify-center mt-auto pt-2">
                           <button
                             onClick={() => openDetails(s)}
-                            className={`px-4 py-2 text-[10px] font-bold uppercase tracking-widest transition-all rounded-lg w-full shadow-[0_0_12px_rgba(223,255,0,0.4)] hover:shadow-[0_0_20px_rgba(223,255,0,0.8)] ${
+                            className={`px-4 py-2 text-[10px] font-bold uppercase tracking-widest transition-all rounded-lg w-full ${
                               isDestaque
-                                ? "bg-[#DFFF00] text-[#020617]"
-                                : "bg-[#DFFF00]/10 border border-[#DFFF00] text-[#DFFF00] hover:bg-[#DFFF00] hover:text-[#020617]"
+                                ? "bg-[#DFFF00] text-[#020617] hover:shadow-[0_0_15px_rgba(223,255,0,0.5)]"
+                                : "border border-white/10 text-white hover:bg-[#DFFF00] hover:text-[#020617] hover:border-[#DFFF00]"
                             }`}
                           >
                             {s.cta || "DETALHES"}
                           </button>
                           <button
                             onClick={() => window.open(links.whatsapp, "_blank")}
-                            className="p-2 border border-[#DFFF00] text-[#DFFF00] bg-transparent shadow-[0_0_8px_rgba(223,255,0,0.3)] hover:shadow-[0_0_15px_rgba(37,211,102,0.5)] hover:bg-[#25D366] hover:border-[#25D366] hover:text-white transition-all rounded-lg"
+                            className="p-2 border border-white/10 bg-transparent hover:bg-[#25D366] hover:border-[#25D366] text-white transition-all rounded-lg"
                             title="Chamar no WhatsApp"
                           >
                             <MessageCircle size={14} />
@@ -1424,7 +1514,7 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
         </div>
       </div>
 
-      {/* MODAL DE DETALHES DO SERVIÇO */}
+      {/* MODAL DE DETALHES DO SERVIÇO (MANTIDO NEUTRO/CIANO) */}
       <AnimatePresence>
         {modalOpen && selectedService && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
@@ -1868,3 +1958,4 @@ return (
   </div>
 );
 }  // <-- ESTA É A CHAVE QUE FALTAVA (fecha o componente App)
+
