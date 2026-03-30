@@ -851,6 +851,7 @@ const SmartCatalog = ({
   return (
     <section id="catalog" className="py-16 bg-slate-950 border-t border-white/5 relative">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
+        {/* Usando Ciano para subtítulos de seção */}
         <div className="mb-12">
           <div className="flex items-center gap-2 text-[#00F0FF] font-mono text-xs tracking-widest uppercase mb-3">
             <span className="w-1.5 h-1.5 bg-[#00F0FF] rounded-full animate-pulse" />
@@ -903,7 +904,7 @@ const SmartCatalog = ({
           </div>
 
           <div className="flex flex-col overflow-y-auto max-h-[300px] scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-slate-900">
-            {filteredTracks.slice(0, 3).map((track: any) => {
+            {filteredTracks.map((track: any) => {
               const isCurrent = currentTrack?.id === track.id;
               
               return (
