@@ -684,6 +684,7 @@ const Footer = () => {
 // ============================================================
 const Navbar = ({ links }: { links: any }) => {
   const [scrolled, setScrolled] = useState(false);
+  const [imgError, setImgError] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -704,16 +705,26 @@ const Navbar = ({ links }: { links: any }) => {
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-        {/* LOGO COM IMAGEM */}
+        {/* LOGO COM IMAGEM E FALLBACK */}
         <div
           className="flex items-center cursor-pointer"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         >
-          <img 
-            src="/image_2ee558fe-removebg-preview.png"
-            alt="L'A HIT"
-            className="h-14 w-auto md:h-20 transition-all duration-300 hover:opacity-80"
-          />
+          {!imgError ? (
+            <img 
+              src="/image_2ee558fe-removebg-preview.png"
+              alt="L*A HIT"
+              className="h-14 w-auto md:h-20 transition-all duration-300 hover:opacity-80"
+              onError={() => setImgError(true)}
+            />
+          ) : (
+            <div className="flex items-center gap-1">
+              <span className="text-2xl md:text-3xl font-black text-white italic tracking-tighter">L</span>
+              <span className="text-[#DFFF00] text-xl md:text-2xl font-bold">*</span>
+              <span className="text-2xl md:text-3xl font-black text-white italic tracking-tighter">A</span>
+              <span className="text-white text-sm md:text-base font-bold ml-1 tracking-wider">HIT</span>
+            </div>
+          )}
         </div>
         
         {/* MENU */}
