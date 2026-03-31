@@ -378,6 +378,81 @@ const MagneticButton = ({ children, className, onClick, disabled }: any) => (
   </motion.button>
 );
 
+const SectionHeader = ({
+  subtitle,
+  title,
+}: {
+  subtitle: string;
+  title: string;
+}) => (
+  <div className="mb-12">
+    <div className="flex items-center gap-2 text-blue-500 font-mono text-xs tracking-widest uppercase mb-3">
+      <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse" />
+      {subtitle}
+    </div>
+    <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight">
+      {title}
+    </h2>
+  </div>
+);
+
+// ============================================================
+// LOGO ANIMADO (RESTAURADO)
+// ============================================================
+const LogoAnimado = () => {
+  return (
+    <div className="flex flex-col items-center justify-center select-none group cursor-pointer">
+      <div className="relative flex items-center justify-center gap-1 mb-[-4px]">
+        <span className="text-3xl font-black text-white italic tracking-tighter">L</span>
+        
+        <motion.span
+          animate={{ 
+            scale: [1, 1.2, 1],
+            opacity: [0.7, 1, 0.7],
+            filter: ["drop-shadow(0 0 2px #DFFF00)", "drop-shadow(0 0 8px #DFFF00)", "drop-shadow(0 0 2px #DFFF00)"]
+          }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+          className="text-[#DFFF00] text-2xl mx-0.5"
+        >
+          ✦
+        </motion.span>
+        
+        <span className="text-3xl font-black text-white italic tracking-tighter">A</span>
+      </div>
+
+      <motion.div 
+        initial={{ width: 0, opacity: 0 }}
+        animate={{ width: "110%", opacity: 0.7 }}
+        transition={{ duration: 1, delay: 0.5 }}
+        className="h-[1.5px] bg-[#00F0FF] shadow-[0_0_10px_#00F0FF] relative z-10"
+      />
+
+      <div className="flex items-center justify-center text-[10px] font-black text-[#DFFF00] tracking-[0.5em] mt-1 relative">
+        <span>H</span>
+        <div className="relative inline-flex justify-center">
+          <span className="opacity-100">I</span>
+          <motion.div
+            initial={{ y: 0, opacity: 1 }}
+            animate={{ 
+              y: -36,
+              opacity: [1, 1, 0],
+              scale: [1, 1.4, 0.6]
+            }}
+            transition={{ 
+              duration: 1.4, 
+              repeat: Infinity, 
+              repeatDelay: 2.5,
+              ease: "circIn" 
+            }}
+            className="absolute -top-1 w-[3px] h-[3px] bg-[#DFFF00] rounded-full shadow-[0_0_8px_#DFFF00]"
+          />
+        </div>
+        <span className="ml-1">T</span>
+      </div>
+    </div>
+  );
+};
+
 // ============================================================
 // MODAL DE LICENCIAMENTO
 // ============================================================
@@ -1156,7 +1231,6 @@ const PersistentPlayer = ({
 
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4 flex-wrap md:flex-nowrap">
           
-          {/* INFO DA MÚSICA */}
           <div className="flex items-center gap-4 w-full md:w-1/3">
             <div className="w-12 h-12 bg-slate-900 rounded-md relative flex items-center justify-center shrink-0 border border-[#00F0FF]/20 overflow-hidden">
               <Music size={20} className="text-[#00F0FF] drop-shadow-[0_0_5px_#00F0FF]" />
@@ -1175,7 +1249,6 @@ const PersistentPlayer = ({
             </div>
           </div>
 
-          {/* CONTROLES CENTRAIS NEON */}
           <div className="flex flex-col items-center w-full md:w-2/4">
             <div className="flex items-center gap-6 mb-2">
               <button onClick={playPrevious} className="text-slate-500 hover:text-[#00F0FF] transition-colors">
@@ -1214,7 +1287,6 @@ const PersistentPlayer = ({
             </div>
           </div>
 
-          {/* AÇÃO - LICENCIAR */}
           <div className="w-full md:w-1/4 flex items-center justify-end gap-4">
             <button
               onClick={() => onLicenseClick(track)}
@@ -1299,7 +1371,6 @@ const Services = ({ servicos, links, onLeadOpen }: {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
           
-          {/* COLUNA ESQUERDA - EMPRESAS */}
           <div className="bg-slate-900 rounded-2xl border border-[#00F0FF]/20 overflow-hidden flex flex-col h-full shadow-[0_0_30px_-10px_rgba(0,240,255,0.2)]">
             <div className="p-6 pb-3 border-b border-[#00F0FF]/20">
               <div className="flex items-center gap-2 text-[#00F0FF] font-mono text-[11px] tracking-widest uppercase mb-1">
@@ -1387,7 +1458,6 @@ const Services = ({ servicos, links, onLeadOpen }: {
             </div>
           </div>
 
-          {/* COLUNA DIREITA - ARTISTAS */}
           <div className="bg-slate-900 rounded-2xl border border-[#DFFF00]/20 overflow-hidden flex flex-col h-full shadow-[0_0_30px_-10px_rgba(223,255,0,0.2)]">
             <div className="p-6 pb-3 border-b border-[#DFFF00]/20">
               <div className="flex items-center gap-2 text-[#DFFF00] font-mono text-[11px] tracking-widest uppercase mb-1">
