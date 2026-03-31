@@ -864,7 +864,7 @@ const Hero = ({ onOpenShowreel }: { onOpenShowreel: () => void }) => {
 };
 
 // ============================================================
-// SMART CATALOG - VERSÃO CORRIGIDA COM 3 COLUNAS
+// SMART CATALOG - VERSÃO COM 3 LINHAS VISÍVEIS
 // ============================================================
 const SmartCatalog = ({
   catalogo,
@@ -913,6 +913,9 @@ const SmartCatalog = ({
           <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight">
             A Biblioteca.
           </h2>
+          <p className="text-slate-400 text-sm mt-2">
+            Mostrando {filteredTracks.length} faixas disponíveis
+          </p>
         </div>
 
         <div className="flex flex-col lg:flex-row justify-between items-end mb-8 gap-6">
@@ -946,7 +949,7 @@ const SmartCatalog = ({
           </div>
         </div>
 
-        <div className="bg-slate-900/50 border border-white/10 rounded-xl overflow-hidden backdrop-blur-sm flex flex-col">
+        <div className="bg-slate-900/50 border border-white/10 rounded-xl overflow-hidden backdrop-blur-sm">
           {/* HEADER - 3 COLUNAS */}
           <div className="grid grid-cols-12 gap-4 px-6 py-4 border-b border-white/5 bg-slate-900 text-[10px] font-bold text-slate-500 uppercase tracking-widest sticky top-0 z-20">
             <div className="col-span-2 md:col-span-1 text-center">Play</div>
@@ -954,15 +957,15 @@ const SmartCatalog = ({
             <div className="col-span-2 md:col-span-2 text-right">Ação</div>
           </div>
 
-          {/* LISTA DE MÚSICAS */}
-          <div className="flex flex-col overflow-y-auto max-h-[300px] scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-slate-900">
-            {filteredTracks.map((track: any) => {
+          {/* LISTA DE MÚSICAS - ALTURA FIXA PARA MOSTRAR APENAS 3 LINHAS */}
+          <div className="flex flex-col overflow-y-auto" style={{ height: "calc(3 * 80px)" }}>
+            {filteredTracks.slice(0, 3).map((track: any) => {
               const isCurrent = currentTrack?.id === track.id;
               
               return (
                 <div
                   key={track.id}
-                  className={`grid grid-cols-12 gap-4 px-6 py-4 items-center border-b border-white/5 transition-colors group ${
+                  className={`grid grid-cols-12 gap-4 px-6 py-4 items-center border-b border-white/5 transition-colors group h-[80px] ${
                     isCurrent ? "bg-[#00F0FF]/5" : "hover:bg-white/[0.02]"
                   }`}
                 >
@@ -1003,6 +1006,16 @@ const SmartCatalog = ({
               );
             })}
           </div>
+
+          {/* INDICADOR DE MAIS MÚSICAS */}
+          {filteredTracks.length > 3 && (
+            <div className="p-4 text-center border-t border-white/5 bg-slate-900/80">
+              <p className="text-[10px] text-slate-500 font-mono">
+                + {filteredTracks.length - 3} {filteredTracks.length - 3 === 1 ? 'música disponível' : 'músicas disponíveis'} 
+                <span className="text-[#00F0FF] ml-2">→ Role para ver mais</span>
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </section>
