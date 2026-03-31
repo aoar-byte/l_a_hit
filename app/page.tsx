@@ -860,11 +860,9 @@ const Hero = ({ onOpenShowreel }: { onOpenShowreel: () => void }) => {
               </MagneticButton>
               
               <MagneticButton
-  onClick={onOpenShowreel}
-  className="px-6 sm:px-8 py-3 border border-white/20 text-white font-bold uppercase tracking-widest text-sm sm:text-base backdrop-blur-sm hover:border-[#DFFF00] hover:text-[#DFFF00] hover:shadow-[0_0_20px_rgba(223,255,0,0.3)] transition-all"
->
-  Showreel
-</MagneticButton>
+                onClick={onOpenShowreel}
+                className="px-6 sm:px-8 py-3 border border-white/20 text-white font-bold uppercase tracking-widest text-sm sm:text-base flex items-center gap-2 sm:gap-3 backdrop-blur-sm hover:border-[#DFFF00] hover:text-[#DFFF00] hover:shadow-[0_0_20px_rgba(223,255,0,0.3)] transition-all"
+              >
                 <Play size={16} fill="currentColor" /> Showreel
               </MagneticButton>
             </motion.div>
@@ -917,6 +915,7 @@ const SmartCatalog = ({
   return (
     <section id="catalog" className="py-16 bg-slate-950 border-t border-white/5 relative">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
+        {/* Usando Ciano para subtítulos de seção */}
         <div className="mb-12">
           <div className="flex items-center gap-2 text-[#00F0FF] font-mono text-xs tracking-widest uppercase mb-3">
             <span className="w-1.5 h-1.5 bg-[#00F0FF] rounded-full animate-pulse" />
@@ -968,7 +967,7 @@ const SmartCatalog = ({
             <div className="col-span-5 md:col-span-3 text-right">Ação</div>
           </div>
 
-          <div className="flex flex-col overflow-y-auto max-h-[180px] scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-slate-900">
+          <div className="flex flex-col overflow-y-auto max-h-[300px] scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-slate-900">
             {filteredTracks.slice(0, 3).map((track: any) => {
               const isCurrent = currentTrack?.id === track.id;
               
@@ -1994,3 +1993,5 @@ return (
   </div>
 );
 }
+
+
