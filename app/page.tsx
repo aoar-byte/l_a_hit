@@ -1357,13 +1357,13 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
                         <div className="flex gap-2 justify-center mt-auto pt-2">
                           <button
                             onClick={() => openDetails(s)}
-                            className="px-4 py-2 border border-[#00F0FF] text-[#00F0FF] text-[10px] font-bold uppercase tracking-widest hover:bg-[#00F0FF] hover:text-[#020617] hover:shadow-[0_0_15px_rgba(0,240,255,0.4)] transition-all rounded-lg w-full"
+                            className="px-4 py-2 border border-[#00F0FF] text-[#00F0FF] text-[10px] font-bold uppercase tracking-widest hover:bg-[#00F0FF] hover:text-[#020617] shadow-[0_0_12px_rgba(0,240,255,0.5)] transition-all rounded-lg w-full"
                           >
                             {s.cta || "DETALHES"}
                           </button>
                           <button
                             onClick={() => window.open(links.whatsapp, "_blank")}
-                            className="p-2 border border-[#00F0FF] text-[#00F0FF] bg-transparent shadow-[0_0_8px_rgba(0,240,255,0.3)] hover:shadow-[0_0_15px_rgba(37,211,102,0.5)] hover:bg-[#25D366] hover:border-[#25D366] hover:text-white transition-all rounded-lg"
+                            className="p-2 border border-[#00F0FF] text-[#00F0FF] bg-transparent shadow-[0_0_8px_rgba(0,240,255,0.4)] hover:shadow-[0_0_15px_rgba(37,211,102,0.5)] hover:bg-[#25D366] hover:border-[#25D366] hover:text-white transition-all rounded-lg"
                             title="Chamar no WhatsApp"
                           >
                             <MessageCircle size={14} />
@@ -1462,17 +1462,17 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
                         <div className="flex gap-2 justify-center mt-auto pt-2">
                           <button
                             onClick={() => openDetails(s)}
-                            className={`px-4 py-2 text-[10px] font-bold uppercase tracking-widest transition-all rounded-lg w-full ${
+                            className={`px-4 py-2 text-[10px] font-bold uppercase tracking-widest transition-all rounded-lg w-full shadow-[0_0_12px_rgba(223,255,0,0.5)] ${
                               isDestaque
-                                ? "bg-[#DFFF00] text-[#020617] hover:shadow-[0_0_15px_rgba(223,255,0,0.5)]"
-                                : "border border-[#DFFF00] text-[#DFFF00] hover:bg-[#DFFF00] hover:text-[#020617] hover:shadow-[0_0_15px_rgba(223,255,0,0.4)]"
+                                ? "bg-[#DFFF00] text-[#020617] hover:shadow-[0_0_20px_rgba(223,255,0,0.7)]"
+                                : "border border-[#DFFF00] text-[#DFFF00] hover:bg-[#DFFF00] hover:text-[#020617]"
                             }`}
                           >
                             {s.cta || "DETALHES"}
                           </button>
                           <button
                             onClick={() => window.open(links.whatsapp, "_blank")}
-                            className="p-2 border border-[#DFFF00] text-[#DFFF00] bg-transparent shadow-[0_0_8px_rgba(223,255,0,0.3)] hover:shadow-[0_0_15px_rgba(37,211,102,0.5)] hover:bg-[#25D366] hover:border-[#25D366] hover:text-white transition-all rounded-lg"
+                            className="p-2 border border-[#DFFF00] text-[#DFFF00] bg-transparent shadow-[0_0_8px_rgba(223,255,0,0.4)] hover:shadow-[0_0_15px_rgba(37,211,102,0.5)] hover:bg-[#25D366] hover:border-[#25D366] hover:text-white transition-all rounded-lg"
                             title="Chamar no WhatsApp"
                           >
                             <MessageCircle size={14} />
