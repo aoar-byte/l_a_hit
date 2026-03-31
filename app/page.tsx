@@ -860,9 +860,11 @@ const Hero = ({ onOpenShowreel }: { onOpenShowreel: () => void }) => {
               </MagneticButton>
               
               <MagneticButton
-                onClick={onOpenShowreel}
-                className="px-6 sm:px-8 py-3 border border-white/20 text-white font-bold uppercase tracking-widest text-sm sm:text-base flex items-center gap-2 sm:gap-3 backdrop-blur-sm hover:border-[#DFFF00] hover:text-[#DFFF00] hover:shadow-[0_0_20px_rgba(223,255,0,0.3)] transition-all"
-              >
+  onClick={onOpenShowreel}
+  className="px-6 sm:px-8 py-3 border border-white/20 text-white font-bold uppercase tracking-widest text-sm sm:text-base backdrop-blur-sm hover:border-[#DFFF00] hover:text-[#DFFF00] hover:shadow-[0_0_20px_rgba(223,255,0,0.3)] transition-all"
+>
+  Showreel
+</MagneticButton>
                 <Play size={16} fill="currentColor" /> Showreel
               </MagneticButton>
             </motion.div>
@@ -967,7 +969,7 @@ const SmartCatalog = ({
             <div className="col-span-5 md:col-span-3 text-right">Ação</div>
           </div>
 
-          <div className="flex flex-col overflow-y-auto max-h-[300px] scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-slate-900">
+          <div className="flex flex-col overflow-y-auto max-h-[300px] scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-slate-900" style={{ overflowY: 'auto' }}>
   {filteredTracks.slice(0, 3).map((track: any) => {
               const isCurrent = currentTrack?.id === track.id;
               
