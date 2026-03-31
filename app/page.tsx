@@ -808,13 +808,9 @@ const Navbar = ({ links }: { links: any }) => {
 // ============================================================
 // HERO - VERSÃO CORRIGIDA (POSICIONAMENTO E RESPONSIVIDADE)
 // ============================================================
-const Hero = () => {
+const Hero = ({ onOpenShowreel }: { onOpenShowreel: () => void }) => {
   const scrollToCatalog = () =>
     document.getElementById("catalog")?.scrollIntoView({ behavior: "smooth" });
-
-  const openShowreel = () => {
-    window.open("https://www.youtube.com/watch?v=cTJEQ7P4PxY", "_blank");
-  };
 
   return (
     <section className="relative min-h-screen flex items-center justify-start overflow-hidden bg-slate-950">
@@ -864,7 +860,7 @@ const Hero = () => {
               </MagneticButton>
               
               <MagneticButton
-                onClick={openShowreel}
+                onClick={onOpenShowreel}
                 className="px-6 sm:px-8 py-3 border border-white/20 text-white font-bold uppercase tracking-widest text-sm sm:text-base flex items-center gap-2 sm:gap-3 backdrop-blur-sm hover:border-[#DFFF00] hover:text-[#DFFF00] hover:shadow-[0_0_20px_rgba(223,255,0,0.3)] transition-all"
               >
                 <Play size={16} fill="currentColor" /> Showreel
@@ -1780,6 +1776,39 @@ const LogoAnimado = () => {
 };
 
 // ============================================================
+// MODAL DE SHOWREEL (VÍDEO EMBUTIDO)
+// ============================================================
+const VideoModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/90 backdrop-blur-md">
+      <motion.div
+        initial={{ scale: 0.9, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.9, opacity: 0 }}
+        className="relative w-full max-w-4xl aspect-video bg-slate-900 rounded-xl overflow-hidden shadow-2xl shadow-[#00F0FF]/20"
+      >
+        <button
+          onClick={onClose}
+          className="absolute -top-10 right-0 sm:top-2 sm:right-2 text-white hover:text-[#DFFF00] transition-colors z-10 bg-black/50 rounded-full p-2"
+        >
+          <X size={24} />
+        </button>
+        <iframe
+          className="w-full h-full"
+          src="https://www.youtube.com/embed/cTJEQ7P4PxY?autoplay=1&rel=0"
+          title="L*A HIT Showreel"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        />
+      </motion.div>
+    </div>
+  );
+};
+
+// ============================================================
 // APP PRINCIPAL
 // ============================================================
 export default function App() {
@@ -1791,6 +1820,7 @@ export default function App() {
   const [showLeadModal, setShowLeadModal] = useState(false);
   const [leadService, setLeadService] = useState("");
   const [filteredTracks, setFilteredTracks] = useState<any[]>([]);
+  const [showVideoModal, setShowVideoModal] = useState(false);
 
   useEffect(() => {
     async function loadData() {
@@ -1921,7 +1951,7 @@ return (
     <NoiseOverlay />
     <Navbar links={config.links} />
     <main className="relative z-10">
-      <Hero />
+      <Hero onOpenShowreel={() => setShowVideoModal(true)} />
       <SmartCatalog
         catalogo={config.catalogo}
         filteredTracks={filteredTracks}
@@ -1946,7 +1976,7 @@ return (
       filteredTracks={filteredTracks}
       isPlayingAuto={true}
     />
-       <AnimatePresence>
+    <AnimatePresence>
       {showQuoteModal && currentTrack && (
         <QuoteModal
           track={currentTrack}
@@ -1959,8 +1989,7 @@ return (
         <LeadModal service={leadService} onClose={() => setShowLeadModal(false)} />
       )}
     </AnimatePresence>
+    <VideoModal isOpen={showVideoModal} onClose={() => setShowVideoModal(false)} />
   </div>
 );
-}  // <-- ESTA É A CHAVE QUE FALTAVA (fecha o componente App)
-
-
+}
