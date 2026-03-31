@@ -864,7 +864,7 @@ const Hero = ({ onOpenShowreel }: { onOpenShowreel: () => void }) => {
 };
 
 // ============================================================
-// SMART CATALOG - VERSÃO COM 3 LINHAS VISÍVEIS
+// SMART CATALOG - APENAS 3 LINHAS FIXAS (SEM SCROLL)
 // ============================================================
 const SmartCatalog = ({
   catalogo,
@@ -902,6 +902,9 @@ const SmartCatalog = ({
     setFilteredTracks(filtered);
   }, [searchTerm, activeFilter, catalogo, setFilteredTracks]);
 
+  // Pega apenas as 3 primeiras músicas
+  const tracksToShow = filteredTracks.slice(0, 3);
+
   return (
     <section id="catalog" className="py-16 bg-slate-950 border-t border-white/5 relative">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
@@ -914,7 +917,7 @@ const SmartCatalog = ({
             A Biblioteca.
           </h2>
           <p className="text-slate-400 text-sm mt-2">
-            Mostrando {filteredTracks.length} faixas disponíveis
+            Mostrando 3 de {filteredTracks.length} faixas
           </p>
         </div>
 
@@ -949,27 +952,29 @@ const SmartCatalog = ({
           </div>
         </div>
 
-        <div className="bg-slate-900/50 border border-white/10 rounded-xl overflow-hidden backdrop-blur-sm">
-          {/* HEADER - 3 COLUNAS */}
+        <div className="bg-slate-900/50 border border-white/10 rounded-xl overflow-hidden backdrop-blur-sm flex flex-col">
+          {/* HEADER - 5 COLUNAS */}
           <div className="grid grid-cols-12 gap-4 px-6 py-4 border-b border-white/5 bg-slate-900 text-[10px] font-bold text-slate-500 uppercase tracking-widest sticky top-0 z-20">
             <div className="col-span-2 md:col-span-1 text-center">Play</div>
-            <div className="col-span-8 md:col-span-9">Faixa / Artista</div>
-            <div className="col-span-2 md:col-span-2 text-right">Ação</div>
+            <div className="col-span-5 md:col-span-4">Título da Faixa</div>
+            <div className="col-span-2 hidden md:block">Gênero</div>
+            <div className="col-span-1 hidden md:block text-center">BPM</div>
+            <div className="col-span-1 hidden md:block text-center">Mood</div>
+            <div className="col-span-5 md:col-span-3 text-right">Ação</div>
           </div>
 
-          {/* LISTA DE MÚSICAS - ALTURA FIXA PARA MOSTRAR APENAS 3 LINHAS */}
-          <div className="flex flex-col overflow-y-auto" style={{ height: "calc(3 * 80px)" }}>
-            {filteredTracks.slice(0, 3).map((track: any) => {
+          {/* APENAS 3 LINHAS - SEM SCROLL */}
+          <div className="flex flex-col">
+            {tracksToShow.map((track: any) => {
               const isCurrent = currentTrack?.id === track.id;
               
               return (
                 <div
                   key={track.id}
-                  className={`grid grid-cols-12 gap-4 px-6 py-4 items-center border-b border-white/5 transition-colors group h-[80px] ${
+                  className={`grid grid-cols-12 gap-4 px-6 py-4 items-center border-b border-white/5 transition-colors group ${
                     isCurrent ? "bg-[#00F0FF]/5" : "hover:bg-white/[0.02]"
                   }`}
                 >
-                  {/* Botão Play */}
                   <div className="col-span-2 md:col-span-1 flex justify-center">
                     <button
                       onClick={() => isCurrent ? setIsPlaying(!isPlaying) : (setCurrentTrack(track), setIsPlaying(true))}
@@ -983,18 +988,21 @@ const SmartCatalog = ({
                     </button>
                   </div>
 
-                  {/* Título e Artista com todas as informações */}
-                  <div className="col-span-8 md:col-span-9">
-                    <h4 className={`text-sm font-bold truncate ${isCurrent ? "text-[#00F0FF]" : "text-white"}`}>
-                      {track.title}
-                    </h4>
-                    <p className="text-slate-500 text-[10px] uppercase font-black tracking-widest">
-                      {track.artist} • {track.genre} • {track.bpm} BPM • {track.mood}
-                    </p>
+                  <div className="col-span-5 md:col-span-4">
+                    <h4 className={`text-sm font-bold truncate ${isCurrent ? "text-[#00F0FF]" : "text-white"}`}>{track.title}</h4>
+                    <p className="text-slate-500 text-[10px] uppercase font-black tracking-widest">{track.artist}</p>
                   </div>
 
-                  {/* Botão Licenciar */}
-                  <div className="col-span-2 md:col-span-2 text-right">
+                  <div className="col-span-2 hidden md:block">
+                    <span className="px-2 py-1 rounded-sm border border-white/10 text-[9px] font-bold text-slate-400 uppercase tracking-tighter group-hover:border-[#DFFF00]/50 group-hover:text-[#DFFF00] transition-colors">
+                      {track.genre}
+                    </span>
+                  </div>
+                  
+                  <div className="col-span-1 hidden md:block text-center text-slate-400 text-xs font-mono">{track.bpm}</div>
+                  <div className="col-span-1 hidden md:block text-center text-slate-400 text-xs">{track.mood}</div>
+
+                  <div className="col-span-5 md:col-span-3 text-right">
                     <button
                       onClick={() => onLicenseClick(track)}
                       className="px-4 py-1.5 bg-transparent border border-[#00F0FF]/50 text-[#00F0FF] text-[10px] font-black uppercase tracking-widest hover:bg-[#00F0FF] hover:text-[#020617] hover:shadow-[0_0_15px_rgba(0,240,255,0.4)] transition-all"
@@ -1010,9 +1018,8 @@ const SmartCatalog = ({
           {/* INDICADOR DE MAIS MÚSICAS */}
           {filteredTracks.length > 3 && (
             <div className="p-4 text-center border-t border-white/5 bg-slate-900/80">
-              <p className="text-[10px] text-slate-500 font-mono">
-                + {filteredTracks.length - 3} {filteredTracks.length - 3 === 1 ? 'música disponível' : 'músicas disponíveis'} 
-                <span className="text-[#00F0FF] ml-2">→ Role para ver mais</span>
+              <p className="text-xs text-slate-400">
+                + {filteredTracks.length - 3} {filteredTracks.length - 3 === 1 ? 'música' : 'músicas'} disponíveis no catálogo completo
               </p>
             </div>
           )}
