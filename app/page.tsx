@@ -812,6 +812,10 @@ const Hero = () => {
   const scrollToCatalog = () =>
     document.getElementById("catalog")?.scrollIntoView({ behavior: "smooth" });
 
+  const openShowreel = () => {
+    window.open("https://www.youtube.com/watch?v=cTJEQ7P4PxY", "_blank");
+  };
+
   return (
     <section className="relative min-h-screen flex items-center justify-start overflow-hidden bg-slate-950">
       <DynamicTerrainCanvas />
@@ -860,6 +864,7 @@ const Hero = () => {
               </MagneticButton>
               
               <MagneticButton
+                onClick={openShowreel}
                 className="px-6 sm:px-8 py-3 border border-white/20 text-white font-bold uppercase tracking-widest text-sm sm:text-base flex items-center gap-2 sm:gap-3 backdrop-blur-sm hover:border-[#DFFF00] hover:text-[#DFFF00] hover:shadow-[0_0_20px_rgba(223,255,0,0.3)] transition-all"
               >
                 <Play size={16} fill="currentColor" /> Showreel
