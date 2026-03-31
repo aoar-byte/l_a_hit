@@ -1593,10 +1593,28 @@ const SocialProof = ({ cases }: { cases: any[] }) => {
 
   const getImageUrl = (path: string) => {
     if (!path || path === "") return null;
+    
+    // Se for URL completa do picsum ou qualquer http, retorna direto
     if (path.startsWith("http")) return path;
+    
+    // Se for caminho local, tenta usar
     if (path.startsWith("/")) return path;
+    
+    // Caso contrário, adiciona /
     return "/" + path;
   };
+
+  // Array de imagens de fallback caso as originais não carreguem
+  const FALLBACK_IMAGES = [
+    "https://picsum.photos/id/104/400/225", // cachorro
+    "https://picsum.photos/id/106/400/225", // flores
+    "https://picsum.photos/id/107/400/225", // grama
+    "https://picsum.photos/id/108/400/225", // montanha
+    "https://picsum.photos/id/116/400/225", // praia
+    "https://picsum.photos/id/155/400/225", // trenó
+    "https://picsum.photos/id/169/400/225", // sol
+    "https://picsum.photos/id/175/400/225", // trem
+  ];
 
   const getObjectPosition = (enquadramento: string) => {
     switch(enquadramento) {
@@ -1622,6 +1640,7 @@ const SocialProof = ({ cases }: { cases: any[] }) => {
     return plays;
   };
 
+  // Se não há cases, mostra mensagem
   if (!cases || cases.length === 0) {
     return (
       <section id="cases" className="py-16 bg-slate-950 border-t border-white/5">
@@ -1651,10 +1670,17 @@ const SocialProof = ({ cases }: { cases: any[] }) => {
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {cases.map((item) => {
-            const imageSrc = getImageUrl(item.image || item.videoThumb);
-            const playsValue = formatPlays(item.plays);
+          {cases.map((item, index) => {
+            // Se a imagem original falhou ou não existe, usa fallback
+            let imageSrc = getImageUrl(item.image || item.videoThumb);
             const hasError = imageErrors[item.id];
+            
+            // Se não tem imagem ou deu erro, usa fallback baseado no index
+            if (!imageSrc || hasError) {
+              imageSrc = FALLBACK_IMAGES[index % FALLBACK_IMAGES.length];
+            }
+            
+            const playsValue = formatPlays(item.plays);
             const objectPosition = getObjectPosition(item.enquadramento);
 
             return (
@@ -1666,19 +1692,13 @@ const SocialProof = ({ cases }: { cases: any[] }) => {
                 className="group block bg-transparent border border-white/5 hover:border-[#00F0FF]/50 transition-all overflow-hidden rounded-lg shadow-lg"
               >
                 <div className="relative w-full bg-slate-900 overflow-hidden" style={{ aspectRatio: "16/9" }}>
-                  {imageSrc && !hasError ? (
-                    <img
-                      src={imageSrc}
-                      alt={item.title}
-                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      style={{ objectPosition }}
-                      onError={() => handleImageError(item.id)}
-                    />
-                  ) : (
-                    <div className="absolute inset-0 flex items-center justify-center bg-slate-900">
-                      <ImageIcon size={24} className="text-slate-700" />
-                    </div>
-                  )}
+                  <img
+                    src={imageSrc}
+                    alt={item.title}
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    style={{ objectPosition }}
+                    onError={() => handleImageError(item.id)}
+                  />
                   
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-80 pointer-events-none" />
                   
@@ -1705,6 +1725,7 @@ const SocialProof = ({ cases }: { cases: any[] }) => {
                     {item.platform === "Spotify" && <Music size={10} className="text-white" />}
                     {item.platform === "Instagram Reels" && <Instagram size={10} className="text-white" />}
                     {item.platform === "TikTok" && <Music size={10} className="text-white" />}
+                    {item.platform === "Instagram" && <Instagram size={10} className="text-white" />}
                   </div>
                 </div>
               </a>
