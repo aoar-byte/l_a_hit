@@ -147,8 +147,8 @@ const FALLBACK_DATA = {
       id: 1,
       title: "MINHA FLOR",
       artist: "L'A HIT Originals",
-      image: "/cases/minha-flor.jpg",
-      videoThumb: "/cases/minha-flor-thumb.jpg",
+      image: "https://picsum.photos/id/100/400/225",
+      videoThumb: "https://picsum.photos/id/100/400/225",
       link: "https://youtube.com/watch?v=...",
       plays: "1.2M",
       platform: "YouTube",
@@ -158,8 +158,8 @@ const FALLBACK_DATA = {
       id: 2,
       title: "SOZINHA POR OPÇÃO",
       artist: "L'A HIT Originals",
-      image: "/cases/sozinha.jpg",
-      videoThumb: "/cases/sozinha-thumb.jpg",
+      image: "https://picsum.photos/id/101/400/225",
+      videoThumb: "https://picsum.photos/id/101/400/225",
       link: "https://open.spotify.com/track/...",
       plays: "850K",
       platform: "Spotify",
@@ -169,8 +169,8 @@ const FALLBACK_DATA = {
       id: 3,
       title: "TROVÕES",
       artist: "L'A HIT Originals",
-      image: "/cases/trovoes.jpg",
-      videoThumb: "/cases/trovoes-thumb.jpg",
+      image: "https://picsum.photos/id/102/400/225",
+      videoThumb: "https://picsum.photos/id/102/400/225",
       link: "https://instagram.com/p/...",
       plays: "2.3M",
       platform: "Instagram Reels",
@@ -180,8 +180,8 @@ const FALLBACK_DATA = {
       id: 4,
       title: "CACHAÇA TERAPIA",
       artist: "L'A HIT Originals",
-      image: "/cases/cachaca.jpg",
-      videoThumb: "/cases/cachaca-thumb.jpg",
+      image: "https://picsum.photos/id/103/400/225",
+      videoThumb: "https://picsum.photos/id/103/400/225",
       link: "https://tiktok.com/@...",
       plays: "5.7M",
       platform: "TikTok",
@@ -378,81 +378,6 @@ const MagneticButton = ({ children, className, onClick, disabled }: any) => (
   </motion.button>
 );
 
-const SectionHeader = ({
-  subtitle,
-  title,
-}: {
-  subtitle: string;
-  title: string;
-}) => (
-  <div className="mb-12">
-    <div className="flex items-center gap-2 text-blue-500 font-mono text-xs tracking-widest uppercase mb-3">
-      <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse" />
-      {subtitle}
-    </div>
-    <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight">
-      {title}
-    </h2>
-  </div>
-);
-
-// ============================================================
-// LOGO ANIMADO (RESTAURADO)
-// ============================================================
-const LogoAnimado = () => {
-  return (
-    <div className="flex flex-col items-center justify-center select-none group cursor-pointer">
-      <div className="relative flex items-center justify-center gap-1 mb-[-4px]">
-        <span className="text-3xl font-black text-white italic tracking-tighter">L</span>
-        
-        <motion.span
-          animate={{ 
-            scale: [1, 1.2, 1],
-            opacity: [0.7, 1, 0.7],
-            filter: ["drop-shadow(0 0 2px #DFFF00)", "drop-shadow(0 0 8px #DFFF00)", "drop-shadow(0 0 2px #DFFF00)"]
-          }}
-          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-          className="text-[#DFFF00] text-2xl mx-0.5"
-        >
-          ✦
-        </motion.span>
-        
-        <span className="text-3xl font-black text-white italic tracking-tighter">A</span>
-      </div>
-
-      <motion.div 
-        initial={{ width: 0, opacity: 0 }}
-        animate={{ width: "110%", opacity: 0.7 }}
-        transition={{ duration: 1, delay: 0.5 }}
-        className="h-[1.5px] bg-[#00F0FF] shadow-[0_0_10px_#00F0FF] relative z-10"
-      />
-
-      <div className="flex items-center justify-center text-[10px] font-black text-[#DFFF00] tracking-[0.5em] mt-1 relative">
-        <span>H</span>
-        <div className="relative inline-flex justify-center">
-          <span className="opacity-100">I</span>
-          <motion.div
-            initial={{ y: 0, opacity: 1 }}
-            animate={{ 
-              y: -36,
-              opacity: [1, 1, 0],
-              scale: [1, 1.4, 0.6]
-            }}
-            transition={{ 
-              duration: 1.4, 
-              repeat: Infinity, 
-              repeatDelay: 2.5,
-              ease: "circIn" 
-            }}
-            className="absolute -top-1 w-[3px] h-[3px] bg-[#DFFF00] rounded-full shadow-[0_0_8px_#DFFF00]"
-          />
-        </div>
-        <span className="ml-1">T</span>
-      </div>
-    </div>
-  );
-};
-
 // ============================================================
 // MODAL DE LICENCIAMENTO
 // ============================================================
@@ -571,9 +496,11 @@ const QuoteModal = ({ track, onClose, tiposLicenca, links }: any) => {
 const LeadModal = ({
   service,
   onClose,
+  links,
 }: {
   service: string;
   onClose: () => void;
+  links: any;
 }) => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -581,11 +508,11 @@ const LeadModal = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const subject = `Interesse em ${service}`;
-    const body = `Nome: ${name}\nE-mail: ${email}\n\nGostaria de receber mais informações sobre ${service}.`;
-    window.location.href = `mailto:contato@lahit.com?subject=${encodeURIComponent(
-      subject
-    )}&body=${encodeURIComponent(body)}`;
+    const message = `Olá! Meu nome é ${name} e tenho interesse em ${service}. Meu e-mail é ${email}.`;
+    window.open(
+      `${links.whatsapp}?text=${encodeURIComponent(message)}`,
+      "_blank"
+    );
     setSubmitted(true);
   };
 
@@ -604,8 +531,7 @@ const LeadModal = ({
         </button>
         <h3 className="text-2xl font-bold text-white mb-2">{service}</h3>
         <p className="text-slate-400 mb-6">
-          Cadastre-se para receber novidades, promoções e conteúdos exclusivos
-          sobre {service}.
+          Preencha seus dados e entraremos em contato pelo WhatsApp.
         </p>
         {!submitted ? (
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -627,16 +553,16 @@ const LeadModal = ({
             />
             <button
               type="submit"
-              className="w-full py-3 bg-[#DFFF00] text-[#020617] font-bold uppercase tracking-widest hover:bg-blue-700 transition-colors flex items-center justify-center gap-2"
+              className="w-full py-3 bg-[#25D366] text-white font-bold uppercase tracking-widest hover:bg-green-700 transition-colors flex items-center justify-center gap-2"
             >
-              <Send size={16} /> Enviar
+              <MessageCircle size={16} /> Falar no WhatsApp
             </button>
           </form>
         ) : (
           <div className="text-center py-6">
             <CheckCircle2 size={40} className="text-emerald-500 mx-auto mb-4" />
             <p className="text-white">
-              Obrigado! Em breve você receberá nossas novidades.
+              Redirecionando para o WhatsApp...
             </p>
           </div>
         )}
@@ -1085,7 +1011,7 @@ const SmartCatalog = ({
 };
             
 // ============================================================
-// PLAYER DE MÚSICA FIXO - VERSÃO CORRIGIDA
+// PLAYER DE MÚSICA FIXO
 // ============================================================
 const PersistentPlayer = ({ 
   track, 
@@ -1306,7 +1232,7 @@ const PersistentPlayer = ({
 };
 
 // ============================================================
-// SERVIÇOS - VERSÃO CORRIGIDA COM CATEGORIAS
+// SERVIÇOS - VERSÃO CORRIGIDA
 // ============================================================
 const Services = ({ servicos, links, onLeadOpen }: { 
   servicos: any[]; 
@@ -1646,15 +1572,18 @@ const Services = ({ servicos, links, onLeadOpen }: {
 };
 
 // ============================================================
-// SOCIAL PROOF - VERSÃO CORRIGIDA
+// SOCIAL PROOF - VERSÃO CORRIGIDA COM IMAGENS FUNCIONANDO
 // ============================================================
 const SocialProof = ({ cases }: { cases: any[] }) => {
   const [imageErrors, setImageErrors] = useState<Record<string, boolean>>({});
 
   const getImageUrl = (path: string) => {
     if (!path || path === "") return null;
+    // Se já for URL completa, retorna direto
     if (path.startsWith("http")) return path;
+    // Se começar com /, retorna como está
     if (path.startsWith("/")) return path;
+    // Caso contrário, adiciona /
     return "/" + path;
   };
 
@@ -1671,6 +1600,7 @@ const SocialProof = ({ cases }: { cases: any[] }) => {
   };
 
   const handleImageError = (id: string | number) => {
+    console.log(`Erro ao carregar imagem para case ${id}`);
     setImageErrors(prev => ({ ...prev, [id]: true }));
   };
 
@@ -1993,7 +1923,11 @@ export default function App() {
           />
         )}
         {showLeadModal && (
-          <LeadModal service={leadService} onClose={() => setShowLeadModal(false)} />
+          <LeadModal 
+            service={leadService} 
+            onClose={() => setShowLeadModal(false)} 
+            links={config.links}
+          />
         )}
       </AnimatePresence>
       <VideoModal isOpen={showVideoModal} onClose={() => setShowVideoModal(false)} />
