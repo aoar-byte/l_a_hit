@@ -864,7 +864,7 @@ const Hero = ({ onOpenShowreel }: { onOpenShowreel: () => void }) => {
 };
 
 // ============================================================
-// SMART CATALOG
+// SMART CATALOG - VERSÃO CORRIGIDA COM 3 COLUNAS
 // ============================================================
 const SmartCatalog = ({
   catalogo,
@@ -947,15 +947,14 @@ const SmartCatalog = ({
         </div>
 
         <div className="bg-slate-900/50 border border-white/10 rounded-xl overflow-hidden backdrop-blur-sm flex flex-col">
+          {/* HEADER - 3 COLUNAS */}
           <div className="grid grid-cols-12 gap-4 px-6 py-4 border-b border-white/5 bg-slate-900 text-[10px] font-bold text-slate-500 uppercase tracking-widest sticky top-0 z-20">
             <div className="col-span-2 md:col-span-1 text-center">Play</div>
-            <div className="col-span-5 md:col-span-4">Título da Faixa</div>
-            <div className="col-span-2 hidden md:block">Gênero</div>
-            <div className="col-span-1 hidden md:block text-center">BPM</div>
-            <div className="col-span-1 hidden md:block text-center">Mood</div>
-            <div className="col-span-5 md:col-span-3 text-right">Ação</div>
+            <div className="col-span-8 md:col-span-9">Faixa / Artista</div>
+            <div className="col-span-2 md:col-span-2 text-right">Ação</div>
           </div>
 
+          {/* LISTA DE MÚSICAS */}
           <div className="flex flex-col overflow-y-auto max-h-[300px] scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-slate-900">
             {filteredTracks.map((track: any) => {
               const isCurrent = currentTrack?.id === track.id;
@@ -967,6 +966,7 @@ const SmartCatalog = ({
                     isCurrent ? "bg-[#00F0FF]/5" : "hover:bg-white/[0.02]"
                   }`}
                 >
+                  {/* Botão Play */}
                   <div className="col-span-2 md:col-span-1 flex justify-center">
                     <button
                       onClick={() => isCurrent ? setIsPlaying(!isPlaying) : (setCurrentTrack(track), setIsPlaying(true))}
@@ -980,21 +980,18 @@ const SmartCatalog = ({
                     </button>
                   </div>
 
-                  <div className="col-span-5 md:col-span-4">
-                    <h4 className={`text-sm font-bold truncate ${isCurrent ? "text-[#00F0FF]" : "text-white"}`}>{track.title}</h4>
-                    <p className="text-slate-500 text-[10px] uppercase font-black tracking-widest">{track.artist}</p>
+                  {/* Título e Artista com todas as informações */}
+                  <div className="col-span-8 md:col-span-9">
+                    <h4 className={`text-sm font-bold truncate ${isCurrent ? "text-[#00F0FF]" : "text-white"}`}>
+                      {track.title}
+                    </h4>
+                    <p className="text-slate-500 text-[10px] uppercase font-black tracking-widest">
+                      {track.artist} • {track.genre} • {track.bpm} BPM • {track.mood}
+                    </p>
                   </div>
 
-                  <div className="col-span-2 hidden md:block">
-                    <span className="px-2 py-1 rounded-sm border border-white/10 text-[9px] font-bold text-slate-400 uppercase tracking-tighter group-hover:border-[#DFFF00]/50 group-hover:text-[#DFFF00] transition-colors">
-                      {track.genre}
-                    </span>
-                  </div>
-                  
-                  <div className="col-span-1 hidden md:block text-center text-slate-400 text-xs font-mono">{track.bpm}</div>
-                  <div className="col-span-1 hidden md:block text-center text-slate-400 text-xs">{track.mood}</div>
-
-                  <div className="col-span-5 md:col-span-3 text-right">
+                  {/* Botão Licenciar */}
+                  <div className="col-span-2 md:col-span-2 text-right">
                     <button
                       onClick={() => onLicenseClick(track)}
                       className="px-4 py-1.5 bg-transparent border border-[#00F0FF]/50 text-[#00F0FF] text-[10px] font-black uppercase tracking-widest hover:bg-[#00F0FF] hover:text-[#020617] hover:shadow-[0_0_15px_rgba(0,240,255,0.4)] transition-all"
@@ -1593,27 +1590,16 @@ const SocialProof = ({ cases }: { cases: any[] }) => {
 
   const getImageUrl = (path: string) => {
     if (!path || path === "") return null;
-    
-    // Se for URL completa do picsum ou qualquer http, retorna direto
     if (path.startsWith("http")) return path;
-    
-    // Se for caminho local, tenta usar
     if (path.startsWith("/")) return path;
-    
-    // Caso contrário, adiciona /
     return "/" + path;
   };
 
-  // Array de imagens de fallback caso as originais não carreguem
   const FALLBACK_IMAGES = [
-    "https://picsum.photos/id/104/400/225", // cachorro
-    "https://picsum.photos/id/106/400/225", // flores
-    "https://picsum.photos/id/107/400/225", // grama
-    "https://picsum.photos/id/108/400/225", // montanha
-    "https://picsum.photos/id/116/400/225", // praia
-    "https://picsum.photos/id/155/400/225", // trenó
-    "https://picsum.photos/id/169/400/225", // sol
-    "https://picsum.photos/id/175/400/225", // trem
+    "https://picsum.photos/id/104/400/225",
+    "https://picsum.photos/id/106/400/225",
+    "https://picsum.photos/id/107/400/225",
+    "https://picsum.photos/id/108/400/225",
   ];
 
   const getObjectPosition = (enquadramento: string) => {
@@ -1640,7 +1626,6 @@ const SocialProof = ({ cases }: { cases: any[] }) => {
     return plays;
   };
 
-  // Se não há cases, mostra mensagem
   if (!cases || cases.length === 0) {
     return (
       <section id="cases" className="py-16 bg-slate-950 border-t border-white/5">
@@ -1671,11 +1656,9 @@ const SocialProof = ({ cases }: { cases: any[] }) => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {cases.map((item, index) => {
-            // Se a imagem original falhou ou não existe, usa fallback
             let imageSrc = getImageUrl(item.image || item.videoThumb);
             const hasError = imageErrors[item.id];
             
-            // Se não tem imagem ou deu erro, usa fallback baseado no index
             if (!imageSrc || hasError) {
               imageSrc = FALLBACK_IMAGES[index % FALLBACK_IMAGES.length];
             }
@@ -1725,7 +1708,6 @@ const SocialProof = ({ cases }: { cases: any[] }) => {
                     {item.platform === "Spotify" && <Music size={10} className="text-white" />}
                     {item.platform === "Instagram Reels" && <Instagram size={10} className="text-white" />}
                     {item.platform === "TikTok" && <Music size={10} className="text-white" />}
-                    {item.platform === "Instagram" && <Instagram size={10} className="text-white" />}
                   </div>
                 </div>
               </a>
@@ -1784,115 +1766,116 @@ export default function App() {
   const [filteredTracks, setFilteredTracks] = useState<any[]>([]);
   const [showVideoModal, setShowVideoModal] = useState(false);
 
- useEffect(() => {
-  async function loadData() {
-    try {
-      console.log("Carregando dados das planilhas...");
-      
-      const [catalogoRaw, servicosRaw, casesRaw, linksRaw, tiposLicencaRaw] = await Promise.all([
-        fetchSheet(SHEETS.catalogo),
-        fetchSheet(SHEETS.servicos),
-        fetchSheet(SHEETS.cases),
-        fetchSheet(SHEETS.links),
-        fetchSheet(SHEETS.tiposLicenca),
-      ]);
+  useEffect(() => {
+    async function loadData() {
+      try {
+        console.log("Carregando dados das planilhas...");
+        
+        const [catalogoRaw, servicosRaw, casesRaw, linksRaw, tiposLicencaRaw] = await Promise.all([
+          fetchSheet(SHEETS.catalogo),
+          fetchSheet(SHEETS.servicos),
+          fetchSheet(SHEETS.cases),
+          fetchSheet(SHEETS.links),
+          fetchSheet(SHEETS.tiposLicenca),
+        ]);
 
-      console.log("Dados do catálogo carregados:", catalogoRaw.length);
-      console.log("Dados dos cases carregados:", casesRaw.length);
+        console.log("Dados do catálogo carregados:", catalogoRaw.length);
+        console.log("Dados dos cases carregados:", casesRaw.length);
 
-      let catalogo = FALLBACK_DATA.catalogo;
-      if (catalogoRaw.length > 0) {
-        catalogo = catalogoRaw
-          .map((item: any) => ({
-            id: Number(item.id) || 0,
-            title: item.title || "Sem título",
-            artist: item.artist || "L'A HIT Originals",
-            bpm: Number(item.bpm) || 0,
-            genre: item.genre || "Outro",
-            mood: item.mood || "Neutro",
-            price: Number(item.price) || 0,
-            audioUrl: item.audioUrl || item.link || "",
-          }))
-          .filter((track: any) => track.audioUrl);
-      }
-
-      let cases = FALLBACK_DATA.cases;
-      if (casesRaw.length > 0) {
-        cases = casesRaw.map((item: any) => ({
-          id: Number(item.id) || 0,
-          title: item.title || "Case",
-          artist: item.artist || "L'A HIT Originals",
-          image: item.image || "",
-          videoThumb: item.videoThumb || "",
-          link: item.link || "#",
-          plays: item.plays || "0",
-          platform: item.platform || "Streaming",
-          enquadramento: item.enquadramento || "center",
-        }));
-      }
-
-      let servicos = FALLBACK_DATA.servicos;
-      if (servicosRaw.length > 0) {
-        servicos = servicosRaw.map((item: any) => ({
-          ...item,
-          categoria: item.categoria || "artistas",
-          highlight: item.highlight === "true" || item.highlight === true,
-          icon: getIconComponent(item.icon || "PenTool"),
-        }));
-      }
-
-      let links = FALLBACK_DATA.links;
-      if (linksRaw.length > 0) {
-        links = linksRaw.reduce((acc: any, row: any) => {
-          if (row.chave && row.valor) {
-            const key = row.chave === "wwhatsapp" ? "whatsapp" : row.chave;
-            acc[key] = row.valor;
-          }
-          return acc;
-        }, {});
-        if (!links.whatsapp) {
-          links.whatsapp = FALLBACK_DATA.links.whatsapp;
+        let catalogo = FALLBACK_DATA.catalogo;
+        if (catalogoRaw.length > 0) {
+          catalogo = catalogoRaw
+            .map((item: any) => ({
+              id: Number(item.id) || 0,
+              title: item.title || "Sem título",
+              artist: item.artist || "L'A HIT Originals",
+              bpm: Number(item.bpm) || 0,
+              genre: item.genre || "Outro",
+              mood: item.mood || "Neutro",
+              price: Number(item.price) || 0,
+              audioUrl: item.audioUrl || item.link || "",
+            }))
+            .filter((track: any) => track.audioUrl);
         }
-      }
 
-      let tiposLicenca = FALLBACK_DATA.tiposLicenca;
-      if (tiposLicencaRaw.length > 0) {
-        tiposLicenca = tiposLicencaRaw.map((item: any) => ({
-          ...item,
-          deliverables: item.deliverables 
-            ? item.deliverables.split("|").map((s: string) => s.trim()) 
-            : [],
-          icon: getIconComponent(item.icon || "PenTool"),
-        }));
-      }
+        let cases = FALLBACK_DATA.cases;
+        if (casesRaw.length > 0) {
+          cases = casesRaw.map((item: any) => ({
+            id: Number(item.id) || 0,
+            title: item.title || "Case",
+            artist: item.artist || "L'A HIT Originals",
+            image: item.image || "",
+            videoThumb: item.videoThumb || "",
+            link: item.link || "#",
+            plays: item.plays || "0",
+            platform: item.platform || "Streaming",
+            enquadramento: item.enquadramento || "center",
+          }));
+        }
 
-      setConfig({ catalogo, servicos, cases, links, tiposLicenca });
-      setFilteredTracks(catalogo);
-      console.log("Configuração carregada com sucesso!");
-    } catch (error) {
-      console.error("Erro crítico, usando fallback total", error);
-      setConfig({
-        catalogo: FALLBACK_DATA.catalogo,
-        servicos: FALLBACK_DATA.servicos.map((s) => ({ 
-          ...s, 
-          icon: getIconComponent(s.icon),
-          categoria: s.categoria || "artistas" 
-        })),
-        cases: FALLBACK_DATA.cases,
-        links: FALLBACK_DATA.links,
-        tiposLicenca: FALLBACK_DATA.tiposLicenca.map((t) => ({ 
-          ...t, 
-          icon: getIconComponent(t.icon) 
-        })),
-      });
-      setFilteredTracks(FALLBACK_DATA.catalogo);
-    } finally {
-      setLoading(false);
+        let servicos = FALLBACK_DATA.servicos;
+        if (servicosRaw.length > 0) {
+          servicos = servicosRaw.map((item: any) => ({
+            ...item,
+            categoria: item.categoria || "artistas",
+            highlight: item.highlight === "true" || item.highlight === true,
+            icon: getIconComponent(item.icon || "PenTool"),
+          }));
+        }
+
+        let links = FALLBACK_DATA.links;
+        if (linksRaw.length > 0) {
+          links = linksRaw.reduce((acc: any, row: any) => {
+            if (row.chave && row.valor) {
+              const key = row.chave === "wwhatsapp" ? "whatsapp" : row.chave;
+              acc[key] = row.valor;
+            }
+            return acc;
+          }, {});
+          if (!links.whatsapp) {
+            links.whatsapp = FALLBACK_DATA.links.whatsapp;
+          }
+        }
+
+        let tiposLicenca = FALLBACK_DATA.tiposLicenca;
+        if (tiposLicencaRaw.length > 0) {
+          tiposLicenca = tiposLicencaRaw.map((item: any) => ({
+            ...item,
+            deliverables: item.deliverables 
+              ? item.deliverables.split("|").map((s: string) => s.trim()) 
+              : [],
+            icon: getIconComponent(item.icon || "PenTool"),
+          }));
+        }
+
+        setConfig({ catalogo, servicos, cases, links, tiposLicenca });
+        setFilteredTracks(catalogo);
+        console.log("Configuração carregada com sucesso!");
+      } catch (error) {
+        console.error("Erro crítico, usando fallback total", error);
+        setConfig({
+          catalogo: FALLBACK_DATA.catalogo,
+          servicos: FALLBACK_DATA.servicos.map((s) => ({ 
+            ...s, 
+            icon: getIconComponent(s.icon),
+            categoria: s.categoria || "artistas" 
+          })),
+          cases: FALLBACK_DATA.cases,
+          links: FALLBACK_DATA.links,
+          tiposLicenca: FALLBACK_DATA.tiposLicenca.map((t) => ({ 
+            ...t, 
+            icon: getIconComponent(t.icon) 
+          })),
+        });
+        setFilteredTracks(FALLBACK_DATA.catalogo);
+      } finally {
+        setLoading(false);
+      }
     }
-  }
-  loadData();
-}, []);
-const handleLicenseClick = (track: any) => {
+    loadData();
+  }, []);
+
+  const handleLicenseClick = (track: any) => {
     setCurrentTrack(track);
     setShowQuoteModal(true);
   };
@@ -1953,7 +1936,6 @@ const handleLicenseClick = (track: any) => {
         isPlayingAuto={true}
       />
       
-      {/* BLOCO 1 - MODAIS */}
       <AnimatePresence>
         {showQuoteModal && currentTrack && (
           <QuoteModal
