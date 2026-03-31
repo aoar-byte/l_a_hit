@@ -147,8 +147,8 @@ const FALLBACK_DATA = {
       id: 1,
       title: "MINHA FLOR",
       artist: "L'A HIT Originals",
-      image: "https://picsum.photos/id/100/400/225",
-      videoThumb: "https://picsum.photos/id/100/400/225",
+      image: "https://picsum.photos/id/104/400/225",
+      videoThumb: "https://picsum.photos/id/104/400/225",
       link: "https://youtube.com/watch?v=...",
       plays: "1.2M",
       platform: "YouTube",
@@ -158,8 +158,8 @@ const FALLBACK_DATA = {
       id: 2,
       title: "SOZINHA POR OPÇÃO",
       artist: "L'A HIT Originals",
-      image: "https://picsum.photos/id/101/400/225",
-      videoThumb: "https://picsum.photos/id/101/400/225",
+      image: "https://picsum.photos/id/106/400/225",
+      videoThumb: "https://picsum.photos/id/106/400/225",
       link: "https://open.spotify.com/track/...",
       plays: "850K",
       platform: "Spotify",
@@ -169,8 +169,8 @@ const FALLBACK_DATA = {
       id: 3,
       title: "TROVÕES",
       artist: "L'A HIT Originals",
-      image: "https://picsum.photos/id/102/400/225",
-      videoThumb: "https://picsum.photos/id/102/400/225",
+      image: "https://picsum.photos/id/107/400/225",
+      videoThumb: "https://picsum.photos/id/107/400/225",
       link: "https://instagram.com/p/...",
       plays: "2.3M",
       platform: "Instagram Reels",
@@ -180,8 +180,8 @@ const FALLBACK_DATA = {
       id: 4,
       title: "CACHAÇA TERAPIA",
       artist: "L'A HIT Originals",
-      image: "https://picsum.photos/id/103/400/225",
-      videoThumb: "https://picsum.photos/id/103/400/225",
+      image: "https://picsum.photos/id/108/400/225",
+      videoThumb: "https://picsum.photos/id/108/400/225",
       link: "https://tiktok.com/@...",
       plays: "5.7M",
       platform: "TikTok",
@@ -384,8 +384,9 @@ const MagneticButton = ({ children, className, onClick, disabled }: any) => (
 const QuoteModal = ({ track, onClose, tiposLicenca, links }: any) => {
   const handleWhatsApp = (licenseTitle: string) => {
     const message = `Olá! Tenho interesse em licenciar a música "${track.title}" (ID: ${track.id}) para a modalidade: ${licenseTitle}.`;
+    const whatsappUrl = links?.whatsapp || "https://wa.me/5532998078161";
     window.open(
-      `${links.whatsapp}?text=${encodeURIComponent(message)}`,
+      `${whatsappUrl}?text=${encodeURIComponent(message)}`,
       "_blank"
     );
   };
@@ -509,8 +510,9 @@ const LeadModal = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const message = `Olá! Meu nome é ${name} e tenho interesse em ${service}. Meu e-mail é ${email}.`;
+    const whatsappUrl = links?.whatsapp || "https://wa.me/5532998078161";
     window.open(
-      `${links.whatsapp}?text=${encodeURIComponent(message)}`,
+      `${whatsappUrl}?text=${encodeURIComponent(message)}`,
       "_blank"
     );
     setSubmitted(true);
@@ -1232,7 +1234,7 @@ const PersistentPlayer = ({
 };
 
 // ============================================================
-// SERVIÇOS - VERSÃO CORRIGIDA
+// SERVIÇOS - VERSÃO COMPLETA CORRIGIDA
 // ============================================================
 const Services = ({ servicos, links, onLeadOpen }: { 
   servicos: any[]; 
@@ -1275,10 +1277,7 @@ const Services = ({ servicos, links, onLeadOpen }: {
   const servicosArtistas = servicos.filter((s: any) => s.categoria === "artistas");
 
   return (
-    <section
-      id="services"
-      className="py-16 bg-slate-950 border-t border-white/5"
-    >
+    <section id="services" className="py-16 bg-slate-950 border-t border-white/5">
       <div className="max-w-7xl mx-auto px-6">
         
         <div className="mb-12 text-center">
@@ -1297,6 +1296,7 @@ const Services = ({ servicos, links, onLeadOpen }: {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
           
+          {/* COLUNA ESQUERDA - EMPRESAS */}
           <div className="bg-slate-900 rounded-2xl border border-[#00F0FF]/20 overflow-hidden flex flex-col h-full shadow-[0_0_30px_-10px_rgba(0,240,255,0.2)]">
             <div className="p-6 pb-3 border-b border-[#00F0FF]/20">
               <div className="flex items-center gap-2 text-[#00F0FF] font-mono text-[11px] tracking-widest uppercase mb-1">
@@ -1365,7 +1365,11 @@ const Services = ({ servicos, links, onLeadOpen }: {
                             {s.cta || "DETALHES"}
                           </button>
                           <button
-                            onClick={() => window.open(links.whatsapp, "_blank")}
+                            onClick={() => {
+                              const whatsappUrl = links?.whatsapp || "https://wa.me/5532998078161";
+                              const message = `Olá! Tenho interesse no serviço: ${s.title}`;
+                              window.open(`${whatsappUrl}?text=${encodeURIComponent(message)}`, "_blank");
+                            }}
                             className={`p-2 transition-all rounded-lg ${
                               isHovered
                                 ? "bg-[#25D366] text-white border-[#25D366] shadow-[0_0_10px_rgba(37,211,102,0.4)]"
@@ -1384,6 +1388,7 @@ const Services = ({ servicos, links, onLeadOpen }: {
             </div>
           </div>
 
+          {/* COLUNA DIREITA - ARTISTAS */}
           <div className="bg-slate-900 rounded-2xl border border-[#DFFF00]/20 overflow-hidden flex flex-col h-full shadow-[0_0_30px_-10px_rgba(223,255,0,0.2)]">
             <div className="p-6 pb-3 border-b border-[#DFFF00]/20">
               <div className="flex items-center gap-2 text-[#DFFF00] font-mono text-[11px] tracking-widest uppercase mb-1">
@@ -1483,7 +1488,11 @@ const Services = ({ servicos, links, onLeadOpen }: {
                             {s.cta || "DETALHES"}
                           </button>
                           <button
-                            onClick={() => window.open(links.whatsapp, "_blank")}
+                            onClick={() => {
+                              const whatsappUrl = links?.whatsapp || "https://wa.me/5532998078161";
+                              const message = `Olá! Tenho interesse no serviço: ${s.title}`;
+                              window.open(`${whatsappUrl}?text=${encodeURIComponent(message)}`, "_blank");
+                            }}
                             className={`p-2 transition-all rounded-lg ${
                               isHovered
                                 ? "bg-[#25D366] text-white border-[#25D366] shadow-[0_0_10px_rgba(37,211,102,0.4)]"
@@ -1504,6 +1513,7 @@ const Services = ({ servicos, links, onLeadOpen }: {
         </div>
       </div>
 
+      {/* MODAL DE DETALHES DO SERVIÇO */}
       <AnimatePresence>
         {modalOpen && selectedService && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
@@ -1557,7 +1567,11 @@ const Services = ({ servicos, links, onLeadOpen }: {
               )}
 
               <button
-                onClick={() => window.open(links.whatsapp, "_blank")}
+                onClick={() => {
+                  const whatsappUrl = links?.whatsapp || "https://wa.me/5532998078161";
+                  const message = `Olá! Tenho interesse no serviço: ${selectedService.title}`;
+                  window.open(`${whatsappUrl}?text=${encodeURIComponent(message)}`, "_blank");
+                }}
                 className="w-full py-3 mt-4 bg-[#25D366] text-white text-[11px] font-black uppercase tracking-widest hover:bg-[#1DA851] transition-colors flex items-center justify-center gap-2 rounded-lg"
               >
                 <MessageCircle size={16} />
@@ -1579,11 +1593,8 @@ const SocialProof = ({ cases }: { cases: any[] }) => {
 
   const getImageUrl = (path: string) => {
     if (!path || path === "") return null;
-    // Se já for URL completa, retorna direto
     if (path.startsWith("http")) return path;
-    // Se começar com /, retorna como está
     if (path.startsWith("/")) return path;
-    // Caso contrário, adiciona /
     return "/" + path;
   };
 
@@ -1752,112 +1763,115 @@ export default function App() {
   const [filteredTracks, setFilteredTracks] = useState<any[]>([]);
   const [showVideoModal, setShowVideoModal] = useState(false);
 
-  useEffect(() => {
-    async function loadData() {
-      try {
-        console.log("Carregando dados das planilhas...");
-        
-        const [catalogoRaw, servicosRaw, casesRaw, linksRaw, tiposLicencaRaw] = await Promise.all([
-          fetchSheet(SHEETS.catalogo),
-          fetchSheet(SHEETS.servicos),
-          fetchSheet(SHEETS.cases),
-          fetchSheet(SHEETS.links),
-          fetchSheet(SHEETS.tiposLicenca),
-        ]);
+ useEffect(() => {
+  async function loadData() {
+    try {
+      console.log("Carregando dados das planilhas...");
+      
+      const [catalogoRaw, servicosRaw, casesRaw, linksRaw, tiposLicencaRaw] = await Promise.all([
+        fetchSheet(SHEETS.catalogo),
+        fetchSheet(SHEETS.servicos),
+        fetchSheet(SHEETS.cases),
+        fetchSheet(SHEETS.links),
+        fetchSheet(SHEETS.tiposLicenca),
+      ]);
 
-        console.log("Dados do catálogo carregados:", catalogoRaw.length);
-        console.log("Dados dos cases carregados:", casesRaw.length);
+      console.log("Dados do catálogo carregados:", catalogoRaw.length);
+      console.log("Dados dos cases carregados:", casesRaw.length);
 
-        let catalogo = FALLBACK_DATA.catalogo;
-        if (catalogoRaw && catalogoRaw.length > 0) {
-          catalogo = catalogoRaw
-            .map((item: any) => ({
-              id: Number(item.id) || 0,
-              title: item.title || "Sem título",
-              artist: item.artist || "L'A HIT Originals",
-              bpm: Number(item.bpm) || 0,
-              genre: item.genre || "Outro",
-              mood: item.mood || "Neutro",
-              price: Number(item.price) || 0,
-              audioUrl: item.audioUrl || item.link || "",
-            }))
-            .filter((track: any) => track.audioUrl);
-        }
-
-        let cases = FALLBACK_DATA.cases;
-        if (casesRaw && casesRaw.length > 0) {
-          cases = casesRaw.map((item: any) => ({
+      let catalogo = FALLBACK_DATA.catalogo;
+      if (catalogoRaw.length > 0) {
+        catalogo = catalogoRaw
+          .map((item: any) => ({
             id: Number(item.id) || 0,
-            title: item.title || "Case",
+            title: item.title || "Sem título",
             artist: item.artist || "L'A HIT Originals",
-            image: item.image || "",
-            videoThumb: item.videoThumb || "",
-            link: item.link || "#",
-            plays: item.plays || "0",
-            platform: item.platform || "Streaming",
-            enquadramento: item.enquadramento || "center",
-          }));
-        }
-
-        let servicos = FALLBACK_DATA.servicos;
-        if (servicosRaw && servicosRaw.length > 0) {
-          servicos = servicosRaw.map((item: any) => ({
-            ...item,
-            categoria: item.categoria || "artistas",
-            highlight: item.highlight === "true" || item.highlight === true,
-            icon: getIconComponent(item.icon || "PenTool"),
-          }));
-        }
-
-        let links = FALLBACK_DATA.links;
-        if (linksRaw && linksRaw.length > 0) {
-          links = linksRaw.reduce((acc: any, row: any) => {
-            if (row.chave && row.valor) {
-              acc[row.chave] = row.valor;
-            }
-            return acc;
-          }, {});
-        }
-
-        let tiposLicenca = FALLBACK_DATA.tiposLicenca;
-        if (tiposLicencaRaw && tiposLicencaRaw.length > 0) {
-          tiposLicenca = tiposLicencaRaw.map((item: any) => ({
-            ...item,
-            deliverables: item.deliverables 
-              ? item.deliverables.split("|").map((s: string) => s.trim()) 
-              : [],
-            icon: getIconComponent(item.icon || "PenTool"),
-          }));
-        }
-
-        setConfig({ catalogo, servicos, cases, links, tiposLicenca });
-        setFilteredTracks(catalogo);
-        console.log("Configuração carregada com sucesso!");
-      } catch (error) {
-        console.error("Erro crítico, usando fallback total", error);
-        setConfig({
-          catalogo: FALLBACK_DATA.catalogo,
-          servicos: FALLBACK_DATA.servicos.map((s) => ({ 
-            ...s, 
-            icon: getIconComponent(s.icon),
-            categoria: s.categoria || "artistas" 
-          })),
-          cases: FALLBACK_DATA.cases,
-          links: FALLBACK_DATA.links,
-          tiposLicenca: FALLBACK_DATA.tiposLicenca.map((t) => ({ 
-            ...t, 
-            icon: getIconComponent(t.icon) 
-          })),
-        });
-        setFilteredTracks(FALLBACK_DATA.catalogo);
-      } finally {
-        setLoading(false);
+            bpm: Number(item.bpm) || 0,
+            genre: item.genre || "Outro",
+            mood: item.mood || "Neutro",
+            price: Number(item.price) || 0,
+            audioUrl: item.audioUrl || item.link || "",
+          }))
+          .filter((track: any) => track.audioUrl);
       }
-    }
-    loadData();
-  }, []);
 
-  const handleLicenseClick = (track: any) => {
+      let cases = FALLBACK_DATA.cases;
+      if (casesRaw.length > 0) {
+        cases = casesRaw.map((item: any) => ({
+          id: Number(item.id) || 0,
+          title: item.title || "Case",
+          artist: item.artist || "L'A HIT Originals",
+          image: item.image || "",
+          videoThumb: item.videoThumb || "",
+          link: item.link || "#",
+          plays: item.plays || "0",
+          platform: item.platform || "Streaming",
+          enquadramento: item.enquadramento || "center",
+        }));
+      }
+
+      let servicos = FALLBACK_DATA.servicos;
+      if (servicosRaw.length > 0) {
+        servicos = servicosRaw.map((item: any) => ({
+          ...item,
+          categoria: item.categoria || "artistas",
+          highlight: item.highlight === "true" || item.highlight === true,
+          icon: getIconComponent(item.icon || "PenTool"),
+        }));
+      }
+
+      let links = FALLBACK_DATA.links;
+      if (linksRaw.length > 0) {
+        links = linksRaw.reduce((acc: any, row: any) => {
+          if (row.chave && row.valor) {
+            const key = row.chave === "wwhatsapp" ? "whatsapp" : row.chave;
+            acc[key] = row.valor;
+          }
+          return acc;
+        }, {});
+        if (!links.whatsapp) {
+          links.whatsapp = FALLBACK_DATA.links.whatsapp;
+        }
+      }
+
+      let tiposLicenca = FALLBACK_DATA.tiposLicenca;
+      if (tiposLicencaRaw.length > 0) {
+        tiposLicenca = tiposLicencaRaw.map((item: any) => ({
+          ...item,
+          deliverables: item.deliverables 
+            ? item.deliverables.split("|").map((s: string) => s.trim()) 
+            : [],
+          icon: getIconComponent(item.icon || "PenTool"),
+        }));
+      }
+
+      setConfig({ catalogo, servicos, cases, links, tiposLicenca });
+      setFilteredTracks(catalogo);
+      console.log("Configuração carregada com sucesso!");
+    } catch (error) {
+      console.error("Erro crítico, usando fallback total", error);
+      setConfig({
+        catalogo: FALLBACK_DATA.catalogo,
+        servicos: FALLBACK_DATA.servicos.map((s) => ({ 
+          ...s, 
+          icon: getIconComponent(s.icon),
+          categoria: s.categoria || "artistas" 
+        })),
+        cases: FALLBACK_DATA.cases,
+        links: FALLBACK_DATA.links,
+        tiposLicenca: FALLBACK_DATA.tiposLicenca.map((t) => ({ 
+          ...t, 
+          icon: getIconComponent(t.icon) 
+        })),
+      });
+      setFilteredTracks(FALLBACK_DATA.catalogo);
+    } finally {
+      setLoading(false);
+    }
+  }
+  loadData();
+}, []);
+const handleLicenseClick = (track: any) => {
     setCurrentTrack(track);
     setShowQuoteModal(true);
   };
@@ -1899,7 +1913,11 @@ export default function App() {
           isPlaying={isPlaying}
           setIsPlaying={setIsPlaying}
         />
-        <Services servicos={config.servicos} links={config.links} onLeadOpen={handleLeadOpen} />
+        <Services 
+          servicos={config.servicos} 
+          links={config.links} 
+          onLeadOpen={handleLeadOpen} 
+        />
         <SocialProof cases={config.cases} />
       </main>
       <Footer />
@@ -1913,6 +1931,8 @@ export default function App() {
         filteredTracks={filteredTracks}
         isPlayingAuto={true}
       />
+      
+      {/* BLOCO 1 - MODAIS */}
       <AnimatePresence>
         {showQuoteModal && currentTrack && (
           <QuoteModal
