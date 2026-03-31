@@ -1243,6 +1243,7 @@ const PersistentPlayer = ({
 const Services = ({ servicos, links, onLeadOpen }: any) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedService, setSelectedService] = useState<any>(null);
+  const [hoveredCard, setHoveredCard] = useState<string | null>(null);
 
   const openDetails = (service: any) => {
     setSelectedService(service);
@@ -1322,11 +1323,15 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
                   const Icon = s.icon;
                   const resumo = getResumo(s);
                   const tituloAbreviado = getTituloAbreviado(s.title);
+                  const cardId = `empresa-${i}`;
+                  const isHovered = hoveredCard === cardId;
                   
                   return (
                     <div
                       key={i}
                       className="group bg-slate-950/80 border border-white/10 hover:border-[#00F0FF]/40 rounded-xl transition-all duration-300 overflow-hidden flex flex-col h-full"
+                      onMouseEnter={() => setHoveredCard(cardId)}
+                      onMouseLeave={() => setHoveredCard(null)}
                     >
                       <div className="p-5 flex flex-col h-full">
                         {/* Ícone Ciano com glow */}
@@ -1343,13 +1348,13 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
                         </div>
                         
                         <div className="min-h-[48px] flex items-center justify-center mb-4">
-                          <p className="text-slate-400 text-xs text-center leading-relaxed line-clamp-2">
+                          <p className="text-slate-500 text-xs text-center leading-relaxed line-clamp-2">
                             {resumo}
                           </p>
                         </div>
                         
                         <div className="text-center mb-4">
-                          <span className="text-[10px] text-[#00F0FF] font-mono bg-[#00F0FF]/10 border border-[#00F0FF]/30 px-2 py-1 rounded shadow-[0_0_8px_rgba(0,240,255,0.2)]">
+                          <span className="text-[10px] text-slate-500 font-mono bg-slate-900/50 px-2 py-1 rounded">
                             Sob consulta
                           </span>
                         </div>
@@ -1357,13 +1362,21 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
                         <div className="flex gap-2 justify-center mt-auto pt-2">
                           <button
                             onClick={() => openDetails(s)}
-                            className="px-4 py-2 border border-[#00F0FF] text-[#00F0FF] text-[10px] font-bold uppercase tracking-widest hover:bg-[#00F0FF] hover:text-[#020617] shadow-[0_0_12px_rgba(0,240,255,0.5)] transition-all rounded-lg w-full"
+                            className={`px-4 py-2 text-[10px] font-bold uppercase tracking-widest transition-all rounded-lg w-full ${
+                              isHovered
+                                ? "bg-[#00F0FF] text-[#020617] shadow-[0_0_15px_rgba(0,240,255,0.5)]"
+                                : "border border-[#00F0FF]/50 text-[#00F0FF] bg-transparent"
+                            }`}
                           >
                             {s.cta || "DETALHES"}
                           </button>
                           <button
                             onClick={() => window.open(links.whatsapp, "_blank")}
-                            className="p-2 border border-[#00F0FF] text-[#00F0FF] bg-transparent shadow-[0_0_8px_rgba(0,240,255,0.4)] hover:shadow-[0_0_15px_rgba(37,211,102,0.5)] hover:bg-[#25D366] hover:border-[#25D366] hover:text-white transition-all rounded-lg"
+                            className={`p-2 transition-all rounded-lg ${
+                              isHovered
+                                ? "bg-[#25D366] text-white border-[#25D366] shadow-[0_0_10px_rgba(37,211,102,0.4)]"
+                                : "border border-[#00F0FF]/50 text-[#00F0FF] bg-transparent"
+                            }`}
                             title="Chamar no WhatsApp"
                           >
                             <MessageCircle size={14} />
@@ -1400,15 +1413,19 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
                   const resumo = getResumo(s);
                   const tituloAbreviado = getTituloAbreviado(s.title);
                   const isDestaque = s.highlight === true || s.highlight === "TRUE";
+                  const cardId = `artista-${i}`;
+                  const isHovered = hoveredCard === cardId;
                   
                   return (
                     <div
                       key={i}
                       className={`group bg-slate-950/80 border rounded-xl transition-all duration-300 overflow-hidden flex flex-col h-full ${
                         isDestaque
-                          ? "border-[#DFFF00]/40 shadow-[0_0_20px_-5px_rgba(223,255,0,0.3)]"
+                          ? "border-[#DFFF00]/30 hover:border-[#DFFF00]/60 shadow-[0_0_15px_-5px_rgba(223,255,0,0.1)]"
                           : "border-white/10 hover:border-[#DFFF00]/40"
                       }`}
+                      onMouseEnter={() => setHoveredCard(cardId)}
+                      onMouseLeave={() => setHoveredCard(null)}
                     >
                       <div className="p-5 flex flex-col h-full">
                         {/* Ícone Neon com glow */}
@@ -1437,7 +1454,7 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
                         )}
                         
                         <div className="min-h-[48px] flex items-center justify-center mb-4">
-                          <p className="text-slate-400 text-xs text-center leading-relaxed line-clamp-2">
+                          <p className="text-slate-500 text-xs text-center leading-relaxed line-clamp-2">
                             {resumo}
                           </p>
                         </div>
@@ -1454,7 +1471,7 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
                         </div>
                         
                         <div className="text-center mb-4">
-                           <span className="text-[10px] text-[#DFFF00] font-mono bg-[#DFFF00]/10 border border-[#DFFF00]/30 px-2 py-1 rounded shadow-[0_0_8px_rgba(223,255,0,0.2)]">
+                           <span className="text-[10px] text-slate-500 font-mono bg-slate-900/50 px-2 py-1 rounded">
                             Sob consulta
                           </span>
                         </div>
@@ -1462,17 +1479,25 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
                         <div className="flex gap-2 justify-center mt-auto pt-2">
                           <button
                             onClick={() => openDetails(s)}
-                            className={`px-4 py-2 text-[10px] font-bold uppercase tracking-widest transition-all rounded-lg w-full shadow-[0_0_12px_rgba(223,255,0,0.5)] ${
-                              isDestaque
-                                ? "bg-[#DFFF00] text-[#020617] hover:shadow-[0_0_20px_rgba(223,255,0,0.7)]"
-                                : "border border-[#DFFF00] text-[#DFFF00] hover:bg-[#DFFF00] hover:text-[#020617]"
+                            className={`px-4 py-2 text-[10px] font-bold uppercase tracking-widest transition-all rounded-lg w-full ${
+                              isHovered
+                                ? isDestaque
+                                  ? "bg-[#DFFF00] text-[#020617] shadow-[0_0_15px_rgba(223,255,0,0.5)]"
+                                  : "bg-[#DFFF00] text-[#020617] shadow-[0_0_15px_rgba(223,255,0,0.4)]"
+                                : isDestaque
+                                  ? "border border-[#DFFF00]/50 text-[#DFFF00] bg-transparent"
+                                  : "border border-[#DFFF00]/50 text-[#DFFF00] bg-transparent"
                             }`}
                           >
                             {s.cta || "DETALHES"}
                           </button>
                           <button
                             onClick={() => window.open(links.whatsapp, "_blank")}
-                            className="p-2 border border-[#DFFF00] text-[#DFFF00] bg-transparent shadow-[0_0_8px_rgba(223,255,0,0.4)] hover:shadow-[0_0_15px_rgba(37,211,102,0.5)] hover:bg-[#25D366] hover:border-[#25D366] hover:text-white transition-all rounded-lg"
+                            className={`p-2 transition-all rounded-lg ${
+                              isHovered
+                                ? "bg-[#25D366] text-white border-[#25D366] shadow-[0_0_10px_rgba(37,211,102,0.4)]"
+                                : "border border-[#DFFF00]/50 text-[#DFFF00] bg-transparent"
+                            }`}
                             title="Chamar no WhatsApp"
                           >
                             <MessageCircle size={14} />
