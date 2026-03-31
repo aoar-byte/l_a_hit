@@ -35,7 +35,7 @@ import {
 } from "lucide-react";
 
 // ============================================================
-// DADOS ESTÁTICOS DE FALLBACK (caso a planilha falhe)
+// DADOS ESTÁTICOS DE FALLBACK
 // ============================================================
 const FALLBACK_DATA = {
   catalogo: [
@@ -109,6 +109,7 @@ const FALLBACK_DATA = {
       cta: "Consultar",
       highlight: false,
       external: "",
+      categoria: "artistas",
     },
     {
       id: "sync",
@@ -118,6 +119,7 @@ const FALLBACK_DATA = {
       cta: "Ver Licenças",
       highlight: false,
       external: "",
+      categoria: "empresas",
     },
     {
       id: "brand",
@@ -127,6 +129,7 @@ const FALLBACK_DATA = {
       cta: "Consultar",
       highlight: false,
       external: "",
+      categoria: "empresas",
     },
     {
       id: "distro",
@@ -136,6 +139,7 @@ const FALLBACK_DATA = {
       cta: "Conhecer Parceiro",
       highlight: true,
       external: "https://instagram.com/distribuidora",
+      categoria: "artistas",
     },
   ],
   cases: [
@@ -148,6 +152,7 @@ const FALLBACK_DATA = {
       link: "https://youtube.com/watch?v=...",
       plays: "1.2M",
       platform: "YouTube",
+      enquadramento: "center",
     },
     {
       id: 2,
@@ -158,6 +163,7 @@ const FALLBACK_DATA = {
       link: "https://open.spotify.com/track/...",
       plays: "850K",
       platform: "Spotify",
+      enquadramento: "center",
     },
     {
       id: 3,
@@ -168,6 +174,7 @@ const FALLBACK_DATA = {
       link: "https://instagram.com/p/...",
       plays: "2.3M",
       platform: "Instagram Reels",
+      enquadramento: "center",
     },
     {
       id: 4,
@@ -178,6 +185,7 @@ const FALLBACK_DATA = {
       link: "https://tiktok.com/@...",
       plays: "5.7M",
       platform: "TikTok",
+      enquadramento: "center",
     },
   ],
   links: {
@@ -187,7 +195,7 @@ const FALLBACK_DATA = {
       "https://docs.google.com/forms/d/e/1FAIpQLScVsotUHwhzOwZZ2XuTNtxNFMtErXSsfvFczi6GnQB8ZYs-Rg/viewform?usp=pp_url",
     formularioLicenciamento:
       "https://docs.google.com/forms/d/e/SEU_FORM_ID_LICENCIAMENTO/viewform",
-    wwhatsapp: "https://wa.me/5532998078161",
+    whatsapp: "https://wa.me/5532998078161",
     showreel: "https://www.youtube.com/watch?v=SEU_VIDEO_ID",
   },
   tiposLicenca: [
@@ -269,7 +277,7 @@ const FALLBACK_DATA = {
 };
 
 // ============================================================
-// CONFIGURAÇÃO DAS PLANILHAS (COM TIMESTAMP PARA QUEBRAR CACHE)
+// CONFIGURAÇÃO DAS PLANILHAS
 // ============================================================
 const SHEETS = {
   catalogo:
@@ -284,7 +292,6 @@ const SHEETS = {
     "https://docs.google.com/spreadsheets/d/e/2PACX-1vS7sqQrQ4CJDQ2b8QwjCBVHXXj1yQulLWQoeeP58hqqoA_kgPYDCMf2Q5hvkxcD7m3ISnxmFH_NTe8P/pub?gid=319719436&single=true&output=csv",
 };
 
-// Função para adicionar timestamp e quebrar cache
 function addTimestamp(url: string) {
   return `${url}&_t=${Date.now()}`;
 }
@@ -308,7 +315,7 @@ function getIconComponent(iconName: string): React.ElementType {
 }
 
 // ============================================================
-// FUNÇÃO PARA BUSCAR E PARSEAR CSV
+// FUNÇÃO PARA BUSCAR CSV
 // ============================================================
 async function fetchSheet<T>(url: string): Promise<T[]> {
   try {
@@ -371,26 +378,8 @@ const MagneticButton = ({ children, className, onClick, disabled }: any) => (
   </motion.button>
 );
 
-const SectionHeader = ({
-  subtitle,
-  title,
-}: {
-  subtitle: string;
-  title: string;
-}) => (
-  <div className="mb-12">
-    <div className="flex items-center gap-2 text-blue-500 font-mono text-xs tracking-widest uppercase mb-3">
-      <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse" />
-      {subtitle}
-    </div>
-    <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight">
-      {title}
-    </h2>
-  </div>
-);
-
 // ============================================================
-// MODAL DE LICENCIAMENTO (SEM O BOTÃO GHOSTWRITING)
+// MODAL DE LICENCIAMENTO
 // ============================================================
 const QuoteModal = ({ track, onClose, tiposLicenca, links }: any) => {
   const handleWhatsApp = (licenseTitle: string) => {
@@ -427,8 +416,6 @@ const QuoteModal = ({ track, onClose, tiposLicenca, links }: any) => {
             <X size={24} />
           </button>
         </div>
-
-        {/* BOTÃO REMOVIDO - ESTA SEÇÃO FOI ELIMINADA */}
 
         <div className="p-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -584,7 +571,7 @@ const LeadModal = ({
 };
 
 // ============================================================
-// RODAPÉ (CONTATOS E ESPAÇAMENTO CORRIGIDOS)
+// RODAPÉ
 // ============================================================
 const Footer = () => {
   const scrollToSection = (id: string) =>
@@ -806,7 +793,7 @@ const Navbar = ({ links }: { links: any }) => {
 };
 
 // ============================================================
-// HERO - VERSÃO CORRIGIDA (POSICIONAMENTO E RESPONSIVIDADE)
+// HERO
 // ============================================================
 const Hero = ({ onOpenShowreel }: { onOpenShowreel: () => void }) => {
   const scrollToCatalog = () =>
@@ -874,7 +861,7 @@ const Hero = ({ onOpenShowreel }: { onOpenShowreel: () => void }) => {
 };
 
 // ============================================================
-// COMPONENTE: SMART CATALOG (ESPAÇOS CORRIGIDOS E NEON)
+// SMART CATALOG
 // ============================================================
 const SmartCatalog = ({
   catalogo,
@@ -1023,7 +1010,7 @@ const SmartCatalog = ({
 };
             
 // ============================================================
-// PLAYER DE MÚSICA FIXO (O GLOW NEON DEFINITIVO)
+// PLAYER DE MÚSICA FIXO - VERSÃO CORRIGIDA
 // ============================================================
 const PersistentPlayer = ({ 
   track, 
@@ -1034,7 +1021,16 @@ const PersistentPlayer = ({
   setCurrentTrack,
   filteredTracks,
   isPlayingAuto
-}: any) => {
+}: { 
+  track: any; 
+  isPlaying: boolean; 
+  setIsPlaying: (value: boolean) => void; 
+  onLicenseClick: (track: any) => void;
+  currentTrack: any;
+  setCurrentTrack: (track: any) => void;
+  filteredTracks: any[];
+  isPlayingAuto: boolean;
+}) => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [progress, setProgress] = useState(0);
   const [currentTime, setCurrentTime] = useState("0:00");
@@ -1051,6 +1047,7 @@ const PersistentPlayer = ({
   const playNext = () => {
     if (!filteredTracks || filteredTracks.length === 0) return;
     const currentIndex = filteredTracks.findIndex((t: any) => t.id === currentTrack?.id);
+    if (currentIndex === -1) return;
     const nextIndex = (currentIndex + 1) % filteredTracks.length;
     const nextTrack = filteredTracks[nextIndex];
     if (nextTrack) {
@@ -1062,6 +1059,7 @@ const PersistentPlayer = ({
   const playPrevious = () => {
     if (!filteredTracks || filteredTracks.length === 0) return;
     const currentIndex = filteredTracks.findIndex((t: any) => t.id === currentTrack?.id);
+    if (currentIndex === -1) return;
     const prevIndex = (currentIndex - 1 + filteredTracks.length) % filteredTracks.length;
     const prevTrack = filteredTracks[prevIndex];
     if (prevTrack) {
@@ -1184,7 +1182,6 @@ const PersistentPlayer = ({
                 <SkipBack size={18} fill="currentColor" />
               </button>
               
-              {/* BOTÃO PLAY GIGANTE NEON (VERDE LIMÃO) */}
               <button 
                 onClick={() => setIsPlaying(!isPlaying)}
                 className="w-12 h-12 bg-[#DFFF00] rounded-full flex items-center justify-center text-slate-950 hover:scale-110 transition-all shadow-[0_0_25px_rgba(223,255,0,0.6)] active:scale-95"
@@ -1198,7 +1195,6 @@ const PersistentPlayer = ({
               </button>
             </div>
             
-            {/* BARRA DE PROGRESSO CIANO */}
             <div className="w-full flex items-center gap-3">
               <span className="text-[10px] text-slate-500 font-mono w-8 text-right">{currentTime}</span>
               <div 
@@ -1238,9 +1234,13 @@ const PersistentPlayer = ({
 };
 
 // ============================================================
-// SERVIÇOS (CORES CORRIGIDAS PARA A PALETA LA HIT)
+// SERVIÇOS - VERSÃO CORRIGIDA COM CATEGORIAS
 // ============================================================
-const Services = ({ servicos, links, onLeadOpen }: any) => {
+const Services = ({ servicos, links, onLeadOpen }: { 
+  servicos: any[]; 
+  links: any; 
+  onLeadOpen: (service: string) => void;
+}) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedService, setSelectedService] = useState<any>(null);
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
@@ -1283,7 +1283,6 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
     >
       <div className="max-w-7xl mx-auto px-6">
         
-        {/* TÍTULO PRINCIPAL (CIANO) */}
         <div className="mb-12 text-center">
           <div className="flex items-center justify-center gap-2 text-[#00F0FF] font-mono text-[10px] tracking-widest uppercase mb-2">
             <span className="w-1.5 h-1.5 bg-[#00F0FF] rounded-full animate-pulse shadow-[0_0_5px_#00F0FF]" />
@@ -1298,10 +1297,9 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
           </p>
         </div>
 
-        {/* DUAS COLUNAS LADO A LADO */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
           
-          {/* COLUNA ESQUERDA - EMPRESAS (TEMA CIANO) */}
+          {/* COLUNA ESQUERDA - EMPRESAS */}
           <div className="bg-slate-900 rounded-2xl border border-[#00F0FF]/20 overflow-hidden flex flex-col h-full shadow-[0_0_30px_-10px_rgba(0,240,255,0.2)]">
             <div className="p-6 pb-3 border-b border-[#00F0FF]/20">
               <div className="flex items-center gap-2 text-[#00F0FF] font-mono text-[11px] tracking-widest uppercase mb-1">
@@ -1334,7 +1332,6 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
                       onMouseLeave={() => setHoveredCard(null)}
                     >
                       <div className="p-5 flex flex-col h-full">
-                        {/* Ícone Ciano com glow */}
                         <div className="flex justify-center mb-4">
                           <div className="w-14 h-14 bg-[#00F0FF]/10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(0,240,255,0.3)]">
                             <Icon className="w-7 h-7 text-[#00F0FF] drop-shadow-[0_0_5px_#00F0FF]" />
@@ -1390,7 +1387,7 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
             </div>
           </div>
 
-          {/* COLUNA DIREITA - ARTISTAS (TEMA NEON YELLOW) */}
+          {/* COLUNA DIREITA - ARTISTAS */}
           <div className="bg-slate-900 rounded-2xl border border-[#DFFF00]/20 overflow-hidden flex flex-col h-full shadow-[0_0_30px_-10px_rgba(223,255,0,0.2)]">
             <div className="p-6 pb-3 border-b border-[#DFFF00]/20">
               <div className="flex items-center gap-2 text-[#DFFF00] font-mono text-[11px] tracking-widest uppercase mb-1">
@@ -1428,7 +1425,6 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
                       onMouseLeave={() => setHoveredCard(null)}
                     >
                       <div className="p-5 flex flex-col h-full">
-                        {/* Ícone Neon com glow */}
                         <div className="flex justify-center mb-4">
                           <div className={`w-14 h-14 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform ${
                             isDestaque ? "bg-[#DFFF00]/20 shadow-[0_0_20px_rgba(223,255,0,0.4)]" : "bg-[#DFFF00]/10 shadow-[0_0_10px_rgba(223,255,0,0.2)]"
@@ -1459,7 +1455,6 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
                           </p>
                         </div>
                         
-                        {/* Logo Parceiro */}
                         <div className="min-h-[32px] flex justify-center items-center mb-4">
                           {s.external && s.external !== "" ? (
                             <div className="w-12 h-12 bg-slate-900 border border-[#DFFF00]/30 rounded-full flex items-center justify-center shadow-[0_0_10px_rgba(223,255,0,0.2)]">
@@ -1513,7 +1508,6 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
         </div>
       </div>
 
-      {/* MODAL DE DETALHES DO SERVIÇO */}
       <AnimatePresence>
         {modalOpen && selectedService && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
@@ -1582,17 +1576,16 @@ const Services = ({ servicos, links, onLeadOpen }: any) => {
 };
 
 // ============================================================
-// SEÇÃO DE PROVA SOCIAL (ESPAÇO E BORDAS CORRIGIDOS)
+// SOCIAL PROOF - VERSÃO CORRIGIDA
 // ============================================================
 const SocialProof = ({ cases }: { cases: any[] }) => {
   const [imageErrors, setImageErrors] = useState<Record<string, boolean>>({});
 
   const getImageUrl = (path: string) => {
-    if (!path) return null;
+    if (!path || path === "") return null;
     if (path.startsWith("http")) return path;
-    let cleanPath = path.replace(/^\/public/, "");
-    if (!cleanPath.startsWith("/")) cleanPath = "/" + cleanPath;
-    return cleanPath;
+    if (path.startsWith("/")) return path;
+    return "/" + path;
   };
 
   const getObjectPosition = (enquadramento: string) => {
@@ -1713,69 +1706,7 @@ const SocialProof = ({ cases }: { cases: any[] }) => {
 };
 
 // ============================================================
-// COMPONENTE DO LOGO ANIMADO (L✦A HIT)
-// ============================================================
-const LogoAnimado = () => {
-  return (
-    <div className="flex flex-col items-center justify-center select-none group cursor-pointer">
-      {/* Parte Superior: L ✦ A */}
-      <div className="relative flex items-center justify-center gap-1 mb-[-4px]">
-        <span className="text-3xl font-black text-white italic tracking-tighter">L</span>
-        
-        {/* Estrela de 4 pontas com Pulso Neon */}
-        <motion.span
-          animate={{ 
-            scale: [1, 1.2, 1],
-            opacity: [0.7, 1, 0.7],
-            filter: ["drop-shadow(0 0 2px #DFFF00)", "drop-shadow(0 0 8px #DFFF00)", "drop-shadow(0 0 2px #DFFF00)"]
-          }}
-          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-          className="text-[#DFFF00] text-2xl mx-0.5"
-        >
-          ✦
-        </motion.span>
-        
-        <span className="text-3xl font-black text-white italic tracking-tighter">A</span>
-      </div>
-
-      {/* Linha de Horizonte Laser Ciano */}
-      <motion.div 
-        initial={{ width: 0, opacity: 0 }}
-        animate={{ width: "110%", opacity: 0.7 }}
-        transition={{ duration: 1, delay: 0.5 }}
-        className="h-[1.5px] bg-[#00F0FF] shadow-[0_0_10px_#00F0FF] relative z-10"
-      />
-
-      {/* Palavra HIT com o Pingo Foguete */}
-      <div className="flex items-center justify-center text-[10px] font-black text-[#DFFF00] tracking-[0.5em] mt-1 relative">
-        <span>H</span>
-        <div className="relative inline-flex justify-center">
-          <span className="opacity-100">I</span>
-          {/* O Pingo Foguete: sai do 'I' e vai até a estrela ✦ */}
-          <motion.div
-            initial={{ y: 0, opacity: 1 }}
-            animate={{ 
-              y: -36, // Ajuste de altura para chegar na estrela
-              opacity: [1, 1, 0],
-              scale: [1, 1.4, 0.6]
-            }}
-            transition={{ 
-              duration: 1.4, 
-              repeat: Infinity, 
-              repeatDelay: 2.5,
-              ease: "circIn" 
-            }}
-            className="absolute -top-1 w-[3px] h-[3px] bg-[#DFFF00] rounded-full shadow-[0_0_8px_#DFFF00]"
-          />
-        </div>
-        <span className="ml-1">T</span>
-      </div>
-    </div>
-  );
-};
-
-// ============================================================
-// MODAL DE SHOWREEL (VÍDEO EMBUTIDO)
+// MODAL DE SHOWREEL
 // ============================================================
 const VideoModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
   if (!isOpen) return null;
@@ -1808,7 +1739,7 @@ const VideoModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
 };
 
 // ============================================================
-// APP PRINCIPAL
+// APP PRINCIPAL - VERSÃO CORRIGIDA
 // ============================================================
 export default function App() {
   const [config, setConfig] = useState<any>(null);
@@ -1837,59 +1768,59 @@ export default function App() {
         console.log("Dados do catálogo carregados:", catalogoRaw.length);
         console.log("Dados dos cases carregados:", casesRaw.length);
 
-        // Processa catálogo
         let catalogo = FALLBACK_DATA.catalogo;
-        if (catalogoRaw.length > 0) {
-          catalogo = catalogoRaw.map((item: any) => ({
-            id: Number(item.id) || 0,
-            title: item.title || "Sem título",
-            artist: item.artist || "L'A HIT Originals",
-            bpm: Number(item.bpm) || 0,
-            genre: item.genre || "Outro",
-            mood: item.mood || "Neutro",
-            price: Number(item.price) || 0,
-            audioUrl: item.audioUrl || item.link || "", // Aceita audioUrl ou link
-          })).filter((track: any) => track.audioUrl); // Remove tracks sem áudio
+        if (catalogoRaw && catalogoRaw.length > 0) {
+          catalogo = catalogoRaw
+            .map((item: any) => ({
+              id: Number(item.id) || 0,
+              title: item.title || "Sem título",
+              artist: item.artist || "L'A HIT Originals",
+              bpm: Number(item.bpm) || 0,
+              genre: item.genre || "Outro",
+              mood: item.mood || "Neutro",
+              price: Number(item.price) || 0,
+              audioUrl: item.audioUrl || item.link || "",
+            }))
+            .filter((track: any) => track.audioUrl);
         }
 
-       // Processa cases
-let cases = FALLBACK_DATA.cases;
-if (casesRaw.length > 0) {
-  cases = casesRaw.map((item: any) => ({
-    id: Number(item.id) || 0,
-    title: item.title || "Case",
-    artist: item.artist || "L'A HIT Originals",
-    image: item.image || "",
-    videoThumb: item.videoThumb || "",
-    link: item.link || "#",
-    plays: item.plays || "0",
-    platform: item.platform || "Streaming",
-    enquadramento: item.enquadramento || "center",
-  }));
-}
+        let cases = FALLBACK_DATA.cases;
+        if (casesRaw && casesRaw.length > 0) {
+          cases = casesRaw.map((item: any) => ({
+            id: Number(item.id) || 0,
+            title: item.title || "Case",
+            artist: item.artist || "L'A HIT Originals",
+            image: item.image || "",
+            videoThumb: item.videoThumb || "",
+            link: item.link || "#",
+            plays: item.plays || "0",
+            platform: item.platform || "Streaming",
+            enquadramento: item.enquadramento || "center",
+          }));
+        }
 
-        // Processa serviços
         let servicos = FALLBACK_DATA.servicos;
-        if (servicosRaw.length > 0) {
+        if (servicosRaw && servicosRaw.length > 0) {
           servicos = servicosRaw.map((item: any) => ({
             ...item,
+            categoria: item.categoria || "artistas",
             highlight: item.highlight === "true" || item.highlight === true,
             icon: getIconComponent(item.icon || "PenTool"),
           }));
         }
 
-        // Processa links
         let links = FALLBACK_DATA.links;
-        if (linksRaw.length > 0) {
+        if (linksRaw && linksRaw.length > 0) {
           links = linksRaw.reduce((acc: any, row: any) => {
-            acc[row.chave] = row.valor;
+            if (row.chave && row.valor) {
+              acc[row.chave] = row.valor;
+            }
             return acc;
           }, {});
         }
 
-        // Processa tipos de licença
         let tiposLicenca = FALLBACK_DATA.tiposLicenca;
-        if (tiposLicencaRaw.length > 0) {
+        if (tiposLicencaRaw && tiposLicencaRaw.length > 0) {
           tiposLicenca = tiposLicencaRaw.map((item: any) => ({
             ...item,
             deliverables: item.deliverables 
@@ -1906,10 +1837,17 @@ if (casesRaw.length > 0) {
         console.error("Erro crítico, usando fallback total", error);
         setConfig({
           catalogo: FALLBACK_DATA.catalogo,
-          servicos: FALLBACK_DATA.servicos.map((s) => ({ ...s, icon: getIconComponent(s.icon) })),
+          servicos: FALLBACK_DATA.servicos.map((s) => ({ 
+            ...s, 
+            icon: getIconComponent(s.icon),
+            categoria: s.categoria || "artistas" 
+          })),
           cases: FALLBACK_DATA.cases,
           links: FALLBACK_DATA.links,
-          tiposLicenca: FALLBACK_DATA.tiposLicenca.map((t) => ({ ...t, icon: getIconComponent(t.icon) })),
+          tiposLicenca: FALLBACK_DATA.tiposLicenca.map((t) => ({ 
+            ...t, 
+            icon: getIconComponent(t.icon) 
+          })),
         });
         setFilteredTracks(FALLBACK_DATA.catalogo);
       } finally {
@@ -1929,7 +1867,7 @@ if (casesRaw.length > 0) {
     setShowLeadModal(true);
   };
 
-   if (loading) {
+  if (loading) {
     return (
       <div className="min-h-screen bg-slate-950 flex items-center justify-center">
         <Loader2 size={40} className="animate-spin text-blue-500" />
@@ -1945,52 +1883,50 @@ if (casesRaw.length > 0) {
     );
   }
 
-return (
-  <div className="min-h-screen bg-slate-950 text-slate-50 font-sans selection:bg-blue-600 selection:text-white overflow-x-hidden">
-    <NoiseOverlay />
-    <Navbar links={config.links} />
-    <main className="relative z-10">
-      <Hero onOpenShowreel={() => setShowVideoModal(true)} />
-      <SmartCatalog
-        catalogo={config.catalogo}
-        filteredTracks={filteredTracks}
-        setFilteredTracks={setFilteredTracks}
+  return (
+    <div className="min-h-screen bg-slate-950 text-slate-50 font-sans selection:bg-blue-600 selection:text-white overflow-x-hidden">
+      <NoiseOverlay />
+      <Navbar links={config.links} />
+      <main className="relative z-10">
+        <Hero onOpenShowreel={() => setShowVideoModal(true)} />
+        <SmartCatalog
+          catalogo={config.catalogo}
+          filteredTracks={filteredTracks}
+          setFilteredTracks={setFilteredTracks}
+          onLicenseClick={handleLicenseClick}
+          currentTrack={currentTrack}
+          setCurrentTrack={setCurrentTrack}
+          isPlaying={isPlaying}
+          setIsPlaying={setIsPlaying}
+        />
+        <Services servicos={config.servicos} links={config.links} onLeadOpen={handleLeadOpen} />
+        <SocialProof cases={config.cases} />
+      </main>
+      <Footer />
+      <PersistentPlayer
+        track={currentTrack}
+        isPlaying={isPlaying}
+        setIsPlaying={setIsPlaying}
         onLicenseClick={handleLicenseClick}
         currentTrack={currentTrack}
         setCurrentTrack={setCurrentTrack}
-        isPlaying={isPlaying}
-        setIsPlaying={setIsPlaying}
+        filteredTracks={filteredTracks}
+        isPlayingAuto={true}
       />
-      <Services servicos={config.servicos} links={config.links} onLeadOpen={handleLeadOpen} />
-      <SocialProof cases={config.cases} />
-    </main>
-    <Footer />
-    <PersistentPlayer
-      track={currentTrack}
-      isPlaying={isPlaying}
-      setIsPlaying={setIsPlaying}
-      onLicenseClick={handleLicenseClick}
-      currentTrack={currentTrack}
-      setCurrentTrack={setCurrentTrack}
-      filteredTracks={filteredTracks}
-      isPlayingAuto={true}
-    />
-    <AnimatePresence>
-      {showQuoteModal && currentTrack && (
-        <QuoteModal
-          track={currentTrack}
-          onClose={() => setShowQuoteModal(false)}
-          tiposLicenca={config.tiposLicenca}
-          links={config.links}
-        />
-      )}
-      {showLeadModal && (
-        <LeadModal service={leadService} onClose={() => setShowLeadModal(false)} />
-      )}
-    </AnimatePresence>
-    <VideoModal isOpen={showVideoModal} onClose={() => setShowVideoModal(false)} />
-  </div>
-);
+      <AnimatePresence>
+        {showQuoteModal && currentTrack && (
+          <QuoteModal
+            track={currentTrack}
+            onClose={() => setShowQuoteModal(false)}
+            tiposLicenca={config.tiposLicenca}
+            links={config.links}
+          />
+        )}
+        {showLeadModal && (
+          <LeadModal service={leadService} onClose={() => setShowLeadModal(false)} />
+        )}
+      </AnimatePresence>
+      <VideoModal isOpen={showVideoModal} onClose={() => setShowVideoModal(false)} />
+    </div>
+  );
 }
-
-
