@@ -740,6 +740,72 @@ const DynamicTerrainCanvas = () => {
 };
 
 // ============================================================
+// NAVBAR
+// ============================================================
+const Navbar = ({ links }: { links: any }) => {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollToSection = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  return (
+    <nav
+      className={`fixed top-0 w-full z-50 transition-all duration-500 border-b ${
+        scrolled
+          ? "bg-slate-950/80 backdrop-blur-md border-white/5 py-3"
+          : "bg-transparent border-transparent py-4"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+        <div
+          className="flex items-center cursor-pointer"
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        >
+          <img 
+            src="/image_2ee558fe-removebg-preview.png"
+            alt="L*A HIT"
+            className="h-14 w-auto md:h-20 transition-all duration-300 hover:opacity-80"
+          />
+        </div>
+        
+        <div className="hidden md:flex items-center gap-6 text-xs font-bold tracking-widest text-slate-400 uppercase">
+          <button
+            onClick={() => scrollToSection("catalog")}
+            className="hover:text-white transition-colors relative group"
+          >
+            Catálogo
+            <span className="absolute -bottom-1 left-0 w-0 h-px bg-blue-500 group-hover:w-full transition-all duration-300" />
+          </button>
+          <button
+            onClick={() => scrollToSection("services")}
+            className="hover:text-white transition-colors relative group"
+          >
+            Serviços
+            <span className="absolute -bottom-1 left-0 w-0 h-px bg-blue-500 group-hover:w-full transition-all duration-300" />
+          </button>
+          <button
+            onClick={() => scrollToSection("cases")}
+            className="hover:text-white transition-colors relative group"
+          >
+            Cases
+            <span className="absolute -bottom-1 left-0 w-0 h-px bg-blue-500 group-hover:w-full transition-all duration-300" />
+          </button>
+        </div>
+        
+        <div className="w-20" />
+      </div>
+    </nav>
+  );
+};
+
+// ============================================================
 // HERO - VERSÃO CORRIGIDA (POSICIONAMENTO E RESPONSIVIDADE)
 // ============================================================
 const Hero = () => {
