@@ -187,7 +187,7 @@ const FALLBACK_DATA = {
       "https://docs.google.com/forms/d/e/1FAIpQLScVsotUHwhzOwZZ2XuTNtxNFMtErXSsfvFczi6GnQB8ZYs-Rg/viewform?usp=pp_url",
     formularioLicenciamento:
       "https://docs.google.com/forms/d/e/SEU_FORM_ID_LICENCIAMENTO/viewform",
-    wwhatsapp: "https://api.whatsapp.com/send?phone=5532998078161",
+    wwhatsapp: "https://wa.me/5532998078161",
     showreel: "https://www.youtube.com/watch?v=SEU_VIDEO_ID",
   },
   tiposLicenca: [
