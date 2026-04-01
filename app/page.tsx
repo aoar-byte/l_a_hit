@@ -1260,7 +1260,7 @@ const PersistentPlayer = ({
 };
 
 // ============================================================
-// SERVIÇOS - VERSÃO COMPLETA CORRIGIDA
+// SERVIÇOS - VERSÃO PADRONIZADA
 // ============================================================
 const Services = ({ servicos, links, onLeadOpen }: { 
   servicos: any[]; 
@@ -1284,17 +1284,17 @@ const Services = ({ servicos, links, onLeadOpen }: {
   const getResumo = (service: any) => {
     if (service.desc) {
       const primeiraLinha = service.desc.split("|")[0];
-      if (primeiraLinha && primeiraLinha.length > 60) {
-        return primeiraLinha.substring(0, 57) + "...";
+      if (primeiraLinha && primeiraLinha.length > 55) {
+        return primeiraLinha.substring(0, 52) + "...";
       }
-      return primeiraLinha || "Sob consulta";
+      return primeiraLinha || "";
     }
-    return "Sob consulta";
+    return "";
   };
 
   const getTituloAbreviado = (titulo: string) => {
-    if (titulo.length > 30) {
-      return titulo.substring(0, 30) + "...";
+    if (titulo.length > 25) {
+      return titulo.substring(0, 22) + "...";
     }
     return titulo;
   };
@@ -1324,22 +1324,22 @@ const Services = ({ servicos, links, onLeadOpen }: {
           
           {/* COLUNA ESQUERDA - EMPRESAS */}
           <div className="bg-slate-900 rounded-2xl border border-[#00F0FF]/20 overflow-hidden flex flex-col h-full shadow-[0_0_30px_-10px_rgba(0,240,255,0.2)]">
-            <div className="p-6 pb-3 border-b border-[#00F0FF]/20">
-              <div className="flex items-center gap-2 text-[#00F0FF] font-mono text-[11px] tracking-widest uppercase mb-1">
+            <div className="p-5 pb-3 border-b border-[#00F0FF]/20">
+              <div className="flex items-center gap-2 text-[#00F0FF] font-mono text-[10px] tracking-widest uppercase mb-1">
                 <span className="w-1.5 h-1.5 bg-[#00F0FF] rounded-full shadow-[0_0_5px_#00F0FF]" />
                 B2B SOLUTIONS
                 <span className="w-1.5 h-1.5 bg-[#00F0FF] rounded-full shadow-[0_0_5px_#00F0FF]" />
               </div>
-              <h3 className="text-2xl font-bold text-white">
+              <h3 className="text-xl font-bold text-white">
                 Para Empresas.
               </h3>
-              <p className="text-slate-400 text-xs mt-1">
+              <p className="text-slate-400 text-[11px] mt-1">
                 Licenciamento e identidade sonora para marcas, agências e produtoras.
               </p>
             </div>
 
-            <div className="p-6 flex-1">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 h-full">
+            <div className="p-5 flex-1">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {servicosEmpresas.map((s: any, i: number) => {
                   const Icon = s.icon;
                   const resumo = getResumo(s);
@@ -1350,41 +1350,32 @@ const Services = ({ servicos, links, onLeadOpen }: {
                   return (
                     <div
                       key={i}
-                      className="group bg-slate-950/80 border border-white/10 hover:border-[#00F0FF]/40 rounded-xl transition-all duration-300 overflow-hidden flex flex-col h-full"
+                      className="group bg-slate-950/80 border border-white/10 hover:border-[#00F0FF]/40 rounded-xl transition-all duration-300 overflow-hidden"
                       onMouseEnter={() => setHoveredCard(cardId)}
                       onMouseLeave={() => setHoveredCard(null)}
                     >
-                      <div className="p-5 flex flex-col h-full">
-                        <div className="flex justify-center mb-4">
-                          <div className="w-14 h-14 bg-[#00F0FF]/10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(0,240,255,0.3)]">
-                            <Icon className="w-7 h-7 text-[#00F0FF] drop-shadow-[0_0_5px_#00F0FF]" />
+                      <div className="p-4 flex flex-col h-full">
+                        {/* Ícone com glow no hover */}
+                        <div className="flex justify-center mb-3">
+                          <div className="w-12 h-12 bg-[#00F0FF]/10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform group-hover:shadow-[0_0_15px_rgba(0,240,255,0.4)]">
+                            <Icon className="w-6 h-6 text-[#00F0FF] group-hover:drop-shadow-[0_0_5px_#00F0FF]" />
                           </div>
                         </div>
                         
-                        <div className="min-h-[56px] flex items-center justify-center mb-3">
-                          <h4 className="text-base font-bold text-white group-hover:text-[#00F0FF] transition-colors text-center leading-tight line-clamp-2">
-                            {tituloAbreviado}
-                          </h4>
-                        </div>
+                        <h4 className="text-sm font-bold text-white group-hover:text-[#00F0FF] transition-colors text-center mb-2">
+                          {tituloAbreviado}
+                        </h4>
                         
-                        <div className="min-h-[48px] flex items-center justify-center mb-4">
-                          <p className="text-slate-500 text-xs text-center leading-relaxed line-clamp-2">
-                            {resumo}
-                          </p>
-                        </div>
+                        <p className="text-slate-500 text-[10px] text-center leading-relaxed mb-3 line-clamp-2">
+                          {resumo}
+                        </p>
                         
-                        <div className="text-center mb-4">
-                          <span className="text-[10px] text-slate-500 font-mono bg-slate-900/50 px-2 py-1 rounded">
-                            Sob consulta
-                          </span>
-                        </div>
-                        
-                        <div className="flex gap-2 justify-center mt-auto pt-2">
+                        <div className="flex gap-2 justify-center mt-auto">
                           <button
                             onClick={() => openDetails(s)}
-                            className={`px-4 py-2 text-[10px] font-bold uppercase tracking-widest transition-all rounded-lg w-full ${
+                            className={`flex-1 py-1.5 text-[9px] font-bold uppercase tracking-widest transition-all rounded-md ${
                               isHovered
-                                ? "bg-[#00F0FF] text-[#020617] shadow-[0_0_15px_rgba(0,240,255,0.5)]"
+                                ? "bg-[#00F0FF] text-[#020617]"
                                 : "border border-[#00F0FF]/50 text-[#00F0FF] bg-transparent"
                             }`}
                           >
@@ -1396,14 +1387,14 @@ const Services = ({ servicos, links, onLeadOpen }: {
                               const message = `Olá! Tenho interesse no serviço: ${s.title}`;
                               window.open(`${whatsappUrl}?text=${encodeURIComponent(message)}`, "_blank");
                             }}
-                            className={`p-2 transition-all rounded-lg ${
+                            className={`p-1.5 transition-all rounded-md ${
                               isHovered
-                                ? "bg-[#25D366] text-white border-[#25D366] shadow-[0_0_10px_rgba(37,211,102,0.4)]"
+                                ? "bg-[#25D366] text-white"
                                 : "border border-[#00F0FF]/50 text-[#00F0FF] bg-transparent"
                             }`}
                             title="Chamar no WhatsApp"
                           >
-                            <MessageCircle size={14} />
+                            <MessageCircle size={12} />
                           </button>
                         </div>
                       </div>
@@ -1416,22 +1407,22 @@ const Services = ({ servicos, links, onLeadOpen }: {
 
           {/* COLUNA DIREITA - ARTISTAS */}
           <div className="bg-slate-900 rounded-2xl border border-[#DFFF00]/20 overflow-hidden flex flex-col h-full shadow-[0_0_30px_-10px_rgba(223,255,0,0.2)]">
-            <div className="p-6 pb-3 border-b border-[#DFFF00]/20">
-              <div className="flex items-center gap-2 text-[#DFFF00] font-mono text-[11px] tracking-widest uppercase mb-1">
+            <div className="p-5 pb-3 border-b border-[#DFFF00]/20">
+              <div className="flex items-center gap-2 text-[#DFFF00] font-mono text-[10px] tracking-widest uppercase mb-1">
                 <span className="w-1.5 h-1.5 bg-[#DFFF00] rounded-full shadow-[0_0_5px_#DFFF00]" />
                 ARTIST SOLUTIONS
                 <span className="w-1.5 h-1.5 bg-[#DFFF00] rounded-full shadow-[0_0_5px_#DFFF00]" />
               </div>
-              <h3 className="text-2xl font-bold text-white">
+              <h3 className="text-xl font-bold text-white">
                 Para Artistas.
               </h3>
-              <p className="text-slate-400 text-xs mt-1">
+              <p className="text-slate-400 text-[11px] mt-1">
                 Soluções completas para sua carreira musical, do estúdio ao streaming.
               </p>
             </div>
 
-            <div className="p-6 flex-1">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 h-full">
+            <div className="p-5 flex-1">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {servicosArtistas.map((s: any, i: number) => {
                   const Icon = s.icon;
                   const resumo = getResumo(s);
@@ -1441,100 +1432,90 @@ const Services = ({ servicos, links, onLeadOpen }: {
                   const isHovered = hoveredCard === cardId;
                   
                   return (
-                    // DENTRO DA COLUNA ARTISTAS - CARD MAIS COMPACTO
-<div
-  key={i}
-  className={`group bg-slate-950/80 border rounded-xl transition-all duration-300 overflow-hidden ${
-    isDestaque
-      ? "border-[#DFFF00]/30 hover:border-[#DFFF00]/60"
-      : "border-white/10 hover:border-[#DFFF00]/40"
-  }`}
-  onMouseEnter={() => setHoveredCard(cardId)}
-  onMouseLeave={() => setHoveredCard(null)}
->
-  <div className="p-4 flex flex-col h-full">
-    {/* Ícone */}
-    <div className="flex justify-center mb-3">
-      <div className={`w-12 h-12 rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform ${
-        isDestaque ? "bg-[#DFFF00]/20" : "bg-[#DFFF00]/10"
-      }`}>
-        <Icon className={`w-6 h-6 text-[#DFFF00]`} />
-      </div>
-    </div>
-    
-    {/* Título */}
-    <h4 className={`text-sm font-bold text-center mb-1 ${
-      isDestaque ? "text-[#DFFF00]" : "text-white group-hover:text-[#DFFF00]"
-    } transition-colors`}>
-      {getTituloAbreviado(s.title)}
-    </h4>
-    
-    {/* Badge destaque */}
-    {isDestaque && (
-      <div className="flex justify-center mb-2">
-        <span className="text-[7px] bg-[#DFFF00] text-[#020617] px-1.5 py-0.5 rounded-full font-black tracking-wider">
-          DESTAQUE
-        </span>
-      </div>
-    )}
-    
-    {/* Descrição resumida */}
-    <p className="text-slate-500 text-[10px] text-center leading-relaxed mb-3 line-clamp-2">
-      {getResumo(s)}
-    </p>
-    
-    {/* Logo parceiro */}
-    <div className="min-h-[28px] flex justify-center items-center mb-2">
-      {s.external && s.external !== "" ? (
-        <div className="w-8 h-8 bg-slate-900 border border-[#DFFF00]/30 rounded-full flex items-center justify-center">
-          <span className="text-[6px] text-[#DFFF00] font-mono font-bold">HIT UP</span>
-        </div>
-      ) : (
-        <div className="h-8" />
-      )}
-    </div>
-    
-    {/* Preço/Badge */}
-    <div className="text-center mb-3">
-      <span className="text-[9px] text-slate-500 font-mono bg-slate-900/50 px-2 py-0.5 rounded">
-        Sob consulta
-      </span>
-    </div>
-    
-    {/* Botões */}
-    <div className="flex gap-2 justify-center mt-auto">
-      <button
-        onClick={() => openDetails(s)}
-        className={`flex-1 py-1.5 text-[9px] font-bold uppercase tracking-widest transition-all rounded-md ${
-          isHovered
-            ? isDestaque
-              ? "bg-[#DFFF00] text-[#020617]"
-              : "bg-[#DFFF00] text-[#020617]"
-            : isDestaque
-              ? "border border-[#DFFF00]/50 text-[#DFFF00] bg-transparent"
-              : "border border-[#DFFF00]/50 text-[#DFFF00] bg-transparent"
-        }`}
-      >
-        {s.cta || "DETALHES"}
-      </button>
-      <button
-        onClick={() => {
-          const whatsappUrl = links?.whatsapp || "https://wa.me/5532998078161";
-          const message = `Olá! Tenho interesse no serviço: ${s.title}`;
-          window.open(`${whatsappUrl}?text=${encodeURIComponent(message)}`, "_blank");
-        }}
-        className={`p-1.5 transition-all rounded-md ${
-          isHovered
-            ? "bg-[#25D366] text-white"
-            : "border border-[#DFFF00]/50 text-[#DFFF00] bg-transparent"
-        }`}
-        title="Chamar no WhatsApp"
-      >
-        <MessageCircle size={12} />
-      </button>
-    </div>
-  </div>
-</div>
+                    <div
+                      key={i}
+                      className={`group bg-slate-950/80 border rounded-xl transition-all duration-300 overflow-hidden ${
+                        isDestaque
+                          ? "border-[#DFFF00]/30 hover:border-[#DFFF00]/60"
+                          : "border-white/10 hover:border-[#DFFF00]/40"
+                      }`}
+                      onMouseEnter={() => setHoveredCard(cardId)}
+                      onMouseLeave={() => setHoveredCard(null)}
+                    >
+                      <div className="p-4 flex flex-col h-full">
+                        {/* Ícone com glow no hover */}
+                        <div className="flex justify-center mb-3">
+                          <div className={`w-12 h-12 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform ${
+                            isDestaque 
+                              ? "bg-[#DFFF00]/20 group-hover:shadow-[0_0_20px_rgba(223,255,0,0.5)]" 
+                              : "bg-[#DFFF00]/10 group-hover:shadow-[0_0_15px_rgba(223,255,0,0.3)]"
+                          }`}>
+                            <Icon className={`w-6 h-6 text-[#DFFF00] group-hover:drop-shadow-[0_0_5px_#DFFF00]`} />
+                          </div>
+                        </div>
+                        
+                        <h4 className={`text-sm font-bold text-center mb-1 ${
+                          isDestaque 
+                            ? "text-[#DFFF00]" 
+                            : "text-white group-hover:text-[#DFFF00]"
+                        } transition-colors`}>
+                          {tituloAbreviado}
+                        </h4>
+                        
+                        {isDestaque && (
+                          <div className="flex justify-center mb-2">
+                            <span className="text-[7px] bg-[#DFFF00] text-[#020617] px-1.5 py-0.5 rounded-full font-black tracking-wider shadow-[0_0_8px_#DFFF00]">
+                              DESTAQUE
+                            </span>
+                          </div>
+                        )}
+                        
+                        <p className="text-slate-500 text-[10px] text-center leading-relaxed mb-3 line-clamp-2">
+                          {resumo}
+                        </p>
+                        
+                        {/* Logo parceiro */}
+                        <div className="min-h-[28px] flex justify-center items-center mb-2">
+                          {s.external && s.external !== "" ? (
+                            <div className="w-8 h-8 bg-slate-900 border border-[#DFFF00]/30 rounded-full flex items-center justify-center group-hover:shadow-[0_0_10px_rgba(223,255,0,0.3)]">
+                              <span className="text-[6px] text-[#DFFF00] font-mono font-bold">HIT UP</span>
+                            </div>
+                          ) : (
+                            <div className="h-8" />
+                          )}
+                        </div>
+                        
+                        <div className="flex gap-2 justify-center mt-auto">
+                          <button
+                            onClick={() => openDetails(s)}
+                            className={`flex-1 py-1.5 text-[9px] font-bold uppercase tracking-widest transition-all rounded-md ${
+                              isHovered
+                                ? isDestaque
+                                  ? "bg-[#DFFF00] text-[#020617]"
+                                  : "bg-[#DFFF00] text-[#020617]"
+                                : "border border-[#DFFF00]/50 text-[#DFFF00] bg-transparent"
+                            }`}
+                          >
+                            {s.cta || "DETALHES"}
+                          </button>
+                          <button
+                            onClick={() => {
+                              const whatsappUrl = links?.whatsapp || "https://wa.me/5532998078161";
+                              const message = `Olá! Tenho interesse no serviço: ${s.title}`;
+                              window.open(`${whatsappUrl}?text=${encodeURIComponent(message)}`, "_blank");
+                            }}
+                            className={`p-1.5 transition-all rounded-md ${
+                              isHovered
+                                ? "bg-[#25D366] text-white"
+                                : "border border-[#DFFF00]/50 text-[#DFFF00] bg-transparent"
+                            }`}
+                            title="Chamar no WhatsApp"
+                          >
+                            <MessageCircle size={12} />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                   );
                 })}
               </div>
@@ -1551,7 +1532,7 @@ const Services = ({ servicos, links, onLeadOpen }: {
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
-              className="bg-slate-900 border border-white/10 w-full max-w-md p-6 relative max-h-[80vh] overflow-y-auto rounded-xl shadow-2xl shadow-[#00F0FF]/10"
+              className="bg-slate-900 border border-white/10 w-full max-w-md p-5 relative max-h-[80vh] overflow-y-auto rounded-xl shadow-2xl shadow-[#00F0FF]/10"
             >
               <button
                 onClick={() => setModalOpen(false)}
@@ -1602,9 +1583,9 @@ const Services = ({ servicos, links, onLeadOpen }: {
                   const message = `Olá! Tenho interesse no serviço: ${selectedService.title}`;
                   window.open(`${whatsappUrl}?text=${encodeURIComponent(message)}`, "_blank");
                 }}
-                className="w-full py-3 mt-4 bg-[#25D366] text-white text-[11px] font-black uppercase tracking-widest hover:bg-[#1DA851] transition-colors flex items-center justify-center gap-2 rounded-lg"
+                className="w-full py-2.5 mt-3 bg-[#25D366] text-white text-[10px] font-black uppercase tracking-widest hover:bg-[#1DA851] transition-colors flex items-center justify-center gap-2 rounded-lg"
               >
-                <MessageCircle size={16} />
+                <MessageCircle size={14} />
                 FALAR NO WHATSAPP
               </button>
             </motion.div>
