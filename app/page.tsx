@@ -820,9 +820,9 @@ const Navbar = ({ links }: { links: any }) => {
 };
 
 // ============================================================
-// HERO
+// HERO - COM CONTATO DIRETO
 // ============================================================
-const Hero = ({ onOpenShowreel }: { onOpenShowreel: () => void }) => {
+const Hero = ({ onOpenContact }: { onOpenContact: () => void }) => {
   const scrollToCatalog = () =>
     document.getElementById("catalog")?.scrollIntoView({ behavior: "smooth" });
 
@@ -874,11 +874,33 @@ const Hero = ({ onOpenShowreel }: { onOpenShowreel: () => void }) => {
               </MagneticButton>
               
               <MagneticButton
-                onClick={onOpenShowreel}
-                className="px-6 sm:px-8 py-3 border border-white/20 text-white font-bold uppercase tracking-widest text-sm sm:text-base flex items-center gap-2 sm:gap-3 backdrop-blur-sm hover:border-[#DFFF00] hover:text-[#DFFF00] hover:shadow-[0_0_20px_rgba(223,255,0,0.3)] transition-all"
+                onClick={onOpenContact}
+                className="px-6 sm:px-8 py-3 border border-white/20 text-white font-bold uppercase tracking-widest text-sm sm:text-base flex items-center gap-2 sm:gap-3 backdrop-blur-sm hover:border-[#DFFF00] hover:text-[#DFFF00] hover:shadow-[0_0_20px_rgba(223,255,0,0.3)] transition-all group"
               >
-                <Play size={16} fill="currentColor" /> Showreel
+                <Mail size={16} className="group-hover:scale-110 transition-transform" /> 
+                Contato Direto
               </MagneticButton>
+            </motion.div>
+
+            {/* Selo de credibilidade opcional */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.9 }}
+              className="flex flex-wrap gap-6 mt-10 text-xs text-slate-500"
+            >
+              <span className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#00F0FF]" />
+                Catálogo exclusivo
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#DFFF00]" />
+                Entrega ágil
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#00F0FF]" />
+                Briefing estruturado
+              </span>
             </motion.div>
           </div>
         </div>
@@ -1908,7 +1930,10 @@ export default function App() {
       <NoiseOverlay />
       <Navbar links={config.links} />
       <main className="relative z-10">
-        <Hero onOpenShowreel={() => setShowVideoModal(true)} />
+        <Hero onOpenContact={() => {
+  const whatsappUrl = config?.links?.whatsapp || "https://wa.me/5532998078161";
+  window.open(whatsappUrl, "_blank");
+}} />
         <SmartCatalog
           catalogo={config.catalogo}
           filteredTracks={filteredTracks}
