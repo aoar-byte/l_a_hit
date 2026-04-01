@@ -1260,7 +1260,7 @@ const PersistentPlayer = ({
 };
 
 // ============================================================
-// SERVIÇOS - VERSÃO PADRONIZADA
+// SERVIÇOS - VERSÃO PADRONIZADA COM BRILHO PERMANENTE
 // ============================================================
 const Services = ({ servicos, links, onLeadOpen }: { 
   servicos: any[]; 
@@ -1355,10 +1355,10 @@ const Services = ({ servicos, links, onLeadOpen }: {
                       onMouseLeave={() => setHoveredCard(null)}
                     >
                       <div className="p-4 flex flex-col h-full">
-                        {/* Ícone com glow no hover */}
+                        {/* Ícone com brilho PERMANENTE */}
                         <div className="flex justify-center mb-3">
-                          <div className="w-12 h-12 bg-[#00F0FF]/10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform group-hover:shadow-[0_0_15px_rgba(0,240,255,0.4)]">
-                            <Icon className="w-6 h-6 text-[#00F0FF] group-hover:drop-shadow-[0_0_5px_#00F0FF]" />
+                          <div className="w-12 h-12 bg-[#00F0FF]/10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-[0_0_12px_rgba(0,240,255,0.3)]">
+                            <Icon className="w-6 h-6 text-[#00F0FF] drop-shadow-[0_0_4px_#00F0FF]" />
                           </div>
                         </div>
                         
@@ -1405,7 +1405,7 @@ const Services = ({ servicos, links, onLeadOpen }: {
             </div>
           </div>
 
-          {/* COLUNA DIREITA - ARTISTAS */}
+          {/* COLUNA DIREITA - ARTISTAS - MESMA ESTRUTURA */}
           <div className="bg-slate-900 rounded-2xl border border-[#DFFF00]/20 overflow-hidden flex flex-col h-full shadow-[0_0_30px_-10px_rgba(223,255,0,0.2)]">
             <div className="p-5 pb-3 border-b border-[#DFFF00]/20">
               <div className="flex items-center gap-2 text-[#DFFF00] font-mono text-[10px] tracking-widest uppercase mb-1">
@@ -1443,14 +1443,12 @@ const Services = ({ servicos, links, onLeadOpen }: {
                       onMouseLeave={() => setHoveredCard(null)}
                     >
                       <div className="p-4 flex flex-col h-full">
-                        {/* Ícone com glow no hover */}
+                        {/* Ícone com brilho PERMANENTE - MESMO TAMANHO */}
                         <div className="flex justify-center mb-3">
-                          <div className={`w-12 h-12 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform ${
-                            isDestaque 
-                              ? "bg-[#DFFF00]/20 group-hover:shadow-[0_0_20px_rgba(223,255,0,0.5)]" 
-                              : "bg-[#DFFF00]/10 group-hover:shadow-[0_0_15px_rgba(223,255,0,0.3)]"
+                          <div className={`w-12 h-12 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-[0_0_12px_rgba(223,255,0,0.4)] ${
+                            isDestaque ? "bg-[#DFFF00]/20" : "bg-[#DFFF00]/10"
                           }`}>
-                            <Icon className={`w-6 h-6 text-[#DFFF00] group-hover:drop-shadow-[0_0_5px_#DFFF00]`} />
+                            <Icon className="w-6 h-6 text-[#DFFF00] drop-shadow-[0_0_4px_#DFFF00]" />
                           </div>
                         </div>
                         
@@ -1477,7 +1475,7 @@ const Services = ({ servicos, links, onLeadOpen }: {
                         {/* Logo parceiro */}
                         <div className="min-h-[28px] flex justify-center items-center mb-2">
                           {s.external && s.external !== "" ? (
-                            <div className="w-8 h-8 bg-slate-900 border border-[#DFFF00]/30 rounded-full flex items-center justify-center group-hover:shadow-[0_0_10px_rgba(223,255,0,0.3)]">
+                            <div className="w-8 h-8 bg-slate-900 border border-[#DFFF00]/30 rounded-full flex items-center justify-center shadow-[0_0_8px_rgba(223,255,0,0.3)]">
                               <span className="text-[6px] text-[#DFFF00] font-mono font-bold">HIT UP</span>
                             </div>
                           ) : (
@@ -1490,9 +1488,7 @@ const Services = ({ servicos, links, onLeadOpen }: {
                             onClick={() => openDetails(s)}
                             className={`flex-1 py-1.5 text-[9px] font-bold uppercase tracking-widest transition-all rounded-md ${
                               isHovered
-                                ? isDestaque
-                                  ? "bg-[#DFFF00] text-[#020617]"
-                                  : "bg-[#DFFF00] text-[#020617]"
+                                ? "bg-[#DFFF00] text-[#020617]"
                                 : "border border-[#DFFF00]/50 text-[#DFFF00] bg-transparent"
                             }`}
                           >
