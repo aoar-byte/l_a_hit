@@ -1587,24 +1587,18 @@ const Services = ({ servicos, links, onLeadOpen }: {
 };
 
 // ============================================================
-// SOCIAL PROOF - VERSÃO CORRIGIDA COM IMAGENS FUNCIONANDO
+// SEÇÃO DE PROVA SOCIAL (ESPAÇO E BORDAS CORRIGIDOS)
 // ============================================================
 const SocialProof = ({ cases }: { cases: any[] }) => {
   const [imageErrors, setImageErrors] = useState<Record<string, boolean>>({});
 
   const getImageUrl = (path: string) => {
-    if (!path || path === "") return null;
+    if (!path) return null;
     if (path.startsWith("http")) return path;
-    if (path.startsWith("/")) return path;
-    return "/" + path;
+    let cleanPath = path.replace(/^\/public/, "");
+    if (!cleanPath.startsWith("/")) cleanPath = "/" + cleanPath;
+    return cleanPath;
   };
-
-  const FALLBACK_IMAGES = [
-    "https://picsum.photos/id/104/400/225",
-    "https://picsum.photos/id/106/400/225",
-    "https://picsum.photos/id/107/400/225",
-    "https://picsum.photos/id/108/400/225",
-  ];
 
   const getObjectPosition = (enquadramento: string) => {
     switch(enquadramento) {
@@ -1619,7 +1613,6 @@ const SocialProof = ({ cases }: { cases: any[] }) => {
   };
 
   const handleImageError = (id: string | number) => {
-    console.log(`Erro ao carregar imagem para case ${id}`);
     setImageErrors(prev => ({ ...prev, [id]: true }));
   };
 
@@ -1659,15 +1652,10 @@ const SocialProof = ({ cases }: { cases: any[] }) => {
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {cases.map((item, index) => {
-            let imageSrc = getImageUrl(item.image || item.videoThumb);
-            const hasError = imageErrors[item.id];
-            
-            if (!imageSrc || hasError) {
-              imageSrc = FALLBACK_IMAGES[index % FALLBACK_IMAGES.length];
-            }
-            
+          {cases.map((item) => {
+            const imageSrc = getImageUrl(item.image || item.videoThumb);
             const playsValue = formatPlays(item.plays);
+            const hasError = imageErrors[item.id];
             const objectPosition = getObjectPosition(item.enquadramento);
 
             return (
@@ -1679,13 +1667,19 @@ const SocialProof = ({ cases }: { cases: any[] }) => {
                 className="group block bg-transparent border border-white/5 hover:border-[#00F0FF]/50 transition-all overflow-hidden rounded-lg shadow-lg"
               >
                 <div className="relative w-full bg-slate-900 overflow-hidden" style={{ aspectRatio: "16/9" }}>
-                  <img
-                    src={imageSrc}
-                    alt={item.title}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    style={{ objectPosition }}
-                    onError={() => handleImageError(item.id)}
-                  />
+                  {imageSrc && !hasError ? (
+                    <img
+                      src={imageSrc}
+                      alt={item.title}
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      style={{ objectPosition }}
+                      onError={() => handleImageError(item.id)}
+                    />
+                  ) : (
+                    <div className="absolute inset-0 flex items-center justify-center bg-slate-900">
+                      <ImageIcon size={24} className="text-slate-700" />
+                    </div>
+                  )}
                   
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-80 pointer-events-none" />
                   
