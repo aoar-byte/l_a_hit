@@ -947,15 +947,15 @@ const SmartCatalog = ({
         </div>
 
         <div className="bg-slate-900/50 border border-white/10 rounded-xl overflow-hidden backdrop-blur-sm flex flex-col">
-          {/* HEADER - 3 COLUNAS */}
+          {/* HEADER */}
           <div className="grid grid-cols-12 gap-4 px-6 py-4 border-b border-white/5 bg-slate-900 text-[10px] font-bold text-slate-500 uppercase tracking-widest sticky top-0 z-20">
             <div className="col-span-2 md:col-span-1 text-center">PLAY</div>
             <div className="col-span-8 md:col-span-9">FAIXA / ARTISTA</div>
             <div className="col-span-2 md:col-span-2 text-right">AÇÃO</div>
           </div>
 
-          {/* LISTA COM ALTURA FIXA PARA 3 LINHAS + SCROLL */}
-          <div className="overflow-y-auto" style={{ maxHeight: "calc(3 * 85px)" }}>
+          {/* LISTA - ALTURA PARA 3 LINHAS + SCROLL */}
+          <div className="overflow-y-auto" style={{ maxHeight: "255px" }}>
             {filteredTracks.map((track: any) => {
               const isCurrent = currentTrack?.id === track.id;
               
@@ -966,7 +966,6 @@ const SmartCatalog = ({
                     isCurrent ? "bg-[#00F0FF]/5" : "hover:bg-white/[0.02]"
                   }`}
                 >
-                  {/* Botão Play */}
                   <div className="col-span-2 md:col-span-1 flex justify-center">
                     <button
                       onClick={() => isCurrent ? setIsPlaying(!isPlaying) : (setCurrentTrack(track), setIsPlaying(true))}
@@ -980,7 +979,6 @@ const SmartCatalog = ({
                     </button>
                   </div>
 
-                  {/* Título e Artista com todas as informações */}
                   <div className="col-span-8 md:col-span-9">
                     <h4 className={`text-sm font-bold truncate ${isCurrent ? "text-[#00F0FF]" : "text-white"}`}>
                       {track.title}
@@ -990,7 +988,6 @@ const SmartCatalog = ({
                     </p>
                   </div>
 
-                  {/* Botão Licenciar */}
                   <div className="col-span-2 md:col-span-2 text-right">
                     <button
                       onClick={() => onLicenseClick(track)}
@@ -1004,7 +1001,6 @@ const SmartCatalog = ({
             })}
           </div>
 
-          {/* INDICADOR DE MAIS MÚSICAS COM SCROLL */}
           {filteredTracks.length > 3 && (
             <div className="p-3 text-center border-t border-white/5 bg-slate-900/80">
               <p className="text-[10px] text-slate-400 font-mono">
