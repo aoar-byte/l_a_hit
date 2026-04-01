@@ -864,7 +864,7 @@ const Hero = ({ onOpenShowreel }: { onOpenShowreel: () => void }) => {
 };
 
 // ============================================================
-// SMART CATALOG - APENAS 3 LINHAS FIXAS (SEM SCROLL)
+// SMART CATALOG - 3 LINHAS VISÍVEIS COM SCROLL
 // ============================================================
 const SmartCatalog = ({
   catalogo,
@@ -902,9 +902,6 @@ const SmartCatalog = ({
     setFilteredTracks(filtered);
   }, [searchTerm, activeFilter, catalogo, setFilteredTracks]);
 
-  // Pega apenas as 3 primeiras músicas
-  const tracksToShow = filteredTracks.slice(0, 3);
-
   return (
     <section id="catalog" className="py-16 bg-slate-950 border-t border-white/5 relative">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
@@ -916,9 +913,6 @@ const SmartCatalog = ({
           <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight">
             A Biblioteca.
           </h2>
-          <p className="text-slate-400 text-sm mt-2">
-            Mostrando 3 de {filteredTracks.length} faixas
-          </p>
         </div>
 
         <div className="flex flex-col lg:flex-row justify-between items-end mb-8 gap-6">
@@ -953,59 +947,54 @@ const SmartCatalog = ({
         </div>
 
         <div className="bg-slate-900/50 border border-white/10 rounded-xl overflow-hidden backdrop-blur-sm flex flex-col">
-          {/* HEADER - 5 COLUNAS */}
+          {/* HEADER - 3 COLUNAS (igual à imagem) */}
           <div className="grid grid-cols-12 gap-4 px-6 py-4 border-b border-white/5 bg-slate-900 text-[10px] font-bold text-slate-500 uppercase tracking-widest sticky top-0 z-20">
             <div className="col-span-2 md:col-span-1 text-center">Play</div>
-            <div className="col-span-5 md:col-span-4">Título da Faixa</div>
-            <div className="col-span-2 hidden md:block">Gênero</div>
-            <div className="col-span-1 hidden md:block text-center">BPM</div>
-            <div className="col-span-1 hidden md:block text-center">Mood</div>
-            <div className="col-span-5 md:col-span-3 text-right">Ação</div>
+            <div className="col-span-8 md:col-span-9">Faixa / Artista</div>
+            <div className="col-span-2 md:col-span-2 text-right">Ação</div>
           </div>
 
-          {/* APENAS 3 LINHAS - SEM SCROLL */}
-          <div className="flex flex-col">
-            {tracksToShow.map((track: any) => {
+          {/* LISTA COM ALTURA FIXA PARA 3 LINHAS + SCROLL */}
+          <div className="overflow-y-auto" style={{ maxHeight: "calc(3 * 85px)" }}>
+            {filteredTracks.map((track: any) => {
               const isCurrent = currentTrack?.id === track.id;
               
               return (
                 <div
                   key={track.id}
-                  className={`grid grid-cols-12 gap-4 px-6 py-4 items-center border-b border-white/5 transition-colors group ${
+                  className={`grid grid-cols-12 gap-4 px-6 py-3 items-center border-b border-white/5 transition-colors group ${
                     isCurrent ? "bg-[#00F0FF]/5" : "hover:bg-white/[0.02]"
                   }`}
                 >
+                  {/* Botão Play */}
                   <div className="col-span-2 md:col-span-1 flex justify-center">
                     <button
                       onClick={() => isCurrent ? setIsPlaying(!isPlaying) : (setCurrentTrack(track), setIsPlaying(true))}
-                      className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${
+                      className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${
                         isCurrent && isPlaying
                           ? "bg-[#DFFF00] text-[#020617] shadow-[0_0_15px_#DFFF00]"
                           : "bg-slate-900 border border-[#DFFF00]/30 text-[#DFFF00] hover:border-[#DFFF00] hover:shadow-[0_0_10px_rgba(223,255,0,0.3)]"
                       }`}
                     >
-                      {isCurrent && isPlaying ? <Pause size={16} fill="currentColor" /> : <Play size={16} fill="currentColor" className="ml-1" />}
+                      {isCurrent && isPlaying ? <Pause size={14} fill="currentColor" /> : <Play size={14} fill="currentColor" className="ml-0.5" />}
                     </button>
                   </div>
 
-                  <div className="col-span-5 md:col-span-4">
-                    <h4 className={`text-sm font-bold truncate ${isCurrent ? "text-[#00F0FF]" : "text-white"}`}>{track.title}</h4>
-                    <p className="text-slate-500 text-[10px] uppercase font-black tracking-widest">{track.artist}</p>
+                  {/* Título e Artista com todas as informações */}
+                  <div className="col-span-8 md:col-span-9">
+                    <h4 className={`text-sm font-bold truncate ${isCurrent ? "text-[#00F0FF]" : "text-white"}`}>
+                      {track.title}
+                    </h4>
+                    <p className="text-slate-500 text-[10px] uppercase font-black tracking-widest">
+                      {track.artist} • {track.genre} • {track.bpm} BPM • {track.mood}
+                    </p>
                   </div>
 
-                  <div className="col-span-2 hidden md:block">
-                    <span className="px-2 py-1 rounded-sm border border-white/10 text-[9px] font-bold text-slate-400 uppercase tracking-tighter group-hover:border-[#DFFF00]/50 group-hover:text-[#DFFF00] transition-colors">
-                      {track.genre}
-                    </span>
-                  </div>
-                  
-                  <div className="col-span-1 hidden md:block text-center text-slate-400 text-xs font-mono">{track.bpm}</div>
-                  <div className="col-span-1 hidden md:block text-center text-slate-400 text-xs">{track.mood}</div>
-
-                  <div className="col-span-5 md:col-span-3 text-right">
+                  {/* Botão Licenciar */}
+                  <div className="col-span-2 md:col-span-2 text-right">
                     <button
                       onClick={() => onLicenseClick(track)}
-                      className="px-4 py-1.5 bg-transparent border border-[#00F0FF]/50 text-[#00F0FF] text-[10px] font-black uppercase tracking-widest hover:bg-[#00F0FF] hover:text-[#020617] hover:shadow-[0_0_15px_rgba(0,240,255,0.4)] transition-all"
+                      className="px-3 py-1 bg-transparent border border-[#00F0FF]/50 text-[#00F0FF] text-[9px] font-black uppercase tracking-widest hover:bg-[#00F0FF] hover:text-[#020617] hover:shadow-[0_0_15px_rgba(0,240,255,0.4)] transition-all whitespace-nowrap"
                     >
                       Licenciar
                     </button>
@@ -1015,11 +1004,11 @@ const SmartCatalog = ({
             })}
           </div>
 
-          {/* INDICADOR DE MAIS MÚSICAS */}
+          {/* INDICADOR DE MAIS MÚSICAS COM SCROLL */}
           {filteredTracks.length > 3 && (
-            <div className="p-4 text-center border-t border-white/5 bg-slate-900/80">
-              <p className="text-xs text-slate-400">
-                + {filteredTracks.length - 3} {filteredTracks.length - 3 === 1 ? 'música' : 'músicas'} disponíveis no catálogo completo
+            <div className="p-3 text-center border-t border-white/5 bg-slate-900/80">
+              <p className="text-[10px] text-slate-400 font-mono">
+                + {filteredTracks.length - 3} músicas disponíveis • Role para ver mais
               </p>
             </div>
           )}
