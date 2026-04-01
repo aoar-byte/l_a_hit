@@ -881,27 +881,6 @@ const Hero = ({ onOpenContact }: { onOpenContact: () => void }) => {
                 Contato Direto
               </MagneticButton>
             </motion.div>
-
-            {/* Selo de credibilidade opcional */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.9 }}
-              className="flex flex-wrap gap-6 mt-10 text-xs text-slate-500"
-            >
-              <span className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#00F0FF]" />
-                Catálogo exclusivo
-              </span>
-              <span className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#DFFF00]" />
-                Entrega ágil
-              </span>
-              <span className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#00F0FF]" />
-                Briefing estruturado
-              </span>
-            </motion.div>
           </div>
         </div>
       </div>
