@@ -1260,7 +1260,7 @@ const PersistentPlayer = ({
 };
 
 // ============================================================
-// SERVIÇOS - VERSÃO PADRONIZADA SEM DESLOCAMENTO
+// SERVIÇOS - VERSÃO COM ALTURA FIXA E BRILHO NOS BOTÕES
 // ============================================================
 const Services = ({ servicos, links, onLeadOpen }: { 
   servicos: any[]; 
@@ -1350,32 +1350,30 @@ const Services = ({ servicos, links, onLeadOpen }: {
                   return (
                     <div
                       key={i}
-                      className={`group bg-slate-950/80 border rounded-xl transition-all duration-300 overflow-hidden ${
-                        isHovered ? "border-[#00F0FF]/40" : "border-white/10"
-                      }`}
+                      className="group bg-slate-950/80 border border-white/10 hover:border-[#00F0FF]/40 rounded-xl transition-all duration-300 overflow-hidden h-full"
                       onMouseEnter={() => setHoveredCard(cardId)}
                       onMouseLeave={() => setHoveredCard(null)}
                     >
                       <div className="p-4 flex flex-col h-full">
-                        {/* Ícone com brilho permanente - SEM scale */}
+                        {/* Ícone com brilho permanente */}
                         <div className="flex justify-center mb-3">
                           <div className="w-12 h-12 bg-[#00F0FF]/10 rounded-xl flex items-center justify-center shadow-[0_0_12px_rgba(0,240,255,0.3)]">
                             <Icon className="w-6 h-6 text-[#00F0FF] drop-shadow-[0_0_4px_#00F0FF]" />
                           </div>
                         </div>
                         
-                        <h4 className="text-sm font-bold text-white group-hover:text-[#00F0FF] transition-colors text-center mb-2">
+                        <h4 className="text-sm font-bold text-white group-hover:text-[#00F0FF] transition-colors text-center mb-2 min-h-[40px] flex items-center justify-center">
                           {tituloAbreviado}
                         </h4>
                         
-                        <p className="text-slate-500 text-[10px] text-center leading-relaxed mb-3 line-clamp-2">
+                        <p className="text-slate-500 text-[10px] text-center leading-relaxed mb-3 line-clamp-2 min-h-[32px]">
                           {resumo}
                         </p>
                         
-                        <div className="flex gap-2 justify-center mt-auto">
+                        <div className="flex gap-2 justify-center mt-auto pt-2">
                           <button
                             onClick={() => openDetails(s)}
-                            className="flex-1 py-1.5 text-[9px] font-bold uppercase tracking-widest transition-all rounded-md border border-[#00F0FF]/50 text-[#00F0FF] bg-transparent hover:bg-[#00F0FF] hover:text-[#020617]"
+                            className="flex-1 py-1.5 text-[9px] font-bold uppercase tracking-widest transition-all rounded-md border border-[#00F0FF]/50 text-[#00F0FF] bg-transparent hover:bg-[#00F0FF] hover:text-[#020617] hover:shadow-[0_0_12px_rgba(0,240,255,0.5)]"
                           >
                             CONSULTAR
                           </button>
@@ -1385,7 +1383,7 @@ const Services = ({ servicos, links, onLeadOpen }: {
                               const message = `Olá! Tenho interesse no serviço: ${s.title}`;
                               window.open(`${whatsappUrl}?text=${encodeURIComponent(message)}`, "_blank");
                             }}
-                            className="p-1.5 transition-all rounded-md border border-[#00F0FF]/50 text-[#00F0FF] bg-transparent hover:bg-[#25D366] hover:text-white hover:border-[#25D366]"
+                            className="p-1.5 transition-all rounded-md border border-[#00F0FF]/50 text-[#00F0FF] bg-transparent hover:bg-[#25D366] hover:text-white hover:border-[#25D366] hover:shadow-[0_0_10px_rgba(37,211,102,0.4)]"
                             title="Chamar no WhatsApp"
                           >
                             <MessageCircle size={12} />
@@ -1428,16 +1426,16 @@ const Services = ({ servicos, links, onLeadOpen }: {
                   return (
                     <div
                       key={i}
-                      className={`group bg-slate-950/80 border rounded-xl transition-all duration-300 overflow-hidden ${
-                        isHovered 
-                          ? isDestaque ? "border-[#DFFF00]/60" : "border-[#DFFF00]/40"
-                          : isDestaque ? "border-[#DFFF00]/30" : "border-white/10"
+                      className={`group bg-slate-950/80 border rounded-xl transition-all duration-300 overflow-hidden h-full ${
+                        isDestaque
+                          ? "border-[#DFFF00]/30 hover:border-[#DFFF00]/60"
+                          : "border-white/10 hover:border-[#DFFF00]/40"
                       }`}
                       onMouseEnter={() => setHoveredCard(cardId)}
                       onMouseLeave={() => setHoveredCard(null)}
                     >
                       <div className="p-4 flex flex-col h-full">
-                        {/* Ícone com brilho permanente - SEM scale */}
+                        {/* Ícone com brilho permanente */}
                         <div className="flex justify-center mb-3">
                           <div className={`w-12 h-12 rounded-xl flex items-center justify-center shadow-[0_0_12px_rgba(223,255,0,0.4)] ${
                             isDestaque ? "bg-[#DFFF00]/20" : "bg-[#DFFF00]/10"
@@ -1446,7 +1444,7 @@ const Services = ({ servicos, links, onLeadOpen }: {
                           </div>
                         </div>
                         
-                        <h4 className={`text-sm font-bold text-center mb-1 ${
+                        <h4 className={`text-sm font-bold text-center mb-1 min-h-[40px] flex items-center justify-center ${
                           isDestaque ? "text-[#DFFF00]" : "text-white group-hover:text-[#DFFF00]"
                         } transition-colors`}>
                           {tituloAbreviado}
@@ -1460,7 +1458,7 @@ const Services = ({ servicos, links, onLeadOpen }: {
                           </div>
                         )}
                         
-                        <p className="text-slate-500 text-[10px] text-center leading-relaxed mb-3 line-clamp-2">
+                        <p className="text-slate-500 text-[10px] text-center leading-relaxed mb-3 line-clamp-2 min-h-[32px]">
                           {resumo}
                         </p>
                         
@@ -1475,10 +1473,10 @@ const Services = ({ servicos, links, onLeadOpen }: {
                           )}
                         </div>
                         
-                        <div className="flex gap-2 justify-center mt-auto">
+                        <div className="flex gap-2 justify-center mt-auto pt-2">
                           <button
                             onClick={() => openDetails(s)}
-                            className="flex-1 py-1.5 text-[9px] font-bold uppercase tracking-widest transition-all rounded-md border border-[#DFFF00]/50 text-[#DFFF00] bg-transparent hover:bg-[#DFFF00] hover:text-[#020617]"
+                            className="flex-1 py-1.5 text-[9px] font-bold uppercase tracking-widest transition-all rounded-md border border-[#DFFF00]/50 text-[#DFFF00] bg-transparent hover:bg-[#DFFF00] hover:text-[#020617] hover:shadow-[0_0_12px_rgba(223,255,0,0.5)]"
                           >
                             CONSULTAR
                           </button>
@@ -1488,7 +1486,7 @@ const Services = ({ servicos, links, onLeadOpen }: {
                               const message = `Olá! Tenho interesse no serviço: ${s.title}`;
                               window.open(`${whatsappUrl}?text=${encodeURIComponent(message)}`, "_blank");
                             }}
-                            className="p-1.5 transition-all rounded-md border border-[#DFFF00]/50 text-[#DFFF00] bg-transparent hover:bg-[#25D366] hover:text-white hover:border-[#25D366]"
+                            className="p-1.5 transition-all rounded-md border border-[#DFFF00]/50 text-[#DFFF00] bg-transparent hover:bg-[#25D366] hover:text-white hover:border-[#25D366] hover:shadow-[0_0_10px_rgba(37,211,102,0.4)]"
                             title="Chamar no WhatsApp"
                           >
                             <MessageCircle size={12} />
@@ -1563,7 +1561,7 @@ const Services = ({ servicos, links, onLeadOpen }: {
                   const message = `Olá! Tenho interesse no serviço: ${selectedService.title}`;
                   window.open(`${whatsappUrl}?text=${encodeURIComponent(message)}`, "_blank");
                 }}
-                className="w-full py-2.5 mt-3 bg-[#25D366] text-white text-[10px] font-black uppercase tracking-widest hover:bg-[#1DA851] transition-colors flex items-center justify-center gap-2 rounded-lg"
+                className="w-full py-2.5 mt-3 bg-[#25D366] text-white text-[10px] font-black uppercase tracking-widest hover:bg-[#1DA851] transition-colors flex items-center justify-center gap-2 rounded-lg hover:shadow-[0_0_12px_rgba(37,211,102,0.4)]"
               >
                 <MessageCircle size={14} />
                 FALAR NO WHATSAPP
