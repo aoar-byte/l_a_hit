@@ -379,7 +379,7 @@ const MagneticButton = ({ children, className, onClick, disabled }: any) => (
 );
 
 // ============================================================
-// MODAL DE LICENCIAMENTO
+// MODAL DE LICENCIAMENTO - VERSÃO ALINHADA COM O DESIGN
 // ============================================================
 const QuoteModal = ({ track, onClose, tiposLicenca, links }: any) => {
   const handleWhatsApp = (licenseTitle: string) => {
@@ -392,90 +392,122 @@ const QuoteModal = ({ track, onClose, tiposLicenca, links }: any) => {
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md overflow-y-auto">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-md overflow-y-auto">
       <motion.div
         initial={{ scale: 0.95, opacity: 0, y: 20 }}
         animate={{ scale: 1, opacity: 1, y: 0 }}
-        className="bg-slate-900 border border-white/10 w-full max-w-6xl shadow-2xl relative max-h-[90vh] overflow-y-auto"
+        exit={{ scale: 0.95, opacity: 0, y: 20 }}
+        className="bg-slate-900 border border-[#00F0FF]/20 w-full max-w-6xl shadow-2xl shadow-[#00F0FF]/10 rounded-2xl relative max-h-[90vh] overflow-y-auto"
       >
-        <div className="sticky top-0 bg-slate-900 z-10 p-6 border-b border-white/5 flex justify-between items-center">
-          <div>
-            <span className="text-[10px] font-bold text-blue-500 uppercase tracking-widest border border-blue-500/20 px-2 py-1">
-              Licenciamento
-            </span>
-            <h3 className="text-2xl font-black text-white mt-2">
-              {track.title}
-            </h3>
-            <p className="text-slate-400 font-mono text-xs">
-              ID: {track.id} // {track.bpm} BPM
-            </p>
+        {/* HEADER COM GRADIENTE */}
+        <div className="sticky top-0 bg-slate-900/95 backdrop-blur-sm z-10 p-6 border-b border-[#00F0FF]/20">
+          <div className="flex justify-between items-start">
+            <div>
+              <div className="flex items-center gap-2 mb-2">
+                <span className="w-2 h-2 bg-[#00F0FF] rounded-full animate-pulse shadow-[0_0_8px_#00F0FF]" />
+                <span className="text-[10px] font-bold text-[#00F0FF] uppercase tracking-widest">
+                  Licenciamento
+                </span>
+              </div>
+              <h3 className="text-3xl md:text-4xl font-black text-white tracking-tight">
+                {track.title}
+              </h3>
+              <p className="text-slate-400 font-mono text-xs mt-1">
+                ID: {track.id} • {track.bpm} BPM • {track.genre}
+              </p>
+            </div>
+            <button
+              onClick={onClose}
+              className="text-slate-500 hover:text-white hover:bg-slate-800 p-2 rounded-full transition-all duration-200"
+            >
+              <X size={24} />
+            </button>
           </div>
-          <button
-            onClick={onClose}
-            className="text-slate-400 hover:text-white p-2"
-          >
-            <X size={24} />
-          </button>
         </div>
 
+        {/* CARDS DE LICENÇAS */}
         <div className="p-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {tiposLicenca.map((license: any) => {
               const Icon = license.icon;
+              const isDestaque = license.id === "exclusividade";
+              
               return (
                 <div
                   key={license.id}
-                  className="bg-slate-800/50 border border-white/5 p-6 hover:border-blue-500/30 transition-colors flex flex-col"
+                  className={`group relative bg-slate-800/40 rounded-xl border transition-all duration-300 overflow-hidden ${
+                    isDestaque 
+                      ? "border-[#DFFF00]/30 hover:border-[#DFFF00]/60 shadow-[0_0_20px_-10px_rgba(223,255,0,0.3)]" 
+                      : "border-[#00F0FF]/20 hover:border-[#00F0FF]/40"
+                  }`}
                 >
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-10 h-10 bg-blue-600/20 flex items-center justify-center">
-                      <Icon className="w-5 h-5 text-blue-500" />
+                  {/* Glow de fundo */}
+                  <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${
+                    isDestaque ? "bg-[#DFFF00]/5" : "bg-[#00F0FF]/5"
+                  }`} />
+                  
+                  <div className="relative p-6 flex flex-col h-full">
+                    {/* Ícone e Título */}
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
+                        isDestaque 
+                          ? "bg-[#DFFF00]/20 shadow-[0_0_15px_rgba(223,255,0,0.3)]" 
+                          : "bg-[#00F0FF]/10"
+                      }`}>
+                        <Icon className={`w-6 h-6 ${isDestaque ? "text-[#DFFF00]" : "text-[#00F0FF]"}`} />
+                      </div>
+                      <div>
+                        <h4 className={`text-lg font-black uppercase tracking-wider ${
+                          isDestaque ? "text-[#DFFF00]" : "text-white"
+                        }`}>
+                          {license.title}
+                        </h4>
+                        <p className="text-[10px] text-slate-500 font-mono uppercase tracking-wider">
+                          {license.subtitle}
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <h4 className="text-white font-bold text-sm uppercase tracking-wider">
-                        {license.title}
-                      </h4>
-                      <p className="text-[10px] text-slate-500 font-mono">
-                        {license.subtitle}
+
+                    {/* Preço */}
+                    <div className="mb-4 pb-4 border-b border-white/10">
+                      <span className={`text-3xl font-black ${isDestaque ? "text-[#DFFF00]" : "text-white"}`}>
+                        {license.price}
+                      </span>
+                      <span className="text-[10px] text-slate-500 block mt-1">
+                        {license.payment}
+                      </span>
+                    </div>
+
+                    {/* Deliverables */}
+                    <div className="space-y-2 mb-4 flex-1">
+                      <h5 className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">
+                        O QUE VOCÊ RECEBE:
+                      </h5>
+                      <ul className="space-y-1.5">
+                        {license.deliverables.map((item: string, idx: number) => (
+                          <li key={idx} className="text-xs text-slate-300 flex items-start gap-2">
+                            <CheckCircle2 size={12} className={`mt-0.5 flex-shrink-0 ${isDestaque ? "text-[#DFFF00]" : "text-[#00F0FF]"}`} />
+                            <span className="leading-relaxed">{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    {/* Advantage */}
+                    <div className="mb-6 p-3 bg-slate-900/80 rounded-lg border border-white/5">
+                      <p className="text-xs text-slate-400 italic leading-relaxed">
+                        “{license.advantage}”
                       </p>
                     </div>
-                  </div>
-                  <div className="mb-4">
-                    <span className="text-2xl font-black text-white">
-                      {license.price}
-                    </span>
-                    <span className="text-[10px] text-slate-500 block">
-                      {license.payment}
-                    </span>
-                  </div>
-                  <div className="space-y-2 mb-4 flex-1">
-                    <h5 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-                      O que você recebe:
-                    </h5>
-                    <ul className="space-y-1">
-                      {license.deliverables.map((item: string, idx: number) => (
-                        <li
-                          key={idx}
-                          className="text-xs text-slate-300 flex items-start gap-2"
-                        >
-                          <CheckCircle2
-                            size={12}
-                            className="text-emerald-500 mt-0.5 flex-shrink-0"
-                          />
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div className="mb-6 p-3 bg-slate-900/80 border border-white/5">
-                    <p className="text-xs text-slate-400 italic">
-                      “{license.advantage}”
-                    </p>
-                  </div>
-                  <div className="flex gap-2 mt-auto">
+
+                    {/* Botão WhatsApp */}
                     <button
                       onClick={() => handleWhatsApp(license.title)}
-                      className="w-full py-2 bg-green-600 hover:bg-green-700 text-white text-[10px] font-bold uppercase tracking-widest transition-colors flex items-center justify-center gap-2"
+                      className={`w-full py-3 rounded-lg font-black uppercase tracking-widest text-[11px] transition-all duration-300 flex items-center justify-center gap-2 ${
+                        isDestaque
+                          ? "bg-[#DFFF00] text-[#020617] hover:shadow-[0_0_25px_rgba(223,255,0,0.5)]"
+                          : "bg-[#25D366] text-white hover:bg-[#1DA851] hover:shadow-[0_0_20px_rgba(37,211,102,0.4)]"
+                      }`}
                     >
                       <MessageCircle size={14} />
                       Falar no WhatsApp
@@ -485,6 +517,13 @@ const QuoteModal = ({ track, onClose, tiposLicenca, links }: any) => {
               );
             })}
           </div>
+        </div>
+
+        {/* FOOTER DO MODAL */}
+        <div className="sticky bottom-0 bg-slate-900/95 backdrop-blur-sm p-4 border-t border-[#00F0FF]/20 text-center">
+          <p className="text-[10px] text-slate-500 font-mono">
+            Ao entrar em contato, você concorda com nossos termos de licenciamento.
+          </p>
         </div>
       </motion.div>
     </div>
