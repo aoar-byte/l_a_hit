@@ -21,7 +21,7 @@ import {
   CheckCircle2,
   Lock,
   Loader2,
-  MessageCircle,
+  MessageCircle,  // ✅ já importado
   Send,
   PenTool,
   Radio,
@@ -820,7 +820,7 @@ const Navbar = ({ links }: { links: any }) => {
 };
 
 // ============================================================
-// HERO - COM CONTATO DIRETO
+// HERO - COM CONTATO DIRETO (WHATSAPP)
 // ============================================================
 const Hero = ({ onOpenContact }: { onOpenContact: () => void }) => {
   const scrollToCatalog = () =>
@@ -877,7 +877,7 @@ const Hero = ({ onOpenContact }: { onOpenContact: () => void }) => {
                 onClick={onOpenContact}
                 className="px-6 sm:px-8 py-3 border border-white/20 text-white font-bold uppercase tracking-widest text-sm sm:text-base flex items-center gap-2 sm:gap-3 backdrop-blur-sm hover:border-[#DFFF00] hover:text-[#DFFF00] hover:shadow-[0_0_20px_rgba(223,255,0,0.3)] transition-all group"
               >
-                <Mail size={16} className="group-hover:scale-110 transition-transform" /> 
+                <MessageCircle size={16} className="group-hover:scale-110 transition-transform" /> 
                 Contato Direto
               </MagneticButton>
             </motion.div>
