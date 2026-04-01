@@ -864,7 +864,7 @@ const Hero = ({ onOpenShowreel }: { onOpenShowreel: () => void }) => {
 };
 
 // ============================================================
-// SMART CATALOG - APENAS 3 LINHAS, SEM TEXTO INFORMATIVO
+// SMART CATALOG - 3 LINHAS COM SCROLL, SEM TEXTO INFORMATIVO
 // ============================================================
 const SmartCatalog = ({
   catalogo,
@@ -901,9 +901,6 @@ const SmartCatalog = ({
     }
     setFilteredTracks(filtered);
   }, [searchTerm, activeFilter, catalogo, setFilteredTracks]);
-
-  // PEGA APENAS AS 3 PRIMEIRAS MÚSICAS
-  const tracksToShow = filteredTracks.slice(0, 3);
 
   return (
     <section id="catalog" className="py-16 bg-slate-950 border-t border-white/5 relative">
@@ -960,9 +957,9 @@ const SmartCatalog = ({
             <div className="col-span-5 md:col-span-3 text-right">Ação</div>
           </div>
 
-          {/* APENAS 3 LINHAS - SEM SCROLL, SEM TEXTO ADICIONAL */}
-          <div>
-            {tracksToShow.map((track: any) => {
+          {/* LISTA - ALTURA PARA 3 LINHAS + SCROLL */}
+          <div style={{ height: "255px", overflowY: "auto" }}>
+            {filteredTracks.map((track: any) => {
               const isCurrent = currentTrack?.id === track.id;
               return (
                 <div
