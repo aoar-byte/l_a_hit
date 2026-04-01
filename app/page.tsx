@@ -1260,7 +1260,7 @@ const PersistentPlayer = ({
 };
 
 // ============================================================
-// SERVIÇOS - VERSÃO PADRONIZADA COM BRILHO PERMANENTE
+// SERVIÇOS - VERSÃO PADRONIZADA SEM DESLOCAMENTO
 // ============================================================
 const Services = ({ servicos, links, onLeadOpen }: { 
   servicos: any[]; 
@@ -1350,14 +1350,16 @@ const Services = ({ servicos, links, onLeadOpen }: {
                   return (
                     <div
                       key={i}
-                      className="group bg-slate-950/80 border border-white/10 hover:border-[#00F0FF]/40 rounded-xl transition-all duration-300 overflow-hidden"
+                      className={`group bg-slate-950/80 border rounded-xl transition-all duration-300 overflow-hidden ${
+                        isHovered ? "border-[#00F0FF]/40" : "border-white/10"
+                      }`}
                       onMouseEnter={() => setHoveredCard(cardId)}
                       onMouseLeave={() => setHoveredCard(null)}
                     >
                       <div className="p-4 flex flex-col h-full">
-                        {/* Ícone com brilho PERMANENTE */}
+                        {/* Ícone com brilho permanente - SEM scale */}
                         <div className="flex justify-center mb-3">
-                          <div className="w-12 h-12 bg-[#00F0FF]/10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-[0_0_12px_rgba(0,240,255,0.3)]">
+                          <div className="w-12 h-12 bg-[#00F0FF]/10 rounded-xl flex items-center justify-center shadow-[0_0_12px_rgba(0,240,255,0.3)]">
                             <Icon className="w-6 h-6 text-[#00F0FF] drop-shadow-[0_0_4px_#00F0FF]" />
                           </div>
                         </div>
@@ -1373,13 +1375,9 @@ const Services = ({ servicos, links, onLeadOpen }: {
                         <div className="flex gap-2 justify-center mt-auto">
                           <button
                             onClick={() => openDetails(s)}
-                            className={`flex-1 py-1.5 text-[9px] font-bold uppercase tracking-widest transition-all rounded-md ${
-                              isHovered
-                                ? "bg-[#00F0FF] text-[#020617]"
-                                : "border border-[#00F0FF]/50 text-[#00F0FF] bg-transparent"
-                            }`}
+                            className="flex-1 py-1.5 text-[9px] font-bold uppercase tracking-widest transition-all rounded-md border border-[#00F0FF]/50 text-[#00F0FF] bg-transparent hover:bg-[#00F0FF] hover:text-[#020617]"
                           >
-                            {s.cta || "DETALHES"}
+                            CONSULTAR
                           </button>
                           <button
                             onClick={() => {
@@ -1387,11 +1385,7 @@ const Services = ({ servicos, links, onLeadOpen }: {
                               const message = `Olá! Tenho interesse no serviço: ${s.title}`;
                               window.open(`${whatsappUrl}?text=${encodeURIComponent(message)}`, "_blank");
                             }}
-                            className={`p-1.5 transition-all rounded-md ${
-                              isHovered
-                                ? "bg-[#25D366] text-white"
-                                : "border border-[#00F0FF]/50 text-[#00F0FF] bg-transparent"
-                            }`}
+                            className="p-1.5 transition-all rounded-md border border-[#00F0FF]/50 text-[#00F0FF] bg-transparent hover:bg-[#25D366] hover:text-white hover:border-[#25D366]"
                             title="Chamar no WhatsApp"
                           >
                             <MessageCircle size={12} />
@@ -1405,7 +1399,7 @@ const Services = ({ servicos, links, onLeadOpen }: {
             </div>
           </div>
 
-          {/* COLUNA DIREITA - ARTISTAS - MESMA ESTRUTURA */}
+          {/* COLUNA DIREITA - ARTISTAS */}
           <div className="bg-slate-900 rounded-2xl border border-[#DFFF00]/20 overflow-hidden flex flex-col h-full shadow-[0_0_30px_-10px_rgba(223,255,0,0.2)]">
             <div className="p-5 pb-3 border-b border-[#DFFF00]/20">
               <div className="flex items-center gap-2 text-[#DFFF00] font-mono text-[10px] tracking-widest uppercase mb-1">
@@ -1435,17 +1429,17 @@ const Services = ({ servicos, links, onLeadOpen }: {
                     <div
                       key={i}
                       className={`group bg-slate-950/80 border rounded-xl transition-all duration-300 overflow-hidden ${
-                        isDestaque
-                          ? "border-[#DFFF00]/30 hover:border-[#DFFF00]/60"
-                          : "border-white/10 hover:border-[#DFFF00]/40"
+                        isHovered 
+                          ? isDestaque ? "border-[#DFFF00]/60" : "border-[#DFFF00]/40"
+                          : isDestaque ? "border-[#DFFF00]/30" : "border-white/10"
                       }`}
                       onMouseEnter={() => setHoveredCard(cardId)}
                       onMouseLeave={() => setHoveredCard(null)}
                     >
                       <div className="p-4 flex flex-col h-full">
-                        {/* Ícone com brilho PERMANENTE - MESMO TAMANHO */}
+                        {/* Ícone com brilho permanente - SEM scale */}
                         <div className="flex justify-center mb-3">
-                          <div className={`w-12 h-12 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-[0_0_12px_rgba(223,255,0,0.4)] ${
+                          <div className={`w-12 h-12 rounded-xl flex items-center justify-center shadow-[0_0_12px_rgba(223,255,0,0.4)] ${
                             isDestaque ? "bg-[#DFFF00]/20" : "bg-[#DFFF00]/10"
                           }`}>
                             <Icon className="w-6 h-6 text-[#DFFF00] drop-shadow-[0_0_4px_#DFFF00]" />
@@ -1453,9 +1447,7 @@ const Services = ({ servicos, links, onLeadOpen }: {
                         </div>
                         
                         <h4 className={`text-sm font-bold text-center mb-1 ${
-                          isDestaque 
-                            ? "text-[#DFFF00]" 
-                            : "text-white group-hover:text-[#DFFF00]"
+                          isDestaque ? "text-[#DFFF00]" : "text-white group-hover:text-[#DFFF00]"
                         } transition-colors`}>
                           {tituloAbreviado}
                         </h4>
@@ -1486,13 +1478,9 @@ const Services = ({ servicos, links, onLeadOpen }: {
                         <div className="flex gap-2 justify-center mt-auto">
                           <button
                             onClick={() => openDetails(s)}
-                            className={`flex-1 py-1.5 text-[9px] font-bold uppercase tracking-widest transition-all rounded-md ${
-                              isHovered
-                                ? "bg-[#DFFF00] text-[#020617]"
-                                : "border border-[#DFFF00]/50 text-[#DFFF00] bg-transparent"
-                            }`}
+                            className="flex-1 py-1.5 text-[9px] font-bold uppercase tracking-widest transition-all rounded-md border border-[#DFFF00]/50 text-[#DFFF00] bg-transparent hover:bg-[#DFFF00] hover:text-[#020617]"
                           >
-                            {s.cta || "DETALHES"}
+                            CONSULTAR
                           </button>
                           <button
                             onClick={() => {
@@ -1500,11 +1488,7 @@ const Services = ({ servicos, links, onLeadOpen }: {
                               const message = `Olá! Tenho interesse no serviço: ${s.title}`;
                               window.open(`${whatsappUrl}?text=${encodeURIComponent(message)}`, "_blank");
                             }}
-                            className={`p-1.5 transition-all rounded-md ${
-                              isHovered
-                                ? "bg-[#25D366] text-white"
-                                : "border border-[#DFFF00]/50 text-[#DFFF00] bg-transparent"
-                            }`}
+                            className="p-1.5 transition-all rounded-md border border-[#DFFF00]/50 text-[#DFFF00] bg-transparent hover:bg-[#25D366] hover:text-white hover:border-[#25D366]"
                             title="Chamar no WhatsApp"
                           >
                             <MessageCircle size={12} />
