@@ -656,12 +656,8 @@ const Footer = () => {
           </div>
         </div>
         <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between gap-4">
-          <p>© 2026 L*A HIT HOLDINGS. TODOS OS DIREITOS RESERVADOS.</p>
-          <p className="flex items-center gap-2 text-[#00F0FF]">
-            <span className="w-1.5 h-1.5 bg-[#00F0FF] rounded-full animate-pulse shadow-[0_0_5px_#00F0FF]" />{" "}
-            SYSTEM STATUS: OPTIMAL
-          </p>
-        </div>
+  <p>© 2026 L*A HIT HOLDINGS. TODOS OS DIREITOS RESERVADOS.</p>
+</div>
       </div>
     </footer>
   );
