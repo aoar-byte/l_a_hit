@@ -751,7 +751,7 @@ const DynamicTerrainCanvas = () => {
 };
 
 // ============================================================
-// NAVBAR
+// NAVBAR - ESCOPO 1 (Menu centralizado visualmente)
 // ============================================================
 const Navbar = ({ links }: { links: any }) => {
   const [scrolled, setScrolled] = useState(false);
@@ -774,43 +774,46 @@ const Navbar = ({ links }: { links: any }) => {
           : "bg-transparent border-transparent py-4"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-        <div
-          className="flex items-center cursor-pointer"
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        >
-          <img 
-            src="/image_2ee558fe-removebg-preview.png"
-            alt="L*A HIT"
-            className="h-14 w-auto md:h-20 transition-all duration-300 hover:opacity-80"
-          />
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="relative flex items-center justify-between">
+          {/* Logo - Esquerda */}
+          <div className="flex-shrink-0">
+            <img
+              src="/image_2ee558fe-removebg-preview.png"
+              alt="L*A HIT"
+              className="h-12 md:h-16 w-auto cursor-pointer transition-all duration-300 hover:opacity-80"
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            />
+          </div>
+
+          {/* Menu - Centralizado visualmente */}
+          <div className="absolute left-1/2 transform -translate-x-1/2 hidden md:flex items-center gap-6 lg:gap-8 text-xs font-bold tracking-widest text-slate-400 uppercase">
+            <button
+              onClick={() => scrollToSection("catalog")}
+              className="hover:text-white transition-colors relative group"
+            >
+              Catálogo
+              <span className="absolute -bottom-1 left-0 w-0 h-px bg-blue-500 group-hover:w-full transition-all duration-300" />
+            </button>
+            <button
+              onClick={() => scrollToSection("services")}
+              className="hover:text-white transition-colors relative group"
+            >
+              Serviços
+              <span className="absolute -bottom-1 left-0 w-0 h-px bg-blue-500 group-hover:w-full transition-all duration-300" />
+            </button>
+            <button
+              onClick={() => scrollToSection("cases")}
+              className="hover:text-white transition-colors relative group"
+            >
+              Cases
+              <span className="absolute -bottom-1 left-0 w-0 h-px bg-blue-500 group-hover:w-full transition-all duration-300" />
+            </button>
+          </div>
+
+          {/* Espaço reservado para equilíbrio (mesma largura da logo) */}
+          <div className="w-[100px] md:w-[120px] flex-shrink-0 hidden md:block" />
         </div>
-        
-        <div className="hidden md:flex items-center gap-6 text-xs font-bold tracking-widest text-slate-400 uppercase">
-          <button
-            onClick={() => scrollToSection("catalog")}
-            className="hover:text-white transition-colors relative group"
-          >
-            Catálogo
-            <span className="absolute -bottom-1 left-0 w-0 h-px bg-blue-500 group-hover:w-full transition-all duration-300" />
-          </button>
-          <button
-            onClick={() => scrollToSection("services")}
-            className="hover:text-white transition-colors relative group"
-          >
-            Serviços
-            <span className="absolute -bottom-1 left-0 w-0 h-px bg-blue-500 group-hover:w-full transition-all duration-300" />
-          </button>
-          <button
-            onClick={() => scrollToSection("cases")}
-            className="hover:text-white transition-colors relative group"
-          >
-            Cases
-            <span className="absolute -bottom-1 left-0 w-0 h-px bg-blue-500 group-hover:w-full transition-all duration-300" />
-          </button>
-        </div>
-        
-        <div className="w-20" />
       </div>
     </nav>
   );
