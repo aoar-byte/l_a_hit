@@ -864,7 +864,7 @@ const Hero = ({ onOpenShowreel }: { onOpenShowreel: () => void }) => {
 };
 
 // ============================================================
-// SMART CATALOG - 3 LINHAS COM SCROLL E COLUNAS ORIGINAIS
+// SMART CATALOG - APENAS 3 LINHAS, SEM TEXTO INFORMATIVO
 // ============================================================
 const SmartCatalog = ({
   catalogo,
@@ -901,6 +901,9 @@ const SmartCatalog = ({
     }
     setFilteredTracks(filtered);
   }, [searchTerm, activeFilter, catalogo, setFilteredTracks]);
+
+  // PEGA APENAS AS 3 PRIMEIRAS MÚSICAS
+  const tracksToShow = filteredTracks.slice(0, 3);
 
   return (
     <section id="catalog" className="py-16 bg-slate-950 border-t border-white/5 relative">
@@ -947,7 +950,7 @@ const SmartCatalog = ({
         </div>
 
         <div className="bg-slate-900/50 border border-white/10 rounded-xl overflow-hidden backdrop-blur-sm">
-          {/* HEADER - 5 COLUNAS ORIGINAIS */}
+          {/* HEADER - 5 COLUNAS */}
           <div className="grid grid-cols-12 gap-4 px-6 py-4 border-b border-white/5 bg-slate-900 text-[10px] font-bold text-slate-500 uppercase tracking-widest">
             <div className="col-span-2 md:col-span-1 text-center">Play</div>
             <div className="col-span-5 md:col-span-4">Título da Faixa</div>
@@ -957,9 +960,9 @@ const SmartCatalog = ({
             <div className="col-span-5 md:col-span-3 text-right">Ação</div>
           </div>
 
-          {/* LISTA - ALTURA PARA 3 LINHAS + SCROLL */}
-          <div style={{ height: "255px", overflowY: "auto" }}>
-            {filteredTracks.map((track: any) => {
+          {/* APENAS 3 LINHAS - SEM SCROLL, SEM TEXTO ADICIONAL */}
+          <div>
+            {tracksToShow.map((track: any) => {
               const isCurrent = currentTrack?.id === track.id;
               return (
                 <div
@@ -1007,15 +1010,6 @@ const SmartCatalog = ({
               );
             })}
           </div>
-
-          {/* INDICADOR */}
-          {filteredTracks.length > 3 && (
-            <div className="p-3 text-center border-t border-white/5 bg-slate-900/80">
-              <p className="text-[10px] text-slate-400">
-                + {filteredTracks.length - 3} músicas disponíveis • Role para ver mais
-              </p>
-            </div>
-          )}
         </div>
       </div>
     </section>
