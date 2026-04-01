@@ -379,7 +379,7 @@ const MagneticButton = ({ children, className, onClick, disabled }: any) => (
 );
 
 // ============================================================
-// MODAL DE LICENCIAMENTO - VERSÃO ALINHADA COM O DESIGN
+// MODAL DE LICENCIAMENTO - VERSÃO OTIMIZADA
 // ============================================================
 const QuoteModal = ({ track, onClose, tiposLicenca, links }: any) => {
   const handleWhatsApp = (licenseTitle: string) => {
@@ -392,42 +392,42 @@ const QuoteModal = ({ track, onClose, tiposLicenca, links }: any) => {
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-md overflow-y-auto">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-md">
       <motion.div
         initial={{ scale: 0.95, opacity: 0, y: 20 }}
         animate={{ scale: 1, opacity: 1, y: 0 }}
         exit={{ scale: 0.95, opacity: 0, y: 20 }}
-        className="bg-slate-900 border border-[#00F0FF]/20 w-full max-w-6xl shadow-2xl shadow-[#00F0FF]/10 rounded-2xl relative max-h-[90vh] overflow-y-auto"
+        className="bg-slate-900 border border-[#00F0FF]/20 w-full max-w-6xl shadow-2xl shadow-[#00F0FF]/10 rounded-2xl relative"
       >
-        {/* HEADER COM GRADIENTE */}
-        <div className="sticky top-0 bg-slate-900/95 backdrop-blur-sm z-10 p-6 border-b border-[#00F0FF]/20">
+        {/* HEADER */}
+        <div className="p-5 border-b border-[#00F0FF]/20">
           <div className="flex justify-between items-start">
             <div>
-              <div className="flex items-center gap-2 mb-2">
-                <span className="w-2 h-2 bg-[#00F0FF] rounded-full animate-pulse shadow-[0_0_8px_#00F0FF]" />
-                <span className="text-[10px] font-bold text-[#00F0FF] uppercase tracking-widest">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="w-1.5 h-1.5 bg-[#00F0FF] rounded-full animate-pulse shadow-[0_0_8px_#00F0FF]" />
+                <span className="text-[9px] font-bold text-[#00F0FF] uppercase tracking-widest">
                   Licenciamento
                 </span>
               </div>
-              <h3 className="text-3xl md:text-4xl font-black text-white tracking-tight">
+              <h3 className="text-2xl md:text-3xl font-black text-white tracking-tight">
                 {track.title}
               </h3>
-              <p className="text-slate-400 font-mono text-xs mt-1">
+              <p className="text-slate-500 font-mono text-[10px] mt-0.5">
                 ID: {track.id} • {track.bpm} BPM • {track.genre}
               </p>
             </div>
             <button
               onClick={onClose}
-              className="text-slate-500 hover:text-white hover:bg-slate-800 p-2 rounded-full transition-all duration-200"
+              className="text-slate-500 hover:text-white hover:bg-slate-800 p-1.5 rounded-full transition-all"
             >
-              <X size={24} />
+              <X size={20} />
             </button>
           </div>
         </div>
 
-        {/* CARDS DE LICENÇAS */}
-        <div className="p-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* CARDS - SEM SCROLL INTERNO, ALTURA AJUSTADA */}
+        <div className="p-5 max-h-[65vh] overflow-y-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {tiposLicenca.map((license: any) => {
               const Icon = license.icon;
               const isDestaque = license.id === "exclusividade";
@@ -435,81 +435,74 @@ const QuoteModal = ({ track, onClose, tiposLicenca, links }: any) => {
               return (
                 <div
                   key={license.id}
-                  className={`group relative bg-slate-800/40 rounded-xl border transition-all duration-300 overflow-hidden ${
+                  className={`group bg-slate-800/40 rounded-xl border transition-all duration-300 flex flex-col ${
                     isDestaque 
-                      ? "border-[#DFFF00]/30 hover:border-[#DFFF00]/60 shadow-[0_0_20px_-10px_rgba(223,255,0,0.3)]" 
+                      ? "border-[#DFFF00]/30 hover:border-[#DFFF00]/60" 
                       : "border-[#00F0FF]/20 hover:border-[#00F0FF]/40"
                   }`}
                 >
-                  {/* Glow de fundo */}
-                  <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${
-                    isDestaque ? "bg-[#DFFF00]/5" : "bg-[#00F0FF]/5"
-                  }`} />
-                  
-                  <div className="relative p-6 flex flex-col h-full">
-                    {/* Ícone e Título */}
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
-                        isDestaque 
-                          ? "bg-[#DFFF00]/20 shadow-[0_0_15px_rgba(223,255,0,0.3)]" 
-                          : "bg-[#00F0FF]/10"
+                  <div className="p-4 flex flex-col h-full">
+                    {/* Cabeçalho do Card */}
+                    <div className="flex items-center gap-2 mb-3">
+                      <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
+                        isDestaque ? "bg-[#DFFF00]/20" : "bg-[#00F0FF]/10"
                       }`}>
-                        <Icon className={`w-6 h-6 ${isDestaque ? "text-[#DFFF00]" : "text-[#00F0FF]"}`} />
+                        <Icon className={`w-4 h-4 ${isDestaque ? "text-[#DFFF00]" : "text-[#00F0FF]"}`} />
                       </div>
                       <div>
-                        <h4 className={`text-lg font-black uppercase tracking-wider ${
+                        <h4 className={`text-sm font-black uppercase tracking-wide ${
                           isDestaque ? "text-[#DFFF00]" : "text-white"
                         }`}>
                           {license.title}
                         </h4>
-                        <p className="text-[10px] text-slate-500 font-mono uppercase tracking-wider">
+                        <p className="text-[8px] text-slate-500 font-mono uppercase">
                           {license.subtitle}
                         </p>
                       </div>
                     </div>
 
                     {/* Preço */}
-                    <div className="mb-4 pb-4 border-b border-white/10">
-                      <span className={`text-3xl font-black ${isDestaque ? "text-[#DFFF00]" : "text-white"}`}>
+                    <div className="mb-3">
+                      <span className={`text-2xl font-black ${isDestaque ? "text-[#DFFF00]" : "text-white"}`}>
                         {license.price}
                       </span>
-                      <span className="text-[10px] text-slate-500 block mt-1">
+                      <span className="text-[9px] text-slate-500 block">
                         {license.payment}
                       </span>
                     </div>
 
                     {/* Deliverables */}
-                    <div className="space-y-2 mb-4 flex-1">
-                      <h5 className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">
-                        O QUE VOCÊ RECEBE:
+                    <div className="space-y-1.5 mb-3 flex-1">
+                      <h5 className="text-[8px] font-bold text-slate-400 uppercase tracking-wider">
+                        O que você recebe:
                       </h5>
-                      <ul className="space-y-1.5">
-                        {license.deliverables.map((item: string, idx: number) => (
-                          <li key={idx} className="text-xs text-slate-300 flex items-start gap-2">
-                            <CheckCircle2 size={12} className={`mt-0.5 flex-shrink-0 ${isDestaque ? "text-[#DFFF00]" : "text-[#00F0FF]"}`} />
-                            <span className="leading-relaxed">{item}</span>
+                      <ul className="space-y-1">
+                        {license.deliverables.slice(0, 3).map((item: string, idx: number) => (
+                          <li key={idx} className="text-[10px] text-slate-300 flex items-start gap-1.5">
+                            <CheckCircle2 size={10} className={`mt-0.5 flex-shrink-0 ${isDestaque ? "text-[#DFFF00]" : "text-[#00F0FF]"}`} />
+                            <span className="leading-tight">{item}</span>
                           </li>
                         ))}
                       </ul>
                     </div>
 
                     {/* Advantage */}
-                    <div className="mb-6 p-3 bg-slate-900/80 rounded-lg border border-white/5">
-                      <p className="text-xs text-slate-400 italic leading-relaxed">
-                        “{license.advantage}”
+                    <div className="mb-3 p-2 bg-slate-900/60 rounded-lg border border-white/5">
+                      <p className="text-[9px] text-slate-400 italic leading-relaxed">
+                        “{license.advantage.substring(0, 80)}”
                       </p>
                     </div>
 
                     {/* Botão WhatsApp */}
                     <button
                       onClick={() => handleWhatsApp(license.title)}
-                      className={`w-full py-3 rounded-lg font-black uppercase tracking-widest text-[11px] transition-all duration-300 flex items-center justify-center gap-2 ${
+                      className={`w-full py-2 rounded-lg font-black uppercase tracking-widest text-[10px] transition-all flex items-center justify-center gap-1.5 ${
                         isDestaque
-                          ? "bg-[#DFFF00] text-[#020617] hover:shadow-[0_0_25px_rgba(223,255,0,0.5)]"
-                          : "bg-[#25D366] text-white hover:bg-[#1DA851] hover:shadow-[0_0_20px_rgba(37,211,102,0.4)]"
+                          ? "bg-[#DFFF00] text-[#020617] hover:shadow-[0_0_15px_rgba(223,255,0,0.4)]"
+                          : "bg-[#25D366] text-white hover:bg-[#1DA851]"
                       }`}
                     >
-                      <MessageCircle size={14} />
+                      <MessageCircle size={12} />
                       Falar no WhatsApp
                     </button>
                   </div>
@@ -517,13 +510,6 @@ const QuoteModal = ({ track, onClose, tiposLicenca, links }: any) => {
               );
             })}
           </div>
-        </div>
-
-        {/* FOOTER DO MODAL */}
-        <div className="sticky bottom-0 bg-slate-900/95 backdrop-blur-sm p-4 border-t border-[#00F0FF]/20 text-center">
-          <p className="text-[10px] text-slate-500 font-mono">
-            Ao entrar em contato, você concorda com nossos termos de licenciamento.
-          </p>
         </div>
       </motion.div>
     </div>
@@ -1455,96 +1441,100 @@ const Services = ({ servicos, links, onLeadOpen }: {
                   const isHovered = hoveredCard === cardId;
                   
                   return (
-                    <div
-                      key={i}
-                      className={`group bg-slate-950/80 border rounded-xl transition-all duration-300 overflow-hidden flex flex-col h-full ${
-                        isDestaque
-                          ? "border-[#DFFF00]/30 hover:border-[#DFFF00]/60 shadow-[0_0_15px_-5px_rgba(223,255,0,0.1)]"
-                          : "border-white/10 hover:border-[#DFFF00]/40"
-                      }`}
-                      onMouseEnter={() => setHoveredCard(cardId)}
-                      onMouseLeave={() => setHoveredCard(null)}
-                    >
-                      <div className="p-5 flex flex-col h-full">
-                        <div className="flex justify-center mb-4">
-                          <div className={`w-14 h-14 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform ${
-                            isDestaque ? "bg-[#DFFF00]/20 shadow-[0_0_20px_rgba(223,255,0,0.4)]" : "bg-[#DFFF00]/10 shadow-[0_0_10px_rgba(223,255,0,0.2)]"
-                          }`}>
-                            <Icon className={`w-7 h-7 text-[#DFFF00] drop-shadow-[0_0_8px_rgba(223,255,0,0.6)]`} />
-                          </div>
-                        </div>
-                        
-                        <div className="min-h-[56px] flex items-center justify-center mb-2">
-                          <h4 className={`text-base font-bold text-center leading-tight line-clamp-2 ${
-                            isDestaque ? "text-[#DFFF00] drop-shadow-[0_0_5px_rgba(223,255,0,0.5)]" : "text-white group-hover:text-[#DFFF00]"
-                          } transition-colors`}>
-                            {tituloAbreviado}
-                          </h4>
-                        </div>
-                        
-                        {isDestaque && (
-                          <div className="flex justify-center mb-3">
-                            <span className="text-[8px] bg-[#DFFF00] text-[#020617] px-2 py-0.5 rounded-full font-black tracking-widest shadow-[0_0_8px_#DFFF00]">
-                              DESTAQUE
-                            </span>
-                          </div>
-                        )}
-                        
-                        <div className="min-h-[48px] flex items-center justify-center mb-4">
-                          <p className="text-slate-500 text-xs text-center leading-relaxed line-clamp-2">
-                            {resumo}
-                          </p>
-                        </div>
-                        
-                        <div className="min-h-[32px] flex justify-center items-center mb-4">
-                          {s.external && s.external !== "" ? (
-                            <div className="w-12 h-12 bg-slate-900 border border-[#DFFF00]/30 rounded-full flex items-center justify-center shadow-[0_0_10px_rgba(223,255,0,0.2)]">
-                              <span className="text-[7px] text-[#DFFF00] font-mono font-bold drop-shadow-[0_0_4px_#DFFF00]">HIT UP</span>
-                            </div>
-                          ) : (
-                            <div className="h-12" />
-                          )}
-                        </div>
-                        
-                        <div className="text-center mb-4">
-                           <span className="text-[10px] text-slate-500 font-mono bg-slate-900/50 px-2 py-1 rounded">
-                            Sob consulta
-                          </span>
-                        </div>
-                        
-                        <div className="flex gap-2 justify-center mt-auto pt-2">
-                          <button
-                            onClick={() => openDetails(s)}
-                            className={`px-4 py-2 text-[10px] font-bold uppercase tracking-widest transition-all rounded-lg w-full ${
-                              isHovered
-                                ? isDestaque
-                                  ? "bg-[#DFFF00] text-[#020617] shadow-[0_0_15px_rgba(223,255,0,0.5)]"
-                                  : "bg-[#DFFF00] text-[#020617] shadow-[0_0_15px_rgba(223,255,0,0.4)]"
-                                : isDestaque
-                                  ? "border border-[#DFFF00]/50 text-[#DFFF00] bg-transparent"
-                                  : "border border-[#DFFF00]/50 text-[#DFFF00] bg-transparent"
-                            }`}
-                          >
-                            {s.cta || "DETALHES"}
-                          </button>
-                          <button
-                            onClick={() => {
-                              const whatsappUrl = links?.whatsapp || "https://wa.me/5532998078161";
-                              const message = `Olá! Tenho interesse no serviço: ${s.title}`;
-                              window.open(`${whatsappUrl}?text=${encodeURIComponent(message)}`, "_blank");
-                            }}
-                            className={`p-2 transition-all rounded-lg ${
-                              isHovered
-                                ? "bg-[#25D366] text-white border-[#25D366] shadow-[0_0_10px_rgba(37,211,102,0.4)]"
-                                : "border border-[#DFFF00]/50 text-[#DFFF00] bg-transparent"
-                            }`}
-                            title="Chamar no WhatsApp"
-                          >
-                            <MessageCircle size={14} />
-                          </button>
-                        </div>
-                      </div>
-                    </div>
+                    // DENTRO DA COLUNA ARTISTAS - CARD MAIS COMPACTO
+<div
+  key={i}
+  className={`group bg-slate-950/80 border rounded-xl transition-all duration-300 overflow-hidden ${
+    isDestaque
+      ? "border-[#DFFF00]/30 hover:border-[#DFFF00]/60"
+      : "border-white/10 hover:border-[#DFFF00]/40"
+  }`}
+  onMouseEnter={() => setHoveredCard(cardId)}
+  onMouseLeave={() => setHoveredCard(null)}
+>
+  <div className="p-4 flex flex-col h-full">
+    {/* Ícone */}
+    <div className="flex justify-center mb-3">
+      <div className={`w-12 h-12 rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform ${
+        isDestaque ? "bg-[#DFFF00]/20" : "bg-[#DFFF00]/10"
+      }`}>
+        <Icon className={`w-6 h-6 text-[#DFFF00]`} />
+      </div>
+    </div>
+    
+    {/* Título */}
+    <h4 className={`text-sm font-bold text-center mb-1 ${
+      isDestaque ? "text-[#DFFF00]" : "text-white group-hover:text-[#DFFF00]"
+    } transition-colors`}>
+      {getTituloAbreviado(s.title)}
+    </h4>
+    
+    {/* Badge destaque */}
+    {isDestaque && (
+      <div className="flex justify-center mb-2">
+        <span className="text-[7px] bg-[#DFFF00] text-[#020617] px-1.5 py-0.5 rounded-full font-black tracking-wider">
+          DESTAQUE
+        </span>
+      </div>
+    )}
+    
+    {/* Descrição resumida */}
+    <p className="text-slate-500 text-[10px] text-center leading-relaxed mb-3 line-clamp-2">
+      {getResumo(s)}
+    </p>
+    
+    {/* Logo parceiro */}
+    <div className="min-h-[28px] flex justify-center items-center mb-2">
+      {s.external && s.external !== "" ? (
+        <div className="w-8 h-8 bg-slate-900 border border-[#DFFF00]/30 rounded-full flex items-center justify-center">
+          <span className="text-[6px] text-[#DFFF00] font-mono font-bold">HIT UP</span>
+        </div>
+      ) : (
+        <div className="h-8" />
+      )}
+    </div>
+    
+    {/* Preço/Badge */}
+    <div className="text-center mb-3">
+      <span className="text-[9px] text-slate-500 font-mono bg-slate-900/50 px-2 py-0.5 rounded">
+        Sob consulta
+      </span>
+    </div>
+    
+    {/* Botões */}
+    <div className="flex gap-2 justify-center mt-auto">
+      <button
+        onClick={() => openDetails(s)}
+        className={`flex-1 py-1.5 text-[9px] font-bold uppercase tracking-widest transition-all rounded-md ${
+          isHovered
+            ? isDestaque
+              ? "bg-[#DFFF00] text-[#020617]"
+              : "bg-[#DFFF00] text-[#020617]"
+            : isDestaque
+              ? "border border-[#DFFF00]/50 text-[#DFFF00] bg-transparent"
+              : "border border-[#DFFF00]/50 text-[#DFFF00] bg-transparent"
+        }`}
+      >
+        {s.cta || "DETALHES"}
+      </button>
+      <button
+        onClick={() => {
+          const whatsappUrl = links?.whatsapp || "https://wa.me/5532998078161";
+          const message = `Olá! Tenho interesse no serviço: ${s.title}`;
+          window.open(`${whatsappUrl}?text=${encodeURIComponent(message)}`, "_blank");
+        }}
+        className={`p-1.5 transition-all rounded-md ${
+          isHovered
+            ? "bg-[#25D366] text-white"
+            : "border border-[#DFFF00]/50 text-[#DFFF00] bg-transparent"
+        }`}
+        title="Chamar no WhatsApp"
+      >
+        <MessageCircle size={12} />
+      </button>
+    </div>
+  </div>
+</div>
                   );
                 })}
               </div>
