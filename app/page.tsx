@@ -947,11 +947,11 @@ const SmartCatalog = ({
         </div>
 
         <div className="bg-slate-900/50 border border-white/10 rounded-xl overflow-hidden backdrop-blur-sm flex flex-col">
-          {/* HEADER - 3 COLUNAS (igual à imagem) */}
+          {/* HEADER - 3 COLUNAS */}
           <div className="grid grid-cols-12 gap-4 px-6 py-4 border-b border-white/5 bg-slate-900 text-[10px] font-bold text-slate-500 uppercase tracking-widest sticky top-0 z-20">
-            <div className="col-span-2 md:col-span-1 text-center">Play</div>
-            <div className="col-span-8 md:col-span-9">Faixa / Artista</div>
-            <div className="col-span-2 md:col-span-2 text-right">Ação</div>
+            <div className="col-span-2 md:col-span-1 text-center">PLAY</div>
+            <div className="col-span-8 md:col-span-9">FAIXA / ARTISTA</div>
+            <div className="col-span-2 md:col-span-2 text-right">AÇÃO</div>
           </div>
 
           {/* LISTA COM ALTURA FIXA PARA 3 LINHAS + SCROLL */}
