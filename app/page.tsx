@@ -868,7 +868,7 @@ const Hero = ({ onOpenContact }: { onOpenContact: () => void }) => {
             >
               <MagneticButton
                 onClick={scrollToCatalog}
-                className="px-6 sm:px-8 py-3 bg-[#00F0FF] text-[#020617] font-black tracking-widest uppercase text-sm sm:text-base shadow-[0_0_25px_rgba(0,240,255,0.5)] hover:shadow-[0_0_35px_rgba(0,240,255,0.7)] transition-all"
+                className="px-6 sm:px-8 py-1 bg-[#00F0FF] text-[#020617] font-black tracking-widest uppercase text-sm sm:text-base shadow-[0_0_25px_rgba(0,240,255,0.5)] hover:shadow-[0_0_35px_rgba(0,240,255,0.7)] transition-all"
               >
                 Explorar Catálogo
               </MagneticButton>
