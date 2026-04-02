@@ -820,9 +820,9 @@ const Navbar = ({ links }: { links: any }) => {
 };
 
 // ============================================================
-// HERO - COM CONTATO DIRETO (WHATSAPP)
+// HERO - CORRIGIDO
 // ============================================================
-const Hero = ({ onOpenContact }: { onOpenContact: () => void }) => {
+const Hero = ({ onOpenShowreel }: { onOpenShowreel: () => void }) => {
   const scrollToCatalog = () =>
     document.getElementById("catalog")?.scrollIntoView({ behavior: "smooth" });
 
@@ -867,18 +867,18 @@ const Hero = ({ onOpenContact }: { onOpenContact: () => void }) => {
               className="flex flex-wrap gap-4 justify-start"
             >
               <MagneticButton
-  onClick={scrollToCatalog}
-  className="px-4 sm:px-5 py-2 bg-[#00F0FF] text-[#020617] font-black tracking-widest uppercase text-xs sm:text-sm shadow-[0_0_25px_rgba(0,240,255,0.5)] hover:shadow-[0_0_35px_rgba(0,240,255,0.7)] transition-all"
->
-  Explorar Catálogo
-</MagneticButton>
+                onClick={scrollToCatalog}
+                className="px-4 sm:px-5 py-2 bg-[#00F0FF] text-[#020617] font-black tracking-widest uppercase text-xs sm:text-sm shadow-[0_0_25px_rgba(0,240,255,0.5)] hover:shadow-[0_0_35px_rgba(0,240,255,0.7)] transition-all"
+              >
+                Explorar Catálogo
+              </MagneticButton>
 
-<MagneticButton
-  onClick={onOpenShowreel}
-  className="px-4 sm:px-5 py-2 border border-white/20 text-white font-bold uppercase tracking-widest text-xs sm:text-sm flex items-center gap-2 backdrop-blur-sm hover:border-[#DFFF00] hover:text-[#DFFF00] hover:shadow-[0_0_20px_rgba(223,255,0,0.3)] transition-all"
->
-  <Play size={14} fill="currentColor" /> Showreel
-</MagneticButton>
+              <MagneticButton
+                onClick={onOpenShowreel}
+                className="px-4 sm:px-5 py-2 border border-white/20 text-white font-bold uppercase tracking-widest text-xs sm:text-sm flex items-center gap-2 backdrop-blur-sm hover:border-[#DFFF00] hover:text-[#DFFF00] hover:shadow-[0_0_20px_rgba(223,255,0,0.3)] transition-all"
+              >
+                <Play size={14} fill="currentColor" /> Showreel
+              </MagneticButton>
             </motion.div>
           </div>
         </div>
