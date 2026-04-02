@@ -820,9 +820,9 @@ const Navbar = ({ links }: { links: any }) => {
 };
 
 // ============================================================
-// HERO - CORRIGIDO
+// HERO - COM CONTATO DIRETO (WHATSAPP)
 // ============================================================
-const Hero = ({ onOpenShowreel }: { onOpenShowreel: () => void }) => {
+const Hero = ({ onOpenContact }: { onOpenContact: () => void }) => {
   const scrollToCatalog = () =>
     document.getElementById("catalog")?.scrollIntoView({ behavior: "smooth" });
 
@@ -874,10 +874,10 @@ const Hero = ({ onOpenShowreel }: { onOpenShowreel: () => void }) => {
               </MagneticButton>
 
               <MagneticButton
-                onClick={onOpenShowreel}
+                onClick={onOpenContact}
                 className="px-4 sm:px-5 py-2 border border-white/20 text-white font-bold uppercase tracking-widest text-xs sm:text-sm flex items-center gap-2 backdrop-blur-sm hover:border-[#DFFF00] hover:text-[#DFFF00] hover:shadow-[0_0_20px_rgba(223,255,0,0.3)] transition-all"
               >
-                <Play size={14} fill="currentColor" /> Showreel
+                <MessageCircle size={14} /> Contato Direto
               </MagneticButton>
             </motion.div>
           </div>
