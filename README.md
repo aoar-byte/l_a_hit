@@ -1,4 +1,4 @@
-# 🎵 L'A HIT - Plataforma de Catálogo Musical
+# 🎵 L'A HIT - Plataforma de Cartão-Catálogo Musical
 
 ![Next.js](https://img.shields.io/badge/Next.js-16.2-black?logo=next.js)
 ![React](https://img.shields.io/badge/React-18-blue?logo=react)
